@@ -88,15 +88,13 @@ public class UI {
         c.fill = GridBagConstraints.VERTICAL;
         c.gridx=1;
         
-        JLabel Q1 = new JLabel("How much income does your family earn?");
         
-        JLabel Q2 = new JLabel("How important to you is safety?");
-        JLabel Q3 = new JLabel("How much do you like people?");
-        
-        
-        Questions.add(Q1,c);
-        Questions.add(Q2,c);
-        Questions.add(Q3,c);
+        addLabel("How much do you earn?",Questions,c);
+        addRadioButtonGroup(Questions,c);
+        addLabel("How important is safety?",Questions,c);
+        addRadioButtonGroup(Questions,c);
+        addLabel("How much do you like people?",Questions,c);
+        addRadioButtonGroup(Questions,c);
         
         Main.add(empty,BorderLayout.NORTH);
         Main.add(empty,BorderLayout.SOUTH);
@@ -115,5 +113,36 @@ public class UI {
     private void showAnswerPage()
     {
         
+    }
+    
+    private void addLabel(String s, JPanel p, GridBagConstraints c)
+    {
+        JLabel l = new JLabel(s);
+        p.add(l,c);
+    }
+    
+    private void addRadioButtonGroup(JPanel p, GridBagConstraints c)
+    {
+        JRadioButton b1 = new JRadioButton();
+        JRadioButton b2 = new JRadioButton();
+        JRadioButton b3 = new JRadioButton();
+        JRadioButton b4 = new JRadioButton();
+        JRadioButton b5 = new JRadioButton();
+        
+        ButtonGroup g = new ButtonGroup();
+        g.add(b1);
+        g.add(b2);
+        g.add(b3);
+        g.add(b4);
+        g.add(b5);
+        
+        JPanel rp = new JPanel(new GridLayout(0,5));
+        rp.add(b1);
+        rp.add(b2);
+        rp.add(b3);
+        rp.add(b4);
+        rp.add(b5);
+        
+        p.add(rp,c);
     }
 }
