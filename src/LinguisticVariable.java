@@ -36,7 +36,8 @@ public class LinguisticVariable {
     /**
      * Creates a new fuzzy set without any values.
      * 
-     * @param name name of the fuzzy set
+     * @param name   name of the fuzzy set
+     * @param answer 
      */
     public LinguisticVariable(String name, boolean answer) {
         this.name = name;
@@ -63,6 +64,9 @@ public class LinguisticVariable {
      */
     public void addTerms(LinguisticTerm... terms) {
         for (LinguisticTerm term : terms) {
+            if (answer) {
+                term.setFuzzyLimit(0);
+            }
             values.put(term.getName(), term);
             if (term.getMinValue() < minValue) minValue = term.getMinValue();
             if (term.getMaxValue() > maxValue) maxValue = term.getMaxValue();
@@ -125,12 +129,19 @@ public class LinguisticVariable {
     public double defuzzify() {
         double[] results = new double[(int) ((maxValue - minValue) / STEP_SIZE)];
         for (LinguisticTerm term : values.values()) {
+            System.out.println(term.getName());
             for (int i = 0; i < results.length; ++i) {
                 double x = minValue + (i * STEP_SIZE);
                 // Generate the resulting graph using max-min
-                results[i] = Math.max(results[i], term.getValue(x));
+                double value = term.getValue(x);
+                double thing = results[i];
+                if (value > thing) {
+                    System.out.println("\tReplacing " + thing + " @ " + i + " with " + value);
+                    results[i] = value;
+                }
             }
         }
+        
         double numerator = 0;
         double denominator = 0;
         for (int i = 0; i < results.length; ++i) {
@@ -155,5 +166,9 @@ public class LinguisticVariable {
     
     public boolean isAnswer() {
         return answer;
+    }
+    
+    public void setInput(double input) {
+        this.input = input;
     }
 }
