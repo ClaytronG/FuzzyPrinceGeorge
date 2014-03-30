@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 /**
  * 
@@ -52,6 +54,16 @@ public class LinguisticTerm {
             if (pair.getFirst() < minValue) minValue = pair.getFirst();
             if (pair.getFirst() > maxValue) maxValue = pair.getFirst();
         }
+        sortValues();
+    }
+    
+    private void sortValues() {
+        Collections.sort(values, new Comparator<Pair>() {
+            @Override
+            public int compare(Pair o1, Pair o2) {
+                return Integer.compare(o1.getFirst(), o2.getFirst());
+            }
+        });
     }
 
     /**
@@ -67,22 +79,20 @@ public class LinguisticTerm {
     /**
      * Returns the truth value for this term at the given input.
      * 
-     * @param input 
+     * @param input y[i - 1] + (y[i] - y[i - 1]) / (in - x[i])
      * 
      * @return      the truth value at input 
      */
     public double getValue(double input) {
-        for (int i = 0; i < values.size() - 1; ++i) {
-            Pair point1 = values.get(i),
-                 point2 = values.get(i+1);
-            if (input < minValue) {
-                return function(point1, point2, minValue);
-            }
-            else if (input > maxValue) {
-                return function(point1, point2, maxValue);
-            }
-            else if ((input >= point1.getFirst()) && (input <= point2.getFirst())) {
-                return function(point1, point2, input);
+        if (input <= minValue) return values.get(0).getSecond();
+        if (input >= maxValue) return values.get(values.size()-1).getSecond();
+        for (int i = 1; i < values.size()-1; ++i) {
+            if (input <= values.get(i).getFirst()) {
+                double x1 = values.get(i-1).getFirst();
+                double y1 = values.get(i-1).getSecond();
+                double x2 = values.get(i).getFirst();
+                double y2 = values.get(i).getSecond();
+                return y1 + (y2 - y1) * ((input - x1) / (x2 - x1));
             }
         }
         return 0;
@@ -106,7 +116,9 @@ public class LinguisticTerm {
         double m = (y2 - y1) / (x2 - x1);
         double b = y1 - m * x1;
         double answer = m*x + b;
-        return Math.min(answer, fuzzyLimit);
+        double result = Math.min(answer, fuzzyLimit);
+        System.out.println(name + " @ " + x + " = " + result);
+        return result;
     }
     
     public String getName() { 
@@ -122,6 +134,7 @@ public class LinguisticTerm {
     }
     
     public void setFuzzyLimit(double limit) {
+        System.out.println("Setting limit of " + name + " to " + limit);
         fuzzyLimit = limit;
     }
     

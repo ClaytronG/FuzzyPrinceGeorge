@@ -131,6 +131,7 @@ public class LinguisticVariable {
                 results[i] = Math.max(results[i], term.getValue(x));
             }
         }
+        
         double numerator = 0;
         double denominator = 0;
         for (int i = 0; i < results.length; ++i) {
@@ -155,5 +156,9 @@ public class LinguisticVariable {
     
     public boolean isAnswer() {
         return answer;
+    }
+    
+    public void setInput(double input) {
+        this.input = input;
     }
 }

@@ -14,4 +14,15 @@ public class FuzzyRuleAnd extends FuzzyRuleOperation {
         return Math.min(left.getResult(), right.getResult());
     }
 
+    @Override
+    public String toString() {
+        StringBuilder operation = new StringBuilder();
+        
+        operation.append(left);
+        operation.append(" AND ");
+        operation.append(right);
+        operation.append(" ");
+        
+        return operation.toString();
+    }
 }

@@ -14,17 +14,28 @@ public class FuzzyRule {
         this.result = result;
     }
     
-    public double getResult() {
-        return 0;
-    }
-    
     /**
      * Runs through the rule and updates the answer fuzzy set.
      */
-    public void evaluate() {        
+    public void evaluate() {
+        System.out.println("FuzzyRule.evaluate()");
         LinguisticVariable variable = result.getVariable();
         LinguisticTerm term = variable.getTerm(result.getValue());
-        term.setFuzzyLimit(premise.getResult());
+        double limit = premise.getResult();
+        System.out.println("Premise is " + limit);
+        term.setFuzzyLimit(limit);
+    }
+    
+    @Override
+    public String toString() {
+        StringBuilder rule = new StringBuilder();
+        
+        rule.append("IF ");
+        rule.append(premise);
+        rule.append(" THEN ");
+        rule.append(result);
+        
+        return rule.toString();
     }
     
 }

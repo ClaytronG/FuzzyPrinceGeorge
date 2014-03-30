@@ -35,8 +35,10 @@ public class InferenceEngine {
     }
     
     public void answer() {
+        System.out.println("InferenceEngine.answer()");
         // Evaluate the rules
         for (FuzzyRule rule : rules) {
+            System.out.println(rule);
             rule.evaluate();
         }
         

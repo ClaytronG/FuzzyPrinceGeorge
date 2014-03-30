@@ -1,29 +1,63 @@
 
 import java.util.ArrayList;
-import javax.security.sasl.Sasl;
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JSlider;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 /**
  *
  * @author Clayton
  */
-public class Main {
+public class Main extends JPanel {
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
-        // TODO code application logic here
-        
+    public static void main(String[] args) {        
         UI myUI= new UI();
         myUI.startUI();
         
-        
+        //Schedule a job for the event-dispatching thread:
+        //creating and showing this application's GUI.
+        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                createAndShowGUI();
+            }
+        });
     }
     
-    private static void housingTest() {
+    public Main() {
+        super();
+        setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+        setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        housingTest();
+    }
+    
+    private static JFrame frame;
+    
+    private static void createAndShowGUI() {
+        //Create and set up the window.
+        frame = new JFrame("SliderDemo");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        Main main = new Main();
+        
+        frame.add(main);
+        
+        //Display the window.
+        frame.pack();
+        frame.setVisible(true);
+    }
+    
+    private static final int FACTOR = 5;
+    
+    private void housingTest() {
         // Some variables yo
-        LinguisticVariable price = new LinguisticVariable("Price", false),
+        final LinguisticVariable price = new LinguisticVariable("Price", false),
                  safety = new LinguisticVariable("Safety", false),
                  people = new LinguisticVariable("People", false),
                  style = new LinguisticVariable("Style", false),
@@ -103,19 +137,74 @@ public class Main {
         
         // Some rules yo
         // IF safety IS high AND cost IS very high THEN area IS collegeheights
-        FuzzyRuleTerm first = new FuzzyRuleTerm(safety, "Agree", false);
-        FuzzyRuleTerm second = new FuzzyRuleTerm(price, "Strongly Agree", false);
-        FuzzyRuleTerm result = new FuzzyRuleTerm(area, "College Heights", false);
+        FuzzyRuleTerm first = new FuzzyRuleTerm(safety, agree.getName(), false);
+        FuzzyRuleTerm second = new FuzzyRuleTerm(price, strongAgree.getName(), false);
+        FuzzyRuleTerm result = new FuzzyRuleTerm(area, collegeHeights.getName(), false);
         FuzzyRuleAnd and = new FuzzyRuleAnd(first, second);
         FuzzyRule rule = new FuzzyRule(and, result);
         ArrayList<FuzzyRule> rules = new ArrayList<>();
+        rules.add(rule);
         
-        InferenceEngine engine = new InferenceEngine();
+        final InferenceEngine engine = new InferenceEngine();
         engine.setRules(rules);
-        engine.setVariables(variables);
+        engine.setVariables(variables);        
+        // COST
+        JLabel costLabel = new JLabel("Cost");
+        JSlider costSlider = new JSlider(JSlider.HORIZONTAL, price.getMinValue()*FACTOR, price.getMaxValue()*FACTOR, price.getMaxValue());
+        final JLabel costSliderValueLabel = new JLabel(Double.toString((double)costSlider.getValue() / FACTOR));
+        JPanel costPanel = new JPanel();
+        JPanel costSliderPanel = new JPanel();
+        costSliderPanel.setLayout(new BoxLayout(costSliderPanel, BoxLayout.LINE_AXIS));
+        costSliderPanel.add(costSlider);
+        costSliderPanel.add(costSliderValueLabel);
+        costPanel.setLayout(new BoxLayout(costPanel, BoxLayout.PAGE_AXIS));
+        costPanel.add(costLabel);
+        costPanel.add(costSliderPanel);
         
-        JSlider costSlider = new JSlider(JSlider.HORIZONTAL, price.getMinValue(), price.getMaxValue(), price.getMaxValue()/2);
-        JSlider safetySlider = new JSlider(JSlider.HORIZONTAL, safety.getMinValue(), safety.getMaxValue(), safety.getMaxValue()/2);
+        // SAFETY
+        JLabel safetyLabel = new JLabel("Safety");
+        JSlider safetySlider = new JSlider(JSlider.HORIZONTAL, safety.getMinValue()*FACTOR, safety.getMaxValue()*FACTOR, safety.getMaxValue());
+        final JLabel safetySliderValueLabel = new JLabel(Double.toString((double)safetySlider.getValue() / FACTOR));
+        JPanel safetyPanel = new JPanel();
+        JPanel safetySliderPanel = new JPanel();
+        safetySliderPanel.setLayout(new BoxLayout(safetySliderPanel, BoxLayout.LINE_AXIS));
+        safetySliderPanel.add(safetySlider);
+        safetySliderPanel.add(safetySliderValueLabel);
+        safetyPanel.setLayout(new BoxLayout(safetyPanel, BoxLayout.PAGE_AXIS));
+        safetyPanel.add(safetyLabel);
+        safetyPanel.add(safetySliderPanel);
+        
+        add(costPanel);
+        add(safetyPanel);
+        
+        costSlider.addChangeListener(new ChangeListener() {
+
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                JSlider source = (JSlider) e.getSource();
+                if (!source.getValueIsAdjusting()) {
+                    double value = (double) source.getValue()/FACTOR;
+                    costSliderValueLabel.setText(Double.toString(value));
+                    price.setInput(value);
+                    engine.answer();
+                }
+            }
+        });
+        
+        safetySlider.addChangeListener(new ChangeListener() {
+
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                JSlider source = (JSlider) e.getSource();
+                if (!source.getValueIsAdjusting()) {
+                    double value = (double)source.getValue()/FACTOR;
+                    safetySliderValueLabel.setText(Double.toString(value));
+                    safety.setInput(value);
+                    engine.answer();
+                }
+            }
+        });
+        
     }   
     
     /**
