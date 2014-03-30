@@ -1,4 +1,5 @@
 
+import com.fuzzypg.UI;
 import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -66,15 +67,15 @@ public class Main extends JPanel {
         
         
         LinguisticTerm strongDisagree = new LinguisticTerm("Strongly Disagree");
-        strongDisagree.addValue(new Pair(0,1), new Pair(1,0));
+        strongDisagree.addValue(new Pair(0,1), new Pair(1,1), new Pair(2,0));
         LinguisticTerm disagree = new LinguisticTerm("Disagree");
-        disagree.addValue(new Pair(0,0), new Pair(1,1), new Pair(2,0));
+        disagree.addValue(new Pair(0,0), new Pair(1,1), new Pair(2,1), new Pair(3,0));
         LinguisticTerm neutral = new LinguisticTerm("Neutral");
-        neutral.addValue(new Pair(1,0), new Pair(2,1), new Pair(3,0));
+        neutral.addValue(new Pair(1,0), new Pair(2,1), new Pair(3,1), new Pair(4,0));
         LinguisticTerm agree = new LinguisticTerm("Agree");
-        agree.addValue(new Pair(2,0), new Pair(3,1), new Pair(4,0));
+        agree.addValue(new Pair(2,0), new Pair(3,1), new Pair(4,1), new Pair(5,0));
         LinguisticTerm strongAgree = new LinguisticTerm("Strongly Agree");
-        strongAgree.addValue(new Pair(3,0), new Pair(4,1));
+        strongAgree.addValue(new Pair(3,0), new Pair(4,1), new Pair(5,1));
         ArrayList<LinguisticTerm> terms = new ArrayList<>();
         terms.add(strongDisagree);
         terms.add(disagree);
@@ -137,7 +138,7 @@ public class Main extends JPanel {
         
         // Some rules yo
         // IF safety IS high AND cost IS very high THEN area IS collegeheights
-        FuzzyRuleTerm first = new FuzzyRuleTerm(safety, agree.getName(), false);
+        FuzzyRuleTerm first = new FuzzyRuleTerm(safety, strongDisagree.getName(), false);
         FuzzyRuleTerm second = new FuzzyRuleTerm(price, strongAgree.getName(), false);
         FuzzyRuleTerm result = new FuzzyRuleTerm(area, collegeHeights.getName(), false);
         FuzzyRuleAnd and = new FuzzyRuleAnd(first, second);

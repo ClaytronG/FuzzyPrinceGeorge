@@ -85,14 +85,16 @@ public class LinguisticTerm {
      */
     public double getValue(double input) {
         if (input <= minValue) return values.get(0).getSecond();
-        if (input >= maxValue) return values.get(values.size()-1).getSecond();
-        for (int i = 1; i < values.size()-1; ++i) {
+        if (input > maxValue) return values.get(values.size()-1).getSecond();
+        for (int i = 1; i < values.size(); ++i) {
             if (input <= values.get(i).getFirst()) {
                 double x1 = values.get(i-1).getFirst();
                 double y1 = values.get(i-1).getSecond();
                 double x2 = values.get(i).getFirst();
                 double y2 = values.get(i).getSecond();
-                return y1 + (y2 - y1) * ((input - x1) / (x2 - x1));
+                double answer = y1 + (y2 - y1) * ((input - x1) / (x2 - x1));
+                double result = Math.min(answer, fuzzyLimit);
+                return result; 
             }
         }
         return 0;
