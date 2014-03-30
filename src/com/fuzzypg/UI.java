@@ -1,3 +1,5 @@
+package com.fuzzypg;
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -16,6 +18,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 
+import com.fuzzypg.Main;
+
 /**
  *
  * @author claire
@@ -25,7 +29,7 @@ public class UI {
     private JFrame mf;
     
     //answers to questions;
-    LinguisticVariable[] answs = new LinguisticVariable[6];
+    LinguisticVariable[] inputs = new LinguisticVariable[6];
     
     public void startUI()
     {
@@ -104,7 +108,7 @@ public class UI {
         
     }
     
-    private void showAnswerPage()
+    private void showAnswerPage(LinguisticVariable a)
     {
         
     }
@@ -157,15 +161,15 @@ public class UI {
             public void actionPerformed(ActionEvent e) {
                 switch(e.getActionCommand())
                 {
-                    case "StrongDis":answs[i]=LinguisticVariable.STRONGDISAGREE;
+                    case "StrongDis":inputs[i]=LinguisticVariable.STRONGDISAGREE;
                         break;
-                    case "Disagree":answs[i]=LinguisticVariable.DISAGREE;
+                    case "Disagree":inputs[i]=LinguisticVariable.DISAGREE;
                         break;
-                    case "Neutral":answs[i]=LinguisticVariable.NEUTRAL;
+                    case "Neutral":inputs[i]=LinguisticVariable.NEUTRAL;
                         break;
-                    case "Agree":answs[i]=LinguisticVariable.AGREE;
+                    case "Agree":inputs[i]=LinguisticVariable.AGREE;
                         break;
-                    case "StrongAgr":answs[i]=LinguisticVariable.STRONGAGREE;
+                    case "StrongAgr":inputs[i]=LinguisticVariable.STRONGAGREE;
                         break;
                         
                 }
@@ -211,27 +215,27 @@ public class UI {
         
         a.gridy=2;
         b.gridy=2;
-        addLabel("Safety is my number 1 priority",Questions,a,15);
+        addLabel("Safety is my number one priority.",Questions,a,15);
         addRadioButtonGroup(Questions,b,1);
         
         a.gridy=3;
         b.gridy=3;
-        addLabel("I enjoy the company of others",Questions,a,15);
+        addLabel("I enjoy the company of others.",Questions,a,15);
         addRadioButtonGroup(Questions,b,2);
         
         a.gridy=4;
         b.gridy=4;
-        addLabel("I consider myself a hick!",Questions,a,15);
+        addLabel("I like to plaid more than red carpet attire.",Questions,a,15);
         addRadioButtonGroup(Questions,b,3);
         
         a.gridy=5;
         b.gridy=5;
-        addLabel("I am comfortable with most drug activity",Questions,a,15);
+        addLabel("I am comfortable with hardcore drugs.",Questions,a,15);
         addRadioButtonGroup(Questions,b,4);
         
         a.gridy=6;
         b.gridy=6;
-        addLabel("I like being close to town",Questions,a,15);
+        addLabel("Town amenities should be close by.",Questions,a,15);
         addRadioButtonGroup(Questions,b,5);
         
         
@@ -242,8 +246,10 @@ public class UI {
             public void actionPerformed(ActionEvent e)
             {
                 //Execute when button is pressed
-                //GetAnswer();
-                showAnswerPage();
+                InferenceEngine IE = new InferenceEngine(inputs);
+                LinguisticVariable a =IE.Infer();
+
+                showAnswerPage(a);
                 
             }
         });

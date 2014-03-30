@@ -1,3 +1,5 @@
+package com.fuzzypg;
+
 /**
  *
  * @author Clayton
@@ -12,6 +14,7 @@ public class Main {
         
         UI myUI= new UI();
         myUI.startUI();
+        
     }
     
 }
