@@ -1,4 +1,5 @@
 
+import com.fuzzypg.UI;
 import java.util.ArrayList;
 import javax.security.sasl.Sasl;
 import javax.swing.JSlider;
