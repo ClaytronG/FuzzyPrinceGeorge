@@ -157,15 +157,15 @@ public class UI {
             public void actionPerformed(ActionEvent e) {
                 switch(e.getActionCommand())
                 {
-                    case "StrongDis":answs[i]=LinguisticVariable.STRONGDISAGREE;
+                    case "StrongDis"://answs[i]=LinguisticVariable.STRONGDISAGREE;
                         break;
-                    case "Disagree":answs[i]=LinguisticVariable.DISAGREE;
+                    case "Disagree"://answs[i]=LinguisticVariable.DISAGREE;
                         break;
-                    case "Neutral":answs[i]=LinguisticVariable.NEUTRAL;
+                    case "Neutral"://answs[i]=LinguisticVariable.NEUTRAL;
                         break;
-                    case "Agree":answs[i]=LinguisticVariable.AGREE;
+                    case "Agree"://answs[i]=LinguisticVariable.AGREE;
                         break;
-                    case "StrongAgr":answs[i]=LinguisticVariable.STRONGAGREE;
+                    case "StrongAgr"://answs[i]=LinguisticVariable.STRONGAGREE;
                         break;
                         
                 }

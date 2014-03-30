@@ -1,0 +1,17 @@
+/**
+ * left OR right
+ * 
+ * @author Clayton
+ */
+public class FuzzyRuleOr extends FuzzyRuleOperation {
+    
+    public FuzzyRuleOr(FuzzyRuleTerm left, FuzzyRuleTerm right) {
+        super(left, right);
+    }
+    
+    @Override
+    public double getResult() {
+        return Math.max(left.getResult(), right.getResult());
+    }
+
+}
