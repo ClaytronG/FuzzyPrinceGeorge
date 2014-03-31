@@ -24,6 +24,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Collection;
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 
 /**
@@ -44,7 +46,7 @@ public class UI {
     
     //answers to questions;
     //LinguisticVariable[] inputs = new LinguisticVariable[6];
-    int[] inputs = new int[6];
+    double[] inputs = new double[6];
     
     public void startUI()
     {
@@ -218,6 +220,29 @@ public class UI {
         p.add(rp,c);
     }
     
+    private static final int MIN_VALUE = 0;
+    private static final int MAX_VALUE = 4;
+    private static final int FACTOR = 5;
+    
+    private void addSlider(JPanel p, GridBagConstraints c, final int i) {
+        JSlider slider = new JSlider(JSlider.HORIZONTAL, MIN_VALUE * FACTOR, MAX_VALUE * FACTOR, MAX_VALUE * FACTOR / 2);
+        slider.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                JSlider source = (JSlider) e.getSource();
+                if (!source.getValueIsAdjusting()) {
+                    double value = (double) source.getValue()/FACTOR;
+                    inputs[i] = value;
+                }
+            }
+        });
+        
+        JPanel rp = new JPanel();
+        rp.add(slider);
+        
+        p.add(rp, c);       
+    }
+    
     private void addQuestionContent(JPanel Questions)
     {
         GridBagConstraints a = new GridBagConstraints();
@@ -236,32 +261,38 @@ public class UI {
         a.gridy=1;
         b.gridy=1;
         addLabel("I can afford anything I want!",Questions,a,15);
-        addRadioButtonGroup(Questions,b,0);
+        //addRadioButtonGroup(Questions,b,0);
+        addSlider(Questions, b, 0);
         
         a.gridy=2;
         b.gridy=2;
         addLabel("Safety is my number one priority.",Questions,a,15);
-        addRadioButtonGroup(Questions,b,1);
+        //addRadioButtonGroup(Questions,b,1);
+        addSlider(Questions, b, 1);
         
         a.gridy=3;
         b.gridy=3;
         addLabel("I enjoy the company of others.",Questions,a,15);
-        addRadioButtonGroup(Questions,b,2);
+        //addRadioButtonGroup(Questions,b,2);
+        addSlider(Questions, b, 2);
         
         a.gridy=4;
         b.gridy=4;
         addLabel("I like to plaid more than red carpet attire.",Questions,a,15);
-        addRadioButtonGroup(Questions,b,3);
+        //addRadioButtonGroup(Questions,b,3);
+        addSlider(Questions, b, 3);
         
         a.gridy=5;
         b.gridy=5;
         addLabel("I am comfortable with hardcore drugs.",Questions,a,15);
-        addRadioButtonGroup(Questions,b,4);
+        //addRadioButtonGroup(Questions,b,4);
+        addSlider(Questions, b, 4);
         
         a.gridy=6;
         b.gridy=6;
         addLabel("Town amenities should be close by.",Questions,a,15);
-        addRadioButtonGroup(Questions,b,5);
+        //addRadioButtonGroup(Questions,b,5);
+        addSlider(Questions, b, 5);
         
         
         JButton butt = new JButton("Submit");

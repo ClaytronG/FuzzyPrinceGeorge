@@ -6,6 +6,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 
 
@@ -120,7 +122,9 @@ public class InferenceEngine {
         variables.put(variable.getName(), variable);
     }
     
-    public Collection<LinguisticTerm> answer() {
+    private static final int TOP_N = 3;
+    
+    public void answer() {
         System.out.println("InferenceEngine.answer()");
         // Evaluate the rules
         for (FuzzyRule rule : rules) {
@@ -140,11 +144,54 @@ public class InferenceEngine {
         
         // Do something with the answer
         if (answerVariable != null) {
-            System.out.println("Suggested areas to live: ");
-            for (LinguisticTerm term : answerVariable.getTermFromInput(answerValue)) {
-                System.out.println("\t" + term.getName());
-            }
+            ArrayList<LinguisticTerm> terms = new ArrayList<>();
+            terms.addAll(answerVariable.getTermFromInput(answerValue));
             
+            if (!terms.isEmpty()) {
+                // Get the answer using CoG
+                System.out.println("You should live around: ");
+                for (LinguisticTerm term : terms) {
+                    System.out.println("\t" + term.getName());
+                }
+                // Get a list of alternatives
+                ArrayList<LinguisticTerm> alternates = new ArrayList<>();
+                alternates.addAll(answerVariable.getTerms());
+                Collections.sort(alternates, new Comparator<LinguisticTerm>() {
+                    @Override
+                    public int compare(LinguisticTerm o1, LinguisticTerm o2) {
+                        return Double.compare(o2.getValue(o2.getPointValue()), o1.getValue(o1.getPointValue()));
+                    }
+                });
+                // Since the list is sorted, check the first one. If it is 0
+                // then there are no alternatives
+                if (alternates.get(0).getValue(alternates.get(0).getPointValue()) != 0) {
+                    StringBuilder builder = new StringBuilder();
+                    for (int i = 0; i < TOP_N; ++i) {                        
+                        LinguisticTerm term = alternates.get(i);
+                        if (term.getValue(term.getPointValue()) > 0) {
+                            boolean contains = false;
+                            for (LinguisticTerm answer : terms) {
+                                if (answer.getName().equals(term.getName())) {
+                                    contains = true;
+                                }
+                            }
+                            if (!contains) {
+                                builder.append("\t")
+                                        .append(i+1)
+                                        .append(". ")
+                                        .append(term.getName())
+                                        .append("\n");
+                            }
+                        }
+                    }
+                    if (builder.length() != 0) {
+                        System.out.println("Top alternatives:");
+                        System.out.println(builder.toString());
+                    }
+                }
+            } else {
+                System.out.println("You shouldn't live in Prince George");                
+            }
         } else {
             System.out.println("You shouldn't live in Prince George");
             

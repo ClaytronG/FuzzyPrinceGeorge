@@ -20,11 +20,9 @@ public class FuzzyRule {
      * Runs through the rule and updates the answer fuzzy set.
      */
     public void evaluate() {
-        System.out.println("FuzzyRule.evaluate()");
         LinguisticVariable variable = result.getVariable();
         LinguisticTerm term = variable.getTerm(result.getValue());
         double limit = premise.getResult();
-        System.out.println("Premise is " + limit);
         term.setFuzzyLimit(limit);
     }
     

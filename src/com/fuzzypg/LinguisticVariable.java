@@ -90,21 +90,6 @@ public class LinguisticVariable {
         }
         return terms;
     }
-
-    /**
-     * 
-     * 
-     * @param input 
-     */
-    public void input(double input) {
-        System.out.println("Input " + input);
-        for (LinguisticTerm term : values.values()) {
-            if (term.contains(input)) {
-                System.out.print("\t" + term.getName() + " = ");
-                System.out.println("\t" + term.getValue(input));
-            }
-        }
-    }
     
     public double getMembershipValueOf(String name) {
         return values.get(name).getValue(input);
@@ -129,16 +114,15 @@ public class LinguisticVariable {
      * @return the defuzzified value
      */
     public double defuzzify() {
+        System.out.println("Defuzzifing...");
         double[] results = new double[(int) ((maxValue - minValue) / STEP_SIZE)];
         for (LinguisticTerm term : values.values()) {
-            System.out.println(term.getName());
             for (int i = 0; i < results.length; ++i) {
                 double x = minValue + (i * STEP_SIZE);
                 // Generate the resulting graph using max-min
                 double value = term.getValue(x);
                 double thing = results[i];
                 if (value > thing) {
-                    System.out.println("\tReplacing " + thing + " @ " + i + " with " + value);
                     results[i] = value;
                 }
             }
