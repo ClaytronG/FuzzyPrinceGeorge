@@ -1,7 +1,11 @@
+package com.fuzzypg;
+
 /**
  *
  * A FuzzyRuleTerm is the portion of the rule that looks like
  *  variable IS value
+ * 
+ * ex: Cost IS high
  * 
  * @author Clayton
  */
@@ -40,7 +44,6 @@ public class FuzzyRuleTerm extends FuzzyRuleObject {
         term.append(variable.getName());
         term.append(" IS ");
         term.append(value);
-        term.append(" ");
         
         return term.toString();
     }

@@ -1,3 +1,5 @@
+package com.fuzzypg;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -136,7 +138,6 @@ public class LinguisticTerm {
     }
     
     public void setFuzzyLimit(double limit) {
-        System.out.println("Setting limit of " + name + " to " + limit);
         fuzzyLimit = limit;
     }
     
