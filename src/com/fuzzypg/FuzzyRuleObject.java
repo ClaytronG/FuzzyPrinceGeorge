@@ -7,10 +7,5 @@ package com.fuzzypg;
  */
 public abstract class FuzzyRuleObject {
     
-    /**
-     * 
-     * 
-     * @return 
-     */
     public abstract double getResult();
 }

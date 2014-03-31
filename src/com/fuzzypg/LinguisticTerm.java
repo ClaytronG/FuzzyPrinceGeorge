@@ -33,6 +33,8 @@ public class LinguisticTerm {
      * 
      */
     private double fuzzyLimit = Double.MAX_VALUE;
+    
+    private double pointValue = 0;
 
     /**
      * Creates a new term.
@@ -55,6 +57,9 @@ public class LinguisticTerm {
             values.add(pair);
             if (pair.getFirst() < minValue) minValue = pair.getFirst();
             if (pair.getFirst() > maxValue) maxValue = pair.getFirst();
+            if (pair.getSecond() == 1) {
+                pointValue = pair.getFirst();
+            }
         }
         sortValues();
     }
@@ -81,7 +86,7 @@ public class LinguisticTerm {
     /**
      * Returns the truth value for this term at the given input.
      * 
-     * @param input y[i - 1] + (y[i] - y[i - 1]) / (in - x[i])
+     * @param input 
      * 
      * @return      the truth value at input 
      */
@@ -101,29 +106,6 @@ public class LinguisticTerm {
         }
         return 0;
     }
-
-    /**
-     * Constructs a straight line (y = mx + b) from point1 to point2 and 
-     * returns the value of x on that line.
-     * 
-     * @param point1 first point of the line
-     * @param point2 second point of the line
-     * @param x      
-     * 
-     * @return       value at x of the line from point1 to point2
-     */
-    private double function(Pair point1, Pair point2, double x) {
-        double x1 = point1.getFirst(),
-               y1 = point1.getSecond(),
-               x2 = point2.getFirst(),
-               y2 = point2.getSecond();
-        double m = (y2 - y1) / (x2 - x1);
-        double b = y1 - m * x1;
-        double answer = m*x + b;
-        double result = Math.min(answer, fuzzyLimit);
-        System.out.println(name + " @ " + x + " = " + result);
-        return result;
-    }
     
     public String getName() { 
         return name; 
@@ -139,6 +121,10 @@ public class LinguisticTerm {
     
     public void setFuzzyLimit(double limit) {
         fuzzyLimit = limit;
+    }
+    
+    public double getPointValue() {
+        return pointValue;
     }
     
 }
