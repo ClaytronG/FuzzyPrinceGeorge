@@ -596,7 +596,24 @@ public class UI {
             addFeedBackRadioButtons(j,b);
             
             
+            JButton butt = new JButton("Submit");
+            butt.addActionListener(new ActionListener() {
+ 
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                //Execute when button is pressed
+                showInputPage(false);
+                
+            }
             
+            
+        });
+            a.fill = GridBagConstraints.HORIZONTAL;
+        a.anchor = GridBagConstraints.PAGE_END;
+        a.insets = new Insets(90,0,0,0); 
+        a.gridy=13;
+            j.add(butt,a);
             
         }
         else
