@@ -287,7 +287,7 @@ public class UI {
     
     private void addSlider(JPanel p, GridBagConstraints c, final int i) {
         JSlider slider = new JSlider(JSlider.HORIZONTAL, MIN_VALUE * FACTOR, MAX_VALUE * FACTOR, MAX_VALUE * FACTOR / 2);
-       slider.setPreferredSize(new Dimension(400,20));
+        slider.setPreferredSize(new Dimension(400,20));
         slider.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
@@ -298,10 +298,10 @@ public class UI {
                 }
             }
         });
-        
+
         JPanel rp = new JPanel();
         rp.add(slider);
-        
+
         p.add(rp, c);       
     }
     
@@ -602,7 +602,7 @@ public class UI {
         else
         {
            GridBagConstraints a = new GridBagConstraints();
-            addLabel("Awesome! Thanks for the feed back.", j,a,18 ); 
+            addLabel("Awesome! Thanks for the feedback.", j,a,18 ); 
         }
         return j;
     }

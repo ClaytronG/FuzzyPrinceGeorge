@@ -1,14 +1,8 @@
 package com.fuzzypg;
 
-
 import com.fuzzypg.ui.UI;
-import javax.swing.JPanel;
 
-/**
- *
- * @author Clayton
- */
-public class Main extends JPanel {
+public class Main {
     
     public static InferenceEngine engine;
 
