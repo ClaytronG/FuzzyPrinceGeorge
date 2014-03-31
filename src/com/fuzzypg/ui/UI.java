@@ -1,10 +1,12 @@
-package com.fuzzypg;
+package com.fuzzypg.ui;
 
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
 
+import com.fuzzypg.HousingSets;
+import com.fuzzypg.Main;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -25,10 +27,19 @@ import javax.swing.*;
  */
 public class UI {
     
+    static class Input {
+        public static final int STRONGLY_DISAGREE = 0;
+        public static final int DISAGREE = 1;
+        public static final int NEUTRAL = 2;
+        public static final int AGREE = 3;
+        public static final int STRONGLY_AGREE = 4;
+    }
+    
     private JFrame mf;
     
     //answers to questions;
-    LinguisticVariable[] inputs = new LinguisticVariable[6];
+    //LinguisticVariable[] inputs = new LinguisticVariable[6];
+    int[] inputs = new int[6];
     
     public void startUI()
     {
@@ -160,15 +171,20 @@ public class UI {
             public void actionPerformed(ActionEvent e) {
                 switch(e.getActionCommand())
                 {
-                    case "StrongDis"://answs[i]=LinguisticVariable.STRONGDISAGREE;
+                    case "StrongDis"://answ[i]=LinguisticVariable.STRONGDISAGREE;
+                        inputs[i] = Input.STRONGLY_DISAGREE;
                         break;
-                    case "Disagree"://answs[i]=LinguisticVariable.DISAGREE;
+                    case "Disagree"://answ[i]=LinguisticVariable.DISAGREE;
+                        inputs[i] = Input.DISAGREE;
                         break;
-                    case "Neutral"://answs[i]=LinguisticVariable.NEUTRAL;
+                    case "Neutral"://answ[i]=LinguisticVariable.NEUTRAL;
+                        inputs[i] = Input.NEUTRAL;
                         break;
-                    case "Agree"://answs[i]=LinguisticVariable.AGREE;
+                    case "Agree"://answ[i]=LinguisticVariable.AGREE;
+                        inputs[i] = Input.AGREE;
                         break;
-                    case "StrongAgr"://answs[i]=LinguisticVariable.STRONGAGREE;
+                    case "StrongAgr"://answ[i]=LinguisticVariable.STRONGAGREE;
+                        inputs[i] = Input.STRONGLY_AGREE;
                         break;
                         
                 }
@@ -244,11 +260,20 @@ public class UI {
             @Override
             public void actionPerformed(ActionEvent e)
             {
+                /*
                 //Execute when button is pressed
                 InferenceEngine IE = new InferenceEngine(inputs);
                 LinguisticVariable a =IE.Infer();
 
                 showAnswerPage(a);
+                */
+                HousingSets.price.setInput(inputs[0]);
+                HousingSets.safety.setInput(inputs[1]);
+                HousingSets.people.setInput(inputs[2]);
+                HousingSets.style.setInput(inputs[3]);
+                HousingSets.drugs.setInput(inputs[4]);
+                HousingSets.proximity.setInput(inputs[5]);
+                Main.engine.answer();
                 
             }
         });

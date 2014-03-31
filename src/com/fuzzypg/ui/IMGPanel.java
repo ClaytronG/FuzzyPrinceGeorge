@@ -1,4 +1,4 @@
-package com.fuzzypg;
+package com.fuzzypg.ui;
 
 /*
  * To change this template, choose Tools | Templates

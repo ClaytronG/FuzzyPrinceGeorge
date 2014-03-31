@@ -1,5 +1,7 @@
+package com.fuzzypg;
 
-import com.fuzzypg.UI;
+
+import com.fuzzypg.ui.UI;
 import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -15,14 +17,21 @@ import javax.swing.event.ChangeListener;
  * @author Clayton
  */
 public class Main extends JPanel {
+    
+    public static InferenceEngine engine;
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {        
-        UI myUI= new UI();
-        myUI.startUI();
+        HousingSets.init();
         
+        engine = new InferenceEngine("Area.rules");
+        engine.setVariables(HousingSets.getVariables());
+               
+        UI myUI = new UI();
+        myUI.startUI();
+        /**
         //Schedule a job for the event-dispatching thread:
         //creating and showing this application's GUI.
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
@@ -30,6 +39,7 @@ public class Main extends JPanel {
                 createAndShowGUI();
             }
         });
+        * */
     }
     
     public Main() {
