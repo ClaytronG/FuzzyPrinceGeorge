@@ -143,8 +143,6 @@ public class InferenceEngine {
             }
         }
         
-        
-        
         // Do something with the answer
         if (answerVariable != null) {
             ArrayList<LinguisticTerm> terms = new ArrayList<>();

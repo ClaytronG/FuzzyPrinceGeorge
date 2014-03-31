@@ -1,7 +1,8 @@
 package com.fuzzypg;
 
 /**
- *
+ * 
+ * 
  * @author Clayton
  */
 public abstract class FuzzyRuleOperation extends FuzzyRuleObject {

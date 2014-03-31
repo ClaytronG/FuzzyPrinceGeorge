@@ -1,23 +1,31 @@
 package com.fuzzypg;
 
 /**
- *
+ * Fuzzy rules consist of a premise or multiple premises and a result. Premises
+ * consist of Fuzzy Terms and, if necessary, operations like AND and OR.
+ * 
+ * Example:
+ * 
+ *      IF temp IS hot AND time IS late THEN fan IS high
+ *         ----------------------------      -----------
+ *                  Premise                     Result
+ * 
  * @author Clayton
  */
 public class FuzzyRule {
     
     // The IFs
-    private final FuzzyRuleOperation premise;   
+    private final FuzzyRuleObject premise;   
     // The THEN
     private final FuzzyRuleTerm result;
     
-    public FuzzyRule(FuzzyRuleOperation premise, FuzzyRuleTerm result) {
+    public FuzzyRule(FuzzyRuleObject premise, FuzzyRuleTerm result) {
         this.premise = premise;
         this.result = result;
     }
     
     /**
-     * Runs through the rule and updates the answer fuzzy set.
+     * Evaluates the rule and updates the corresponding answer fuzzy set.
      */
     public void evaluate() {
         LinguisticVariable variable = result.getVariable();
