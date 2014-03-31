@@ -63,6 +63,7 @@ public class UI {
         public static final int TOO_FAR_FROM_TOWN=10;
         public static final int TOO_CLOSE_TO_TOWN=11;
     }
+    
     private JFrame mf;
     
     //answers to questions;
