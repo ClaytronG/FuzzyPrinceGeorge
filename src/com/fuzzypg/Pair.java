@@ -7,19 +7,19 @@ package com.fuzzypg;
  */
 public class Pair {
     
-    private final int first;
-    private final int second;
+    private final double first;
+    private final double second;
 
-    public Pair(int first, int second) {
+    public Pair(double first, double second) {
         this.first = first;
         this.second = second;
     }
     
-    public int getFirst() {
+    public double getFirst() {
         return first;
     }
     
-    public int getSecond() {
+    public double getSecond() {
         return second;
     }
 }

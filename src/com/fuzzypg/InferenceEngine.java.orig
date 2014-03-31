@@ -35,7 +35,6 @@ public class InferenceEngine {
             
             while ((line = buffer.readLine()) != null) {
                 String[] things = line.split(",");
-                //System.out.println("Reading: " + line);
                 FuzzyRuleTerm result = new FuzzyRuleTerm(HousingSets.area, HousingSets.getTerm(things[0]).getName(), false);
                 // Cost
                 FuzzyRuleObject cost = createRule(HousingSets.price, Double.parseDouble(things[1]));
@@ -57,7 +56,6 @@ public class InferenceEngine {
                 FuzzyRuleAnd fifth = new FuzzyRuleAnd(fourth, proximity);
                 
                 FuzzyRule rule = new FuzzyRule(fifth, result);
-                //System.out.println(rule);
                 rules.add(rule);
             }
         } catch (FileNotFoundException e) {
@@ -68,33 +66,33 @@ public class InferenceEngine {
     }
     
     private FuzzyRuleObject createRule(LinguisticVariable variable, double value) {
-        int thing =((int) value); // Because Swicth dn'like d'ble
+        int thing =(int) (value * 10); // Because Swicth dn'like d'ble
         switch (thing) {
-            case 1:    // 1
+            case 10:    // 1
                 return new FuzzyRuleTerm(variable, HousingSets.strongDisagree.getName(), false);
             case 15:    // 1.5
                 FuzzyRuleTerm left = new FuzzyRuleTerm(variable, HousingSets.strongDisagree.getName(), false);
                 FuzzyRuleTerm right = new FuzzyRuleTerm(variable, HousingSets.disagree.getName(), false);
                 return new FuzzyRuleOr(left, right);
-            case 2:    // 2
+            case 20:    // 2
                 return new FuzzyRuleTerm(variable, HousingSets.disagree.getName(), false);                
             case 25:    // 2.5
                 left = new FuzzyRuleTerm(variable, HousingSets.disagree.getName(), false);
                 right = new FuzzyRuleTerm(variable, HousingSets.neutral.getName(), false);
                 return new FuzzyRuleOr(left, right);
-            case 3:    // 3
+            case 30:    // 3
                 return new FuzzyRuleTerm(variable, HousingSets.neutral.getName(), false);
             case 35:    // 3.5
                 left = new FuzzyRuleTerm(variable, HousingSets.neutral.getName(), false);
                 right = new FuzzyRuleTerm(variable, HousingSets.agree.getName(), false);
                 return new FuzzyRuleOr(left, right);
-            case 4:    // 4
+            case 40:    // 4
                 return new FuzzyRuleTerm(variable, HousingSets.agree.getName(), false);
             case 45:    // 4.5
                 left = new FuzzyRuleTerm(variable, HousingSets.agree.getName(), false);
                 right = new FuzzyRuleTerm(variable, HousingSets.strongAgree.getName(), false);
                 return new FuzzyRuleOr(left, right);
-            case 5:    // 5
+            case 50:    // 5
                 return new FuzzyRuleTerm(variable, HousingSets.strongAgree.getName(), false);
         }
         
@@ -122,13 +120,16 @@ public class InferenceEngine {
         variables.put(variable.getName(), variable);
     }
     
+<<<<<<< HEAD
+    public Collection<LinguisticTerm> answer() {
+        System.out.println("InferenceEngine.answer()");
+=======
     private static final int TOP_N = 3;
     
-    public LinguisticVariable answer() {
-        System.out.println("InferenceEngine.answer()");
+    public void answer() {
+>>>>>>> 5537010ed806a07f5e0fa752209058a965d81250
         // Evaluate the rules
         for (FuzzyRule rule : rules) {
-            System.out.println(rule);
             rule.evaluate();
         }
         
@@ -139,11 +140,8 @@ public class InferenceEngine {
             if (variable.isAnswer()) {
                 answerValue = variable.defuzzify();
                 answerVariable = variable;
-                System.out.println("v:"+answerValue);
             }
         }
-        
-        
         
         // Do something with the answer
         if (answerVariable != null) {
@@ -195,12 +193,15 @@ public class InferenceEngine {
             } else {
                 System.out.println("You shouldn't live in Prince George");                
             }
+<<<<<<< HEAD
+            
         } else {
             System.out.println("You shouldn't live in Prince George");
             
+=======
+>>>>>>> 5537010ed806a07f5e0fa752209058a965d81250
         }
         
-        return answerVariable;
-        
+        return answerVariable.getTermFromInput(answerValue);
     }
 }

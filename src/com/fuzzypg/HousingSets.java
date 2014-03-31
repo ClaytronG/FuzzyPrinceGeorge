@@ -72,7 +72,7 @@ public class HousingSets {
         disagree = new LinguisticTerm("Disagree");
         disagree.addValue(new Pair(0,0), new Pair(1,1), new Pair(2,1), new Pair(3,0));
         neutral = new LinguisticTerm("Neutral");
-        neutral.addValue(new Pair(1,0), new Pair(2,1), new Pair(3,1), new Pair(4,0));
+        neutral.addValue(new Pair(1,0.5), new Pair(2,1), new Pair(3,1), new Pair(4,0.5));
         agree = new LinguisticTerm("Agree");
         agree.addValue(new Pair(2,0), new Pair(3,1), new Pair(4,1), new Pair(5,0));
         strongAgree = new LinguisticTerm("Strongly Agree");

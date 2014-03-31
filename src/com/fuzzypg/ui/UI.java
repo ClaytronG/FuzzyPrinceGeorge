@@ -19,10 +19,15 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.util.ArrayList;
 import java.util.Collection;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -33,6 +38,10 @@ import javax.swing.event.ChangeListener;
  * @author claire
  */
 public class UI {
+    
+    private final Color primary = new Color(242,245,245);
+    private final Color secondary = new Color(217,222,222);
+    private final Color tertiary = new Color(216,231,232);
     
     static class Input {
         public static final int STRONGLY_DISAGREE = 0;
@@ -103,17 +112,9 @@ public class UI {
         
         
         JPanel Main = new JPanel(new BorderLayout());
-        Main.setBackground(new Color(224,230,172));
+        Main.setBackground(secondary);
         
-        JPanel Questions = new JPanel(new GridBagLayout());
-        Questions.setBackground(new Color (241,247,186));
-        Questions.setOpaque(true);
-        
-        JPanel Buttons = new JPanel();
-        Buttons.setLayout(new BoxLayout(Buttons,BoxLayout.PAGE_AXIS));
-        Buttons.setOpaque(false);
-        
-        addQuestionContent(Questions);
+        JPanel Questions =getQuestionContent();
         addEmptySpaceQuestionPage(Main);
         
         Main.add(Questions,BorderLayout.CENTER);
@@ -125,14 +126,49 @@ public class UI {
         
     }
     
-    private void showAnswerPage(Collection<LinguisticTerm> ans)
+    private void showAnswerPage(LinguisticVariable a)
     {
-        String ansPic="";
-        if (ans!=null)
-        {
+        String answ="";
+        mf.getContentPane().removeAll();
+        
+        
+        JPanel Main = new JPanel(new BorderLayout());
+        Main.setBackground(secondary);
+        
+        addEmptySpaceQuestionPage(Main);
+        JPanel c = null;
+        
+        if (a!= null) {
+            ArrayList<LinguisticTerm> terms = new ArrayList<>();
+            terms.addAll(a.getTermFromInput(a.defuzzify()));
             
-          int t= 4;
+            if (!terms.isEmpty()) {
+                  answ= terms.get(0).getName();
+                  c=addResultContent(answ);
+                  
+            }
         }
+        
+        if("".equals(answ))
+        {
+            c=noAnswerPage();
+        }
+        
+        
+        
+        Main.add(c,BorderLayout.CENTER);
+        
+        mf.add(Main);
+        mf.revalidate();
+        mf.repaint();
+        
+    }
+    
+    private void showInputPage()
+    {
+       mf.getContentPane().removeAll();
+       mf.revalidate();
+       mf.repaint();
     }
     
     private void addLabel(String s, JPanel p, GridBagConstraints c, int fs)
@@ -226,6 +262,7 @@ public class UI {
     
     private void addSlider(JPanel p, GridBagConstraints c, final int i) {
         JSlider slider = new JSlider(JSlider.HORIZONTAL, MIN_VALUE * FACTOR, MAX_VALUE * FACTOR, MAX_VALUE * FACTOR / 2);
+       slider.setPreferredSize(new Dimension(400,20));
         slider.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
@@ -243,12 +280,96 @@ public class UI {
         p.add(rp, c);       
     }
     
-    private void addQuestionContent(JPanel Questions)
+    private JPanel addResultContent(String answ)
     {
+        JPanel r = new JPanel(new GridBagLayout());
+        r.setBackground(primary);
+        r.setOpaque(true);
+        r.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
+    
+        
+        String imgURL=answ.replace(" ","")+".PNG";
+        //imgURL="CollegeHeights.PNG";
+        JLabel picLabel = new JLabel();
+         try
+        {
+            BufferedImage i = ImageIO.read(new File(imgURL));
+            picLabel = new JLabel(new ImageIcon(i.getScaledInstance(300, 300,Image.SCALE_SMOOTH)));
+            picLabel.setPreferredSize(new Dimension(300,300));
+            picLabel.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 2));
+        }
+        catch(Exception e){}
+        
         GridBagConstraints a = new GridBagConstraints();
         GridBagConstraints b = new GridBagConstraints();
         a.fill = GridBagConstraints.VERTICAL;
         b.fill = GridBagConstraints.VERTICAL;
+        
+        a.anchor = GridBagConstraints.WEST;
+        a.gridx=1;
+        b.gridx=2;
+        
+        
+        
+        b.gridy=0;
+        b.gridheight=4;
+        b.insets = new Insets(0,40,0,0);
+        r.add(picLabel, b);
+        
+        a.gridy=0;
+        addLabel("You should live around:",r,a,15);
+        
+        a.gridy=1;
+        addLabel(answ,r,a,15);
+        
+        //add back button
+        JButton butt = new JButton("Back");
+        butt.addActionListener(new ActionListener() {
+ 
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                //Execute when button is pressed
+                showQuestionPage();
+                
+            }
+        });
+        
+        GridBagConstraints c = new GridBagConstraints();
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.anchor = GridBagConstraints.PAGE_START;
+        c.insets = new Insets(0,0,100,50);  
+        c.gridx = 0;       
+        c.gridy = 0; 
+        r.add(butt,c);
+        
+        
+        //add input buttons and text
+        c.anchor = GridBagConstraints.PAGE_END;
+        c.insets = new Insets(15,0,5,5);
+        c.gridy =4;
+        c.gridwidth=3;
+        r.add(getIsUsefulButtonPanel(),c);
+        
+        
+        return r;
+        
+        
+    }
+    
+    private JPanel getQuestionContent()
+    {
+        JPanel Questions = new JPanel(new GridBagLayout());
+        Questions.setBackground(primary);
+        Questions.setOpaque(true);
+        Questions.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
+        
+        GridBagConstraints a = new GridBagConstraints();
+        GridBagConstraints b = new GridBagConstraints();
+        a.fill = GridBagConstraints.VERTICAL;
+        b.fill = GridBagConstraints.VERTICAL;
+        a.ipady=5;
+        b.ipady=5;
         
         a.anchor = GridBagConstraints.WEST;
         a.gridx=0;
@@ -260,6 +381,7 @@ public class UI {
        
         a.gridy=1;
         b.gridy=1;
+        b.fill = GridBagConstraints.HORIZONTAL;
         addLabel("I can afford anything I want!",Questions,a,15);
         //addRadioButtonGroup(Questions,b,0);
         addSlider(Questions, b, 0);
@@ -314,7 +436,8 @@ public class UI {
                 HousingSets.style.setInput(inputs[3]);
                 HousingSets.drugs.setInput(inputs[4]);
                 HousingSets.proximity.setInput(inputs[5]);
-                Main.engine.answer();
+                LinguisticVariable a =Main.engine.answer();
+                showAnswerPage(a);
                 
             }
         });
@@ -327,8 +450,104 @@ public class UI {
         c.gridy = 7;       
         
         Questions.add(butt, c);
+        
+        return Questions;
     }
     
+    private JPanel noAnswerPage()
+    {
+        JPanel na = new JPanel(new GridBagLayout());
+        na.setBackground(primary);
+        na.setOpaque(true);
+        na.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
+        
+        GridBagConstraints a = new GridBagConstraints();
+        
+        a.gridx=2;
+        a.gridy=1;
+        a.insets= new Insets(30,0,0,0);
+        addLabel("We're Sorry",na, a, 18);
+        
+        a.gridx=2;
+        a.gridy=2;
+        a.gridwidth=3;
+        a.gridheight=1;
+        
+        String text ="We're very sorry, but our system could not find any location"+
+                " in Prince George which suited your criteria. Perhaps Prince George"+
+                " is not the right town for you. Feel free to modify your search criteria"+
+                " and try again.";
+        JTextArea ta = new JTextArea(text);
+        ta.setOpaque(false);
+        ta.setFont(ta.getFont().deriveFont((float)15));
+        ta.setLineWrap(true);
+        ta.setWrapStyleWord(true);
+        ta.setPreferredSize(new Dimension(300,300));
+        
+        na.add(ta,a);
+        
+        JButton butt = new JButton("Try Again");
+        butt.addActionListener(new ActionListener() {
+ 
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                //Execute when button is pressed
+                showQuestionPage();
+                
+            }
+        });
+        
+        GridBagConstraints c = new GridBagConstraints();
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.anchor = GridBagConstraints.PAGE_END;
+        c.insets = new Insets(0,10,10,10);  
+        c.gridx = 2;       
+        c.gridy = 3; 
+        na.add(butt,c);
+        
+        
+        return na;
+    }
+    private JPanel getIsUsefulButtonPanel()
+    {
+        JPanel useful = new JPanel();
+        useful.setLayout(new BoxLayout(useful, BoxLayout.PAGE_AXIS));
+        useful.setBackground(tertiary);
+        useful.setOpaque(true);
+        
+        JLabel l = new JLabel("Did you find our prediction helpful?");
+        
+        JButton yb = new JButton("Yes!");
+        JButton nb = new JButton("No!");
+        
+        
+        nb.addActionListener(new ActionListener() {
+ 
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                //Execute when button is pressed
+                showInputPage();
+                
+            }
+        });
+        
+        Box hb = Box.createHorizontalBox();
+        hb.setBorder(BorderFactory.createEmptyBorder(15, 15,15, 15));
+        hb.add(l);
+        hb.add(Box.createHorizontalGlue());
+       // hb.add(Box.createRigidArea(new Dimension(40,5)));
+        hb.add(yb);
+        hb.add(Box.createRigidArea(new Dimension(15,5)));
+        hb.add(nb);
+        
+        useful.add(hb);
+        
+        
+        return useful;
+        
+    }
     private void addEmptySpaceQuestionPage(JPanel p)
     {
         JPanel emptyN = new JPanel();
@@ -347,14 +566,14 @@ public class UI {
         emptyW.setLayout(new BoxLayout(emptyW, BoxLayout.PAGE_AXIS));
         
         emptyN.add(Box.createHorizontalGlue());
-        emptyN.add(Box.createRigidArea(new Dimension(50,50)));
+        emptyN.add(Box.createRigidArea(new Dimension(20,20)));
         emptyE.add(Box.createVerticalGlue());
-        emptyE.add(Box.createRigidArea(new Dimension(50,50)));
+        emptyE.add(Box.createRigidArea(new Dimension(20,20)));
         emptyS.add(Box.createHorizontalGlue());
-        emptyS.add(Box.createRigidArea(new Dimension(50,50)));
+        emptyS.add(Box.createRigidArea(new Dimension(20,20)));
         emptyW.add(Box.createVerticalGlue());
-        emptyW.add(Box.createRigidArea(new Dimension(50,50)));
-        
+        emptyW.add(Box.createRigidArea(new Dimension(20,20)));
+       
         p.add(emptyN,BorderLayout.NORTH);
         p.add(emptyS,BorderLayout.SOUTH);
         p.add(emptyE,BorderLayout.EAST);

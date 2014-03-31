@@ -22,12 +22,12 @@ public class LinguisticTerm {
     /**
      * Left most (minimum) x-value that this term covers.
      */
-    private int minValue = Integer.MAX_VALUE;
+    private double minValue = Integer.MAX_VALUE;
     
     /**
      * Right most (maximum) x-value that this term covers.
      */
-    private int maxValue = Integer.MIN_VALUE;
+    private double maxValue = Integer.MIN_VALUE;
     
     /**
      * 
@@ -68,7 +68,7 @@ public class LinguisticTerm {
         Collections.sort(values, new Comparator<Pair>() {
             @Override
             public int compare(Pair o1, Pair o2) {
-                return Integer.compare(o1.getFirst(), o2.getFirst());
+                return Double.compare(o1.getFirst(), o2.getFirst());
             }
         });
     }
@@ -111,11 +111,11 @@ public class LinguisticTerm {
         return name; 
     }
     
-    public int getMinValue() { 
+    public double getMinValue() { 
         return minValue; 
     }
     
-    public int getMaxValue() { 
+    public double getMaxValue() { 
         return maxValue; 
     }
     

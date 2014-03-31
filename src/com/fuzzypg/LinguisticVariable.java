@@ -28,12 +28,12 @@ public class LinguisticVariable {
     /**
      * Minimum value that this fuzzy set covers.
      */
-    private int minValue = Integer.MAX_VALUE;
+    private double minValue = Integer.MAX_VALUE;
     
     /**
      * Maximum value that this fuzzy set covers.
      */
-    private int maxValue = Integer.MIN_VALUE;
+    private double maxValue = Integer.MIN_VALUE;
 
     /**
      * Creates a new fuzzy set without any values.
@@ -142,11 +142,11 @@ public class LinguisticVariable {
         return name;
     }
     
-    public int getMinValue() {
+    public double getMinValue() {
         return minValue;
     }
     
-    public int getMaxValue() {
+    public double getMaxValue() {
         return maxValue;
     }
     
