@@ -48,11 +48,27 @@ public class UI {
         public static final int STRONGLY_AGREE = 4;
     }
     
+    
+    public class Feedback{
+        public static final int TOO_EXPENSIVE=0;
+        public static final int TOO_INEXPENSIVE=1;
+        public static final int TOO_DANGEROUS=2;
+        public static final int TOO_SAFE=3;
+        public static final int TOO_MANY_PEOPLE=4;
+        public static final int TOO_FEW_PEOPLE=5;
+        public static final int TOO_MANY_DRUGS=6;
+        public static final int TOO_ANTIDRUG=7;
+        public static final int TOO_MUCH_YUPPIE=8;
+        public static final int TOO_MUCH_HICK=9;
+        public static final int TOO_FAR_FROM_TOWN=10;
+        public static final int TOO_CLOSE_TO_TOWN=11;
+    }
     private JFrame mf;
     
     //answers to questions;
     //LinguisticVariable[] inputs = new LinguisticVariable[6];
-    double[] inputs = new double[6];
+    double [] inputs = new double[6];
+    ArrayList<Integer> feedback = new ArrayList();
     
     public void startUI()
     {
@@ -161,9 +177,21 @@ public class UI {
         
     }
     
-    private void showInputPage()
+    private void showInputPage(boolean feebackRequired)
     {
        mf.getContentPane().removeAll();
+       
+       JPanel Main = new JPanel(new BorderLayout());
+       Main.setBackground(secondary);
+        
+        addEmptySpaceQuestionPage(Main);
+        
+        JPanel p = getFeedbackPanel(feebackRequired);
+        
+        Main.add(p,BorderLayout.CENTER);
+        
+        mf.add(Main);
+       
        mf.revalidate();
        mf.repaint();
     }
@@ -216,19 +244,19 @@ public class UI {
             public void actionPerformed(ActionEvent e) {
                 switch(e.getActionCommand())
                 {
-                    case "StrongDis"://answ[i]=LinguisticVariable.STRONGDISAGREE;
+                    case "StrongDis":
                         inputs[i] = Input.STRONGLY_DISAGREE;
                         break;
-                    case "Disagree"://answ[i]=LinguisticVariable.DISAGREE;
+                    case "Disagree":
                         inputs[i] = Input.DISAGREE;
                         break;
-                    case "Neutral"://answ[i]=LinguisticVariable.NEUTRAL;
+                    case "Neutral":
                         inputs[i] = Input.NEUTRAL;
                         break;
-                    case "Agree"://answ[i]=LinguisticVariable.AGREE;
+                    case "Agree":
                         inputs[i] = Input.AGREE;
                         break;
-                    case "StrongAgr"://answ[i]=LinguisticVariable.STRONGAGREE;
+                    case "StrongAgr":
                         inputs[i] = Input.STRONGLY_AGREE;
                         break;
                         
@@ -502,6 +530,82 @@ public class UI {
         
         return na;
     }
+    
+    private JPanel getFeedbackPanel(boolean feedbackRequired)
+    {
+        JPanel j = new JPanel(new GridBagLayout());
+        j.setBackground(primary);
+        j.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
+        
+        if(feedbackRequired)
+        {
+           GridBagConstraints a = new GridBagConstraints();
+           
+           a.gridx=0;
+           a.gridy=0;
+           a.gridwidth=2;
+            addLabel("What was wrong with our selection?", j,a,18 ); 
+            
+            GridBagConstraints b = new GridBagConstraints();
+            GridBagConstraints c = new GridBagConstraints();
+            b.gridx=0;
+            c.gridx=1;
+            
+            
+            b.gridy=1;
+            c.gridy=1;
+            addLabel("Too Inexpensive",j,b,14);
+            addLabel("Too Expensive",j,c,14);
+            b.gridy =2;
+            addFeedBackRadioButtons(j,b);
+            
+            b.gridy=3;
+            c.gridy=3;
+            addLabel("Too Dangerous",j,b,14);
+            addLabel("Not enough Excitement",j,c,14);
+            b.gridy=4;
+            addFeedBackRadioButtons(j,b);
+            
+            
+            b.gridy=5;
+            c.gridy=5;
+            addLabel("Too Few People",j,b,14);
+            addLabel("Not Many People",j,c,14);
+            b.gridy=6;
+            addFeedBackRadioButtons(j,b);
+            
+            b.gridy=7;
+            c.gridy=7;
+            addLabel("Too Many Drugs",j,b,14);
+            addLabel("Too Anti-Drug",j,c,14);
+            b.gridy=8;
+            addFeedBackRadioButtons(j,b);
+            
+            b.gridy=9;
+            c.gridy=9;
+            addLabel("Too Preppy",j,b,14);
+            addLabel("Too Redneck",j,c,14);
+            b.gridy=10;
+            addFeedBackRadioButtons(j,b);
+            
+            b.gridy=11;
+            c.gridy=11;
+            addLabel("Too Far from Town",j,b,14);
+            addLabel("Too Close to Town",j,c,14);
+            b.gridy=12;
+            addFeedBackRadioButtons(j,b);
+            
+            
+            
+            
+        }
+        else
+        {
+           GridBagConstraints a = new GridBagConstraints();
+            addLabel("Awesome! Thanks for the feed back.", j,a,18 ); 
+        }
+        return j;
+    }
     private JPanel getIsUsefulButtonPanel()
     {
         JPanel useful = new JPanel();
@@ -515,13 +619,24 @@ public class UI {
         JButton nb = new JButton("No!");
         
         
+        yb.addActionListener(new ActionListener() {
+ 
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                //Execute when button is pressed
+                showInputPage(false);
+                
+            }
+        });
+        
         nb.addActionListener(new ActionListener() {
  
             @Override
             public void actionPerformed(ActionEvent e)
             {
                 //Execute when button is pressed
-                showInputPage();
+                showInputPage(true);
                 
             }
         });
@@ -539,6 +654,30 @@ public class UI {
         
         
         return useful;
+        
+    }
+    
+    
+    private void addFeedBackRadioButtons(JPanel j, GridBagConstraints c)
+    {
+        JRadioButton b1 = new JRadioButton();
+        JRadioButton b2 = new JRadioButton();
+        
+        b1.setOpaque(false);
+        b2.setOpaque(false);
+        
+        ButtonGroup g = new ButtonGroup();
+        g.add(b1);
+        g.add(b2);
+        
+        j.add(b1,c);
+        c.gridx=1;
+        j.add(b2,c);
+        
+        c.gridx=0;
+        
+
+        
         
     }
     private void addEmptySpaceQuestionPage(JPanel p)
