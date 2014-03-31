@@ -46,30 +46,21 @@ public class UI {
         public static final int NEUTRAL = 2;
         public static final int AGREE = 3;
         public static final int STRONGLY_AGREE = 4;
-    }
-    
+    }    
     
     public class Feedback{
-        public static final int TOO_EXPENSIVE=0;
-        public static final int TOO_INEXPENSIVE=1;
-        public static final int TOO_DANGEROUS=2;
-        public static final int TOO_SAFE=3;
-        public static final int TOO_MANY_PEOPLE=4;
-        public static final int TOO_FEW_PEOPLE=5;
-        public static final int TOO_MANY_DRUGS=6;
-        public static final int TOO_ANTIDRUG=7;
-        public static final int TOO_MUCH_YUPPIE=8;
-        public static final int TOO_MUCH_HICK=9;
-        public static final int TOO_FAR_FROM_TOWN=10;
-        public static final int TOO_CLOSE_TO_TOWN=11;
+        public static final int NONE = 0;
+        public static final int MORE = 1;
+        public static final int LESS = 2;
     }
+    
+    private String answer;
     
     private JFrame mf;
     
     //answers to questions;
-    //LinguisticVariable[] inputs = new LinguisticVariable[6];
-    double [] inputs = new double[6];
-    ArrayList<Integer> feedback = new ArrayList();
+    double[] inputs = new double[6];
+    int[] feedback = new int[6];
     
     public void startUI()
     {
@@ -308,6 +299,7 @@ public class UI {
     
     private JPanel addResultContent(String answ)
     {
+        answer = answ;
         JPanel r = new JPanel(new GridBagLayout());
         r.setBackground(primary);
         r.setOpaque(true);
@@ -561,14 +553,14 @@ public class UI {
             addLabel("Too Inexpensive",j,b,13);
             addLabel("Too Expensive",j,c,13);
             b.gridy =3;
-            addFeedBackRadioButtons(j,b);
+            addFeedBackRadioButtons(j,b, 0);
             
             b.gridy=4;
             c.gridy=4;
             addLabel("Too Dangerous",j,b,13);
             addLabel("Not enough Excitement",j,c,13);
             b.gridy=5;
-            addFeedBackRadioButtons(j,b);
+            addFeedBackRadioButtons(j,b, 1);
             
             
             b.gridy=6;
@@ -576,28 +568,28 @@ public class UI {
             addLabel("Too Few People",j,b,13);
             addLabel("Not Many People",j,c,13);
             b.gridy=7;
-            addFeedBackRadioButtons(j,b);
+            addFeedBackRadioButtons(j,b, 2);
             
             b.gridy=8;
             c.gridy=8;
             addLabel("Too Many Drugs",j,b,13);
             addLabel("Too Anti-Drug",j,c,13);
             b.gridy=9;
-            addFeedBackRadioButtons(j,b);
+            addFeedBackRadioButtons(j,b, 3);
             
             b.gridy=10;
             c.gridy=10;
             addLabel("Too Preppy",j,b,13);
             addLabel("Too Redneck",j,c,13);
             b.gridy=11;
-            addFeedBackRadioButtons(j,b);
+            addFeedBackRadioButtons(j,b, 4);
             
             b.gridy=12;
             c.gridy=12;
             addLabel("Too Far from Town",j,b,13);
             addLabel("Too Close to Town",j,c,13);
             b.gridy=13;
-            addFeedBackRadioButtons(j,b);
+            addFeedBackRadioButtons(j,b, 5);
             
             
             JButton butt = new JButton("Submit");
@@ -623,7 +615,10 @@ public class UI {
         else
         {
            GridBagConstraints a = new GridBagConstraints();
-            addLabel("Awesome! Thanks for the feedback.", j,a,18 ); 
+           addLabel("Awesome! Thanks for the feedback.", j,a,18 );
+           
+           // Update the rules
+           Main.engine.updateRules(answer, feedback);
         }
         return j;
     }
@@ -679,7 +674,7 @@ public class UI {
     }
     
     
-    private void addFeedBackRadioButtons(JPanel j, GridBagConstraints c)
+    private void addFeedBackRadioButtons(JPanel j, GridBagConstraints c, final int i)
     {
         JRadioButton b1 = new JRadioButton();
         JRadioButton b2 = new JRadioButton();
@@ -697,10 +692,23 @@ public class UI {
         
         c.gridx=0;
         
-
+        b1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Button1");
+                feedback[i] = Feedback.MORE;
+            }
+        });
         
-        
+        b2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Button2");
+                feedback[i] = Feedback.LESS;
+            }
+        });
     }
+    
     private void addEmptySpaceQuestionPage(JPanel p)
     {
         JPanel emptyN = new JPanel();

@@ -14,6 +14,9 @@ package com.fuzzypg;
  */
 public class FuzzyRule {
     
+    private String name;
+    private double[] values;
+    
     // The IFs
     private final FuzzyRuleObject premise;   
     // The THEN
@@ -22,6 +25,12 @@ public class FuzzyRule {
     public FuzzyRule(FuzzyRuleObject premise, FuzzyRuleTerm result) {
         this.premise = premise;
         this.result = result;
+    }
+    
+    public FuzzyRule(FuzzyRuleObject premise, FuzzyRuleTerm result, String name, double[] values) {
+        this(premise, result);
+        this.name = name;
+        this.values = values;
     }
     
     /**
@@ -34,6 +43,14 @@ public class FuzzyRule {
         term.setFuzzyLimit(limit);
     }
     
+    public String getName() {
+        return name;
+    }
+    
+    public double[] getValues() {
+        return values;
+    }
+    
     @Override
     public String toString() {
         StringBuilder rule = new StringBuilder();
@@ -44,6 +61,24 @@ public class FuzzyRule {
         rule.append(result);
         
         return rule.toString();
+    }
+    
+    public String getRuleString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append(name);
+        builder.append(",");
+        builder.append(values[0]);
+        builder.append(",");
+        builder.append(values[1]);
+        builder.append(",");
+        builder.append(values[2]);
+        builder.append(",");
+        builder.append(values[3]);
+        builder.append(",");
+        builder.append(values[4]);
+        builder.append(",");
+        builder.append(values[5]);
+        return builder.toString();
     }
     
 }
