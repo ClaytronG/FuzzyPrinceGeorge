@@ -314,7 +314,7 @@ public class UI {
                 HousingSets.style.setInput(inputs[3]);
                 HousingSets.drugs.setInput(inputs[4]);
                 HousingSets.proximity.setInput(inputs[5]);
-                showAnswerPage(Main.engine.answer());
+                Main.engine.answer();
                 
             }
         });
