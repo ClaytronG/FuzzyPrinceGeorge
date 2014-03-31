@@ -558,48 +558,51 @@ public class UI {
             b.gridx=0;
             c.gridx=1;
             
+            a.gridy=1;
+            a.insets=new Insets(0,0,25,0);
+            addLabel("*Note: Please select only those that apply", j, a, 15);
             
-            b.gridy=1;
-            c.gridy=1;
-            addLabel("Too Inexpensive",j,b,14);
-            addLabel("Too Expensive",j,c,14);
-            b.gridy =2;
+            b.gridy=2;
+            c.gridy=2;
+            addLabel("Too Inexpensive",j,b,13);
+            addLabel("Too Expensive",j,c,13);
+            b.gridy =3;
             addFeedBackRadioButtons(j,b);
             
-            b.gridy=3;
-            c.gridy=3;
-            addLabel("Too Dangerous",j,b,14);
-            addLabel("Not enough Excitement",j,c,14);
             b.gridy=4;
-            addFeedBackRadioButtons(j,b);
-            
-            
+            c.gridy=4;
+            addLabel("Too Dangerous",j,b,13);
+            addLabel("Not enough Excitement",j,c,13);
             b.gridy=5;
-            c.gridy=5;
-            addLabel("Too Few People",j,b,14);
-            addLabel("Not Many People",j,c,14);
+            addFeedBackRadioButtons(j,b);
+            
+            
             b.gridy=6;
-            addFeedBackRadioButtons(j,b);
-            
+            c.gridy=6;
+            addLabel("Too Few People",j,b,13);
+            addLabel("Not Many People",j,c,13);
             b.gridy=7;
-            c.gridy=7;
-            addLabel("Too Many Drugs",j,b,14);
-            addLabel("Too Anti-Drug",j,c,14);
+            addFeedBackRadioButtons(j,b);
+            
             b.gridy=8;
-            addFeedBackRadioButtons(j,b);
-            
+            c.gridy=8;
+            addLabel("Too Many Drugs",j,b,13);
+            addLabel("Too Anti-Drug",j,c,13);
             b.gridy=9;
-            c.gridy=9;
-            addLabel("Too Preppy",j,b,14);
-            addLabel("Too Redneck",j,c,14);
-            b.gridy=10;
             addFeedBackRadioButtons(j,b);
             
+            b.gridy=10;
+            c.gridy=10;
+            addLabel("Too Preppy",j,b,13);
+            addLabel("Too Redneck",j,c,13);
             b.gridy=11;
-            c.gridy=11;
-            addLabel("Too Far from Town",j,b,14);
-            addLabel("Too Close to Town",j,c,14);
+            addFeedBackRadioButtons(j,b);
+            
             b.gridy=12;
+            c.gridy=12;
+            addLabel("Too Far from Town",j,b,13);
+            addLabel("Too Close to Town",j,c,13);
+            b.gridy=13;
             addFeedBackRadioButtons(j,b);
             
             
@@ -619,7 +622,7 @@ public class UI {
             a.fill = GridBagConstraints.HORIZONTAL;
         a.anchor = GridBagConstraints.PAGE_END;
         a.insets = new Insets(90,0,0,0); 
-        a.gridy=13;
+        a.gridy=14;
             j.add(butt,a);
             
         }
