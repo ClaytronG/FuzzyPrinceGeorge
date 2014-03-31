@@ -6,6 +6,10 @@ package com.fuzzypg.ui;
  */
 
 import com.fuzzypg.HousingSets;
+import com.fuzzypg.HousingSets;
+import com.fuzzypg.LinguisticTerm;
+import com.fuzzypg.LinguisticVariable;
+import com.fuzzypg.Main;
 import com.fuzzypg.Main;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -18,6 +22,7 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Collection;
 import javax.swing.*;
 
 
@@ -118,9 +123,14 @@ public class UI {
         
     }
     
-    private void showAnswerPage(LinguisticVariable a)
+    private void showAnswerPage(Collection<LinguisticTerm> ans)
     {
-        
+        String ansPic="";
+        if (ans!=null)
+        {
+            
+          int t= 4;
+        }
     }
     
     private void addLabel(String s, JPanel p, GridBagConstraints c, int fs)
@@ -273,7 +283,7 @@ public class UI {
                 HousingSets.style.setInput(inputs[3]);
                 HousingSets.drugs.setInput(inputs[4]);
                 HousingSets.proximity.setInput(inputs[5]);
-                Main.engine.answer();
+                showAnswerPage(Main.engine.answer());
                 
             }
         });

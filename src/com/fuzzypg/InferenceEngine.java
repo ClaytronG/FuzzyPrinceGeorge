@@ -120,7 +120,7 @@ public class InferenceEngine {
         variables.put(variable.getName(), variable);
     }
     
-    public void answer() {
+    public Collection<LinguisticTerm> answer() {
         System.out.println("InferenceEngine.answer()");
         // Evaluate the rules
         for (FuzzyRule rule : rules) {
@@ -144,8 +144,12 @@ public class InferenceEngine {
             for (LinguisticTerm term : answerVariable.getTermFromInput(answerValue)) {
                 System.out.println("\t" + term.getName());
             }
+            
         } else {
             System.out.println("You shouldn't live in Prince George");
+            
         }
+        
+        return answerVariable.getTermFromInput(answerValue);
     }
 }
