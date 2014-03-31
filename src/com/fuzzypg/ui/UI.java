@@ -6,10 +6,8 @@ package com.fuzzypg.ui;
  */
 
 import com.fuzzypg.HousingSets;
-import com.fuzzypg.HousingSets;
 import com.fuzzypg.LinguisticTerm;
 import com.fuzzypg.LinguisticVariable;
-import com.fuzzypg.Main;
 import com.fuzzypg.Main;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -25,13 +23,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-
 
 /**
  *
@@ -290,7 +287,7 @@ public class UI {
     
     private void addSlider(JPanel p, GridBagConstraints c, final int i) {
         JSlider slider = new JSlider(JSlider.HORIZONTAL, MIN_VALUE * FACTOR, MAX_VALUE * FACTOR, MAX_VALUE * FACTOR / 2);
-       slider.setPreferredSize(new Dimension(400,20));
+        slider.setPreferredSize(new Dimension(400,20));
         slider.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
@@ -301,10 +298,10 @@ public class UI {
                 }
             }
         });
-        
+
         JPanel rp = new JPanel();
         rp.add(slider);
-        
+
         p.add(rp, c);       
     }
     
@@ -326,7 +323,7 @@ public class UI {
             picLabel.setPreferredSize(new Dimension(300,300));
             picLabel.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 2));
         }
-        catch(Exception e){}
+        catch(IOException e){}
         
         GridBagConstraints a = new GridBagConstraints();
         GridBagConstraints b = new GridBagConstraints();
@@ -336,8 +333,6 @@ public class UI {
         a.anchor = GridBagConstraints.WEST;
         a.gridx=1;
         b.gridx=2;
-        
-        
         
         b.gridy=0;
         b.gridheight=4;
@@ -380,9 +375,7 @@ public class UI {
         r.add(getIsUsefulButtonPanel(),c);
         
         
-        return r;
-        
-        
+        return r;     
     }
     
     private JPanel getQuestionContent()
@@ -629,7 +622,7 @@ public class UI {
         else
         {
            GridBagConstraints a = new GridBagConstraints();
-            addLabel("Awesome! Thanks for the feed back.", j,a,18 ); 
+            addLabel("Awesome! Thanks for the feedback.", j,a,18 ); 
         }
         return j;
     }

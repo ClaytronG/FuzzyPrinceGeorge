@@ -128,7 +128,6 @@ public class InferenceEngine {
         System.out.println("InferenceEngine.answer()");
         // Evaluate the rules
         for (FuzzyRule rule : rules) {
-            System.out.println(rule);
             rule.evaluate();
         }
         
@@ -142,8 +141,6 @@ public class InferenceEngine {
                 System.out.println("v:"+answerValue);
             }
         }
-        
-        
         
         // Do something with the answer
         if (answerVariable != null) {
