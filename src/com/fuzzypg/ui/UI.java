@@ -19,8 +19,10 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Insets;
+import java.awt.MenuBar;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -85,6 +87,43 @@ public class UI {
     private void showMainPage()
     {
         IMGPanel ip = new IMGPanel("TBCCWDisplay.jpg");  
+        JMenuBar bar = new JMenuBar();
+        JMenu m1 = new JMenu("Options");
+        bar.add(m1);
+        JMenuItem mi1 = new JMenuItem("Add Rule");
+        JMenuItem mi2 = new JMenuItem("Add Fuzzy Set");
+        
+        mi1.addActionListener(new ActionListener() {
+ 
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                //Execute when button is pressed
+                showAddRulePopUp();
+                
+            }
+
+           
+        });
+        
+        mi2.addActionListener(new ActionListener() {
+ 
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                //Execute when button is pressed
+                showAddFuzzySetPopUp();
+                
+            }
+
+            
+        });
+        
+        m1.add(mi1);
+        m1.add(mi2);
+
+        mf.setJMenuBar(bar);
+        
         
         JButton b = new JButton("Start");
         b.addActionListener(new ActionListener() {
@@ -98,7 +137,7 @@ public class UI {
             }
         });
  
-
+        
         b.setAlignmentX(Component.CENTER_ALIGNMENT); 
         ip.setLayout(new BoxLayout(ip, BoxLayout.PAGE_AXIS)); 
         ip.add(Box.createVerticalGlue()); 
@@ -111,6 +150,65 @@ public class UI {
         
     }
     
+     private void showAddRulePopUp() {
+         
+         JFrame pu = new JFrame();
+        pu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
+        pu.setMaximumSize(new Dimension(700, 400));
+        pu.setMinimumSize(new Dimension(700, 400));
+        pu.setPreferredSize(new Dimension(700, 400));
+        pu.setSize(700, 400);
+        
+        JPanel p = new JPanel(new GridBagLayout());
+        GridBagConstraints a = new GridBagConstraints();
+        a.insets = new Insets(4,4,4,4);
+        a.gridx=2;
+        a.gridy=3;
+        addLabel("Price", p, a, 14);
+        a.gridx=3;
+        addLabel("Safety", p, a, 14);
+        a.gridx=4;
+        addLabel("Socialness", p, a, 14);
+        a.gridx=5;
+        addLabel("Redneck Area", p, a, 14);
+        a.gridx=6;
+        addLabel("Drug Usage", p, a, 14);
+        a.gridx=7;
+        addLabel("Close to Town", p, a, 14);
+        
+        a.gridy=4;
+        a.gridx=0;
+        addLabel("Answer", p, a, 14);
+        a.gridx=1;
+        addAnswerDropDown(p,a);
+        a.gridx=2;
+        addHighLowDropDown(p,a);
+        a.gridx=3;
+        addHighLowDropDown(p,a);
+        a.gridx=4;
+        addHighLowDropDown(p,a);
+        a.gridx=5;
+        addHighLowDropDown(p,a);
+        a.gridx=6;
+        addHighLowDropDown(p,a);
+        a.gridx=7;
+        addHighLowDropDown(p,a);
+ 
+        
+        pu.add(p);
+        
+        pu.pack();
+        pu.setVisible(true); //To change body of generated methods, choose Tools | Templates.
+            }
+    
+     
+     
+     private void showAddFuzzySetPopUp() {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+     
+     
     private void showQuestionPage()
     {
         mf.getContentPane().removeAll();
@@ -674,7 +772,24 @@ public class UI {
         return useful;
         
     }
+    private void addHighLowDropDown(JPanel p, GridBagConstraints c)
+    {
+        
+        String[] items = {"Very High", "High", "Average", "Low", "Very Low"};
+        
+        JComboBox jc = new JComboBox(items);
+        
+        p.add(jc, c);
+    }
     
+    private void addAnswerDropDown(JPanel p, GridBagConstraints c)
+    {
+        String[] items = {"Very High", "High", "Average", "Low", "Very Low"};
+        
+        JComboBox jc = new JComboBox(items);
+        
+        p.add(jc, c);
+    }
     
     private void addFeedBackRadioButtons(JPanel j, GridBagConstraints c, final int i)
     {
