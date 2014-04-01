@@ -1,16 +1,10 @@
 package com.fuzzypg.ui;
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+import com.fuzzypg.Main;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.LayoutManager;
-import java.awt.Rectangle;
-import java.awt.event.ComponentEvent;
-import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
@@ -19,31 +13,27 @@ import javax.swing.JPanel;
  * @author claire
  */
 public class IMGPanel extends JPanel {
-    
-    private String imgURL;
-    Image img;
-    
+
+    private Image img;
+
     public IMGPanel(String url)
     {
-        imgURL = url;
+        URL resource = Main.class.getResource("images/" + url);
         try{
-            img = ImageIO.read(new File(imgURL));
+            //img = ImageIO.read(new File(imgURL));
+            img = ImageIO.read(resource);
         }
         catch(IOException e)
         {
             System.out.println("Image not read from file: Error is:");
             System.out.println(e.getMessage());
-        }
-        
-        
+        }       
     }
-    
-  @Override
-  protected void paintComponent(Graphics g) {
 
-    super.paintComponent(g);
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
         g.drawImage(img, 0, 0, null);
-}
-    
+    }   
   
 }

@@ -24,6 +24,7 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -83,8 +84,7 @@ public class UI {
     
     private void showMainPage()
     {
-        IMGPanel ip = new IMGPanel("TBCCWDisplay.jpg");
-  
+        IMGPanel ip = new IMGPanel("TBCCWDisplay.jpg");  
         
         JButton b = new JButton("Start");
         b.addActionListener(new ActionListener() {
@@ -307,11 +307,13 @@ public class UI {
     
         
         String imgURL=answ.replace(" ","")+".PNG";
+        System.out.println(imgURL);
         //imgURL="CollegeHeights.PNG";
         JLabel picLabel = new JLabel();
          try
         {
-            BufferedImage i = ImageIO.read(new File(imgURL));
+            URL resource = Main.class.getResource("images/" + imgURL);
+            BufferedImage i = ImageIO.read(resource);
             picLabel = new JLabel(new ImageIcon(i.getScaledInstance(300, 300,Image.SCALE_SMOOTH)));
             picLabel.setPreferredSize(new Dimension(300,300));
             picLabel.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 2));
