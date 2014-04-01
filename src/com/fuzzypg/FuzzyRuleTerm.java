@@ -1,7 +1,6 @@
 package com.fuzzypg;
 
 /**
- *
  * A FuzzyRuleTerm is the portion of the rule that looks like
  *  variable IS value
  * 

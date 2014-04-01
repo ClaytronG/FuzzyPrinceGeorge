@@ -405,7 +405,6 @@ public class UI {
     
         
         String imgURL=answ.replace(" ","")+".PNG";
-        System.out.println(imgURL);
         //imgURL="CollegeHeights.PNG";
         JLabel picLabel = new JLabel();
          try

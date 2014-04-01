@@ -1,7 +1,7 @@
 package com.fuzzypg;
 
 /**
- * 
+ * Operations are union (OR) and intersection (AND).
  * 
  * @author Clayton
  */

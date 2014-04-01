@@ -14,23 +14,42 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 
-
+/**
+ * The Inference Engine evaluates rules and deffuzifies the answer using the 
+ * Center of Gravity (CoG) method.
+ * 
+ * @author Clayton
+ */
 public class InferenceEngine {
     
     private final HashMap<String, FuzzyRule> rules;
     private final HashMap<String, LinguisticVariable> variables;
     
+    /**
+     * Create an empty inference engine. 
+     */
     public InferenceEngine() {
         rules = new HashMap<>();
         variables = new HashMap<>();
     }
     
+    /**
+     * Create an inference engine with rules defined by a .rules file.
+     * 
+     * @param file name of a .rules file 
+     */
     public InferenceEngine(String file) {
         rules = new HashMap<>();
         variables = new HashMap<>();
         parseRules(file);
     }
     
+    /**
+     * Parses a .rules file into FuzzyRules and adds them to the inference
+     * engine.
+     * 
+     * @param file name of a .rules file
+     */
     private void parseRules(String file) {
         try {
             FileReader input = new FileReader(file);
@@ -48,30 +67,45 @@ public class InferenceEngine {
         }
     }
     
+    /**
+     * Creates a FuzzyRule from a line from a .rules file.
+     * 
+     * @param line text string formatted from a .rules file
+     * @return     fuzzy rule
+     */
     private FuzzyRule createRule(String line) {
         String[] things = line.split(",");
         double[] values = new double[6];
         String name;
         //System.out.println("Reading: " + line);
-        FuzzyRuleTerm result = new FuzzyRuleTerm(HousingSets.area, HousingSets.getTerm(things[0]).getName(), false);
+        FuzzyRuleTerm result = 
+                new FuzzyRuleTerm(HousingSets.area, 
+                                  HousingSets.getTerm(things[0]).getName(), 
+                                  false);
         name = things[0];
         // Cost
-        FuzzyRuleObject cost = createRule(HousingSets.price, Double.parseDouble(things[1]));
+        FuzzyRuleObject cost = 
+                createRule(HousingSets.price, Double.parseDouble(things[1]));
         values[0] = Double.parseDouble(things[1]);
         // Safety
-        FuzzyRuleObject safety = createRule(HousingSets.safety, Double.parseDouble(things[2]));
+        FuzzyRuleObject safety = 
+                createRule(HousingSets.safety, Double.parseDouble(things[2]));
         values[1] = Double.parseDouble(things[2]);
         // People
-        FuzzyRuleObject people = createRule(HousingSets.people, Double.parseDouble(things[3]));
+        FuzzyRuleObject people = 
+                createRule(HousingSets.people, Double.parseDouble(things[3]));
         values[2] = Double.parseDouble(things[3]);
         // Hick
-        FuzzyRuleObject hick = createRule(HousingSets.style, Double.parseDouble(things[4]));
+        FuzzyRuleObject hick = 
+                createRule(HousingSets.style, Double.parseDouble(things[4]));
         values[3] = Double.parseDouble(things[4]);
         // Drugs
-        FuzzyRuleObject drugs = createRule(HousingSets.drugs, Double.parseDouble(things[5]));
+        FuzzyRuleObject drugs = 
+                createRule(HousingSets.drugs, Double.parseDouble(things[5]));
         values[4] = Double.parseDouble(things[5]);
         // Proximity
-        FuzzyRuleObject proximity = createRule(HousingSets.proximity, Double.parseDouble(things[6]));
+        FuzzyRuleObject proximity = 
+                createRule(HousingSets.proximity, Double.parseDouble(things[6]));
         values[5] = Double.parseDouble(things[6]);
 
         FuzzyRuleAnd first = new FuzzyRuleAnd(cost, safety);
@@ -80,45 +114,86 @@ public class InferenceEngine {
         FuzzyRuleAnd fourth = new FuzzyRuleAnd(third, drugs);
         FuzzyRuleAnd fifth = new FuzzyRuleAnd(fourth, proximity);
 
-        FuzzyRule rule = new FuzzyRule(fifth, result, name, values);
-        //System.out.println(rule);
-        return rule;
+        return new FuzzyRule(fifth, result, name, values);
     }
     
+    /**
+     * Create an intermediate rule object like a term or an operation.
+     * 
+     * @param variable fuzzy variable that is being evaluated
+     * @param value    membership to check
+     * @return         rule term or operation
+     */
     private FuzzyRuleObject createRule(LinguisticVariable variable, double value) {
-        int thing =((int) value); // Because Swicth dn'like d'ble
+        int thing =(int) (value); // Because Swicth dn'like d'ble
         switch (thing) {
             case 1:    // 1
-                return new FuzzyRuleTerm(variable, HousingSets.strongDisagree.getName(), false);
+                return new FuzzyRuleTerm(variable, 
+                                         HousingSets.strongDisagree.getName(), 
+                                         false);
             case 15:    // 1.5
-                FuzzyRuleTerm left = new FuzzyRuleTerm(variable, HousingSets.strongDisagree.getName(), false);
-                FuzzyRuleTerm right = new FuzzyRuleTerm(variable, HousingSets.disagree.getName(), false);
+                FuzzyRuleTerm left = 
+                        new FuzzyRuleTerm(variable, 
+                                          HousingSets.strongDisagree.getName(), 
+                                          false);
+                FuzzyRuleTerm right = 
+                        new FuzzyRuleTerm(variable, 
+                                          HousingSets.disagree.getName(), 
+                                          false);
                 return new FuzzyRuleOr(left, right);
             case 2:    // 2
-                return new FuzzyRuleTerm(variable, HousingSets.disagree.getName(), false);                
+                return new FuzzyRuleTerm(variable, 
+                                         HousingSets.disagree.getName(), 
+                                         false);                
             case 25:    // 2.5
-                left = new FuzzyRuleTerm(variable, HousingSets.disagree.getName(), false);
-                right = new FuzzyRuleTerm(variable, HousingSets.neutral.getName(), false);
+                left = new FuzzyRuleTerm(variable, 
+                                         HousingSets.disagree.getName(), 
+                                         false);
+                right = new FuzzyRuleTerm(variable, 
+                                          HousingSets.neutral.getName(), 
+                                          false);
                 return new FuzzyRuleOr(left, right);
             case 3:    // 3
-                return new FuzzyRuleTerm(variable, HousingSets.neutral.getName(), false);
+                return new FuzzyRuleTerm(variable, 
+                                         HousingSets.neutral.getName(), 
+                                         false);
             case 35:    // 3.5
-                left = new FuzzyRuleTerm(variable, HousingSets.neutral.getName(), false);
-                right = new FuzzyRuleTerm(variable, HousingSets.agree.getName(), false);
+                left = new FuzzyRuleTerm(variable, 
+                                         HousingSets.neutral.getName(), 
+                                         false);
+                right = new FuzzyRuleTerm(variable, 
+                                          HousingSets.agree.getName(), 
+                                          false);
                 return new FuzzyRuleOr(left, right);
             case 4:    // 4
-                return new FuzzyRuleTerm(variable, HousingSets.agree.getName(), false);
+                return new FuzzyRuleTerm(variable, 
+                                         HousingSets.agree.getName(), 
+                                         false);
             case 45:    // 4.5
-                left = new FuzzyRuleTerm(variable, HousingSets.agree.getName(), false);
-                right = new FuzzyRuleTerm(variable, HousingSets.strongAgree.getName(), false);
+                left = new FuzzyRuleTerm(variable, 
+                                         HousingSets.agree.getName(), 
+                                         false);
+                right = new FuzzyRuleTerm(variable, 
+                                          HousingSets.strongAgree.getName(), 
+                                          false);
                 return new FuzzyRuleOr(left, right);
             case 5:    // 5
-                return new FuzzyRuleTerm(variable, HousingSets.strongAgree.getName(), false);
+                return new FuzzyRuleTerm(variable, 
+                                         HousingSets.strongAgree.getName(), 
+                                         false);
+            default:
+                return new FuzzyRuleTerm(variable, 
+                                         HousingSets.neutral.getName(), 
+                                         false);
         }
-        
-        return null;
     }
     
+    /**
+     * Update the values of a rule.
+     * 
+     * @param name   rule to update
+     * @param values values to update
+     */
     public void updateRules(String name, int[] values) {
         FuzzyRule originalRule = rules.get(name);
         StringBuilder ruleString = new StringBuilder();
@@ -141,13 +216,23 @@ public class InferenceEngine {
         saveRules();
     }
     
+    /**
+     * Update the rules value for the (i'th) fuzzy set.
+     * 
+     * @param rule   rule to change
+     * @param change raise or lower value
+     * @param i      what fuzzy set to update
+     * @return       the updated value
+     */
     private double updateValue(FuzzyRule rule, int change, int i) {
         double value = rule.getValues()[i];
+        // If the rule is to strong, then lower it
         if (change == UI.Feedback.LESS) {
             value -= 0.5;
             if (value < 1) {
                 value = 1;
             }
+        // If the rule is to weak, the raise it
         } else if (change == UI.Feedback.MORE) {
             value += 0.5;
             if (value > 5) {
@@ -157,6 +242,9 @@ public class InferenceEngine {
         return value;
     }
        
+    /**
+     * Save the list of rules to Area.rules.
+     */
     private void saveRules() {
         BufferedWriter writer = null;
         try {
@@ -181,6 +269,12 @@ public class InferenceEngine {
         }
     }
     
+    /**
+     * Clears the list of rules associated with this inference engine and adds
+     * new ones.
+     * 
+     * @param rules list of rules to add
+     */
     public void setRules(Collection<FuzzyRule> rules) {
         this.rules.clear();
         for (FuzzyRule rule : rules) {
@@ -188,10 +282,21 @@ public class InferenceEngine {
         }
     }
     
+    /**
+     * Add a single rule to this inference engine without removing others.
+     * 
+     * @param rule rule to add
+     */
     public void addRule(FuzzyRule rule) {
         rules.put(rule.getName(), rule);
     }
     
+    /**
+     * Clears the list of linguistic variables associated with this inference 
+     * engine and adds new ones.
+     * 
+     * @param variables list of variables to add
+     */
     public void setVariables(Collection<LinguisticVariable> variables) {
         this.variables.clear();
         for (LinguisticVariable variable : variables) {
@@ -199,12 +304,25 @@ public class InferenceEngine {
         }
     }
     
-    public void addVariables(LinguisticVariable variable) {
+    /**
+     * Add a single variable to this inference engine without removing others.
+     * 
+     * @param variable variable to add
+     */
+    public void addVariable(LinguisticVariable variable) {
         variables.put(variable.getName(), variable);
     }
     
+    /**
+     * How many alternative places to show.
+     */
     private static final int TOP_N = 3;
     
+    /**
+     * Evaluates the rules and defuzzifies the answer.
+     * 
+     * @return deffuzified linguistic variable
+     */
     public LinguisticVariable answer() {
         System.out.println("InferenceEngine.answer()");
         // Evaluate the rules

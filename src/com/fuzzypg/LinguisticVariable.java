@@ -12,16 +12,25 @@ import java.util.List;
  */
 public class LinguisticVariable {
     
+    /**
+     * How many discrete steps in the universe of discourse.
+     */
     private final double STEP_SIZE = 0.1;
     
     private final String name;
     
+    /**
+     * Where to evaluate this linguistic variable.
+     */
     private double input;
     
+    /**
+     * If this is an answer variable and can be defuzzified.
+     */
     private final boolean answer;
     
     /**
-     * 
+     * Collection of sets that belong to this linguistic variable.
      */
     private final HashMap<String, LinguisticTerm> values;
 

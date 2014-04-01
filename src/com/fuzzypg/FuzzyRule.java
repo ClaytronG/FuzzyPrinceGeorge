@@ -14,12 +14,20 @@ package com.fuzzypg;
  */
 public class FuzzyRule {
     
-    private String name;
+    /**
+     * Used in .rules files
+     */
+    private String name;    
     private double[] values;
     
-    // The IFs
-    private final FuzzyRuleObject premise;   
-    // The THEN
+    /**
+     * The IFs
+     */
+    private final FuzzyRuleObject premise;
+    
+    /**
+     * The THEN
+     */
     private final FuzzyRuleTerm result;
     
     public FuzzyRule(FuzzyRuleObject premise, FuzzyRuleTerm result) {
@@ -63,6 +71,11 @@ public class FuzzyRule {
         return rule.toString();
     }
     
+    /**
+     * Returns a formated string for saving to a .rules file.
+     * 
+     * @return .rules format string
+     */
     public String getRuleString() {
         StringBuilder builder = new StringBuilder();
         builder.append(name);
