@@ -1,7 +1,12 @@
 package com.fuzzypg;
 
 /**
+ * The intersection of two fuzzy sets.
  * 
+ *  X is x AND y IS y
+ * 
+ * where X is a linguistic variable and x is a fuzzy set in X 
+ *   and Y is a linguistic variable and y is a fuzzy set in Y.
  * 
  * @author Clayton
  */

@@ -1,12 +1,12 @@
 package com.fuzzypg;
 
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
 /**
- *
+ * Static class that holds our Linguistic Variables, Fuzzy Sets, and Rules.
+ * 
  * @author Clayton
  */
 public class HousingSets {

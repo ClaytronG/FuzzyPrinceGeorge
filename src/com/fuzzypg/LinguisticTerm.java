@@ -5,7 +5,8 @@ import java.util.Collections;
 import java.util.Comparator;
 
 /**
- * 
+ * A linguistic term or fuzzy set belongs to a linguistic variable, and has a 
+ * member function located within the universe of discourse.
  * 
  * @author Clayton
  */
@@ -30,10 +31,13 @@ public class LinguisticTerm {
     private double maxValue = Integer.MIN_VALUE;
     
     /**
-     * 
+     * When defuzzified this is the maximum value of the membership.
      */
     private double fuzzyLimit = Double.MAX_VALUE;
     
+    /**
+     * First point (value closest to 1) of this set.
+     */
     private double pointValue = 0;
 
     /**
@@ -64,6 +68,10 @@ public class LinguisticTerm {
         sortValues();
     }
     
+    /**
+     * Sorts the values in increasing order based on the x value, so they are
+     * evaluated correctly.
+     */
     private void sortValues() {
         Collections.sort(values, new Comparator<Pair>() {
             @Override
@@ -76,8 +84,8 @@ public class LinguisticTerm {
     /**
      * Returns true if this term covers the value given by input.
      * 
-     * @param input 
-     * @return      
+     * @param input value to check
+     * @return      true if this set contains input
      */
     public boolean contains(double input) {
         return (input >= minValue) && (input <= maxValue);
@@ -86,7 +94,7 @@ public class LinguisticTerm {
     /**
      * Returns the truth value for this term at the given input.
      * 
-     * @param input 
+     * @param input value in the universe to check membership
      * 
      * @return      the truth value at input 
      */
