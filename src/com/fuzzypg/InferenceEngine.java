@@ -125,9 +125,9 @@ public class InferenceEngine {
      * @return         rule term or operation
      */
     private FuzzyRuleObject createRule(LinguisticVariable variable, double value) {
-        int thing =(int) (value); // Because Swicth dn'like d'ble
+        int thing =(int)(value*10); // Because Swicth dn'like d'ble
         switch (thing) {
-            case 1:    // 1
+            case 10:    // 1
                 return new FuzzyRuleTerm(variable, 
                                          HousingSets.strongDisagree.getName(), 
                                          false);
@@ -141,7 +141,7 @@ public class InferenceEngine {
                                           HousingSets.disagree.getName(), 
                                           false);
                 return new FuzzyRuleOr(left, right);
-            case 2:    // 2
+            case 20:    // 2
                 return new FuzzyRuleTerm(variable, 
                                          HousingSets.disagree.getName(), 
                                          false);                
@@ -153,7 +153,7 @@ public class InferenceEngine {
                                           HousingSets.neutral.getName(), 
                                           false);
                 return new FuzzyRuleOr(left, right);
-            case 3:    // 3
+            case 30:    // 3
                 return new FuzzyRuleTerm(variable, 
                                          HousingSets.neutral.getName(), 
                                          false);
@@ -165,7 +165,7 @@ public class InferenceEngine {
                                           HousingSets.agree.getName(), 
                                           false);
                 return new FuzzyRuleOr(left, right);
-            case 4:    // 4
+            case 40:    // 4
                 return new FuzzyRuleTerm(variable, 
                                          HousingSets.agree.getName(), 
                                          false);
@@ -177,7 +177,7 @@ public class InferenceEngine {
                                           HousingSets.strongAgree.getName(), 
                                           false);
                 return new FuzzyRuleOr(left, right);
-            case 5:    // 5
+            case 50:    // 5
                 return new FuzzyRuleTerm(variable, 
                                          HousingSets.strongAgree.getName(), 
                                          false);

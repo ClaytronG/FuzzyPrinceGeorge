@@ -5,6 +5,7 @@ package com.fuzzypg.ui;
  * and open the template in the editor.
  */
 
+import com.fuzzypg.FuzzyRule;
 import com.fuzzypg.HousingSets;
 import com.fuzzypg.LinguisticTerm;
 import com.fuzzypg.LinguisticVariable;
@@ -152,8 +153,8 @@ public class UI {
     
      private void showAddRulePopUp() {
          
-         JFrame pu = new JFrame();
-        pu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+         final JFrame pu = new JFrame();
+        pu.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         
         pu.setMaximumSize(new Dimension(700, 400));
         pu.setMinimumSize(new Dimension(700, 400));
@@ -164,37 +165,50 @@ public class UI {
         GridBagConstraints a = new GridBagConstraints();
         a.insets = new Insets(4,4,4,4);
         a.gridx=2;
+        a.gridy=2;
+        addLabel("Answer", p, a, 14);
         a.gridy=3;
         addLabel("Price", p, a, 14);
-        a.gridx=3;
+        a.gridy=4;
         addLabel("Safety", p, a, 14);
-        a.gridx=4;
+        a.gridy=5;
         addLabel("Socialness", p, a, 14);
-        a.gridx=5;
+        a.gridy=6;
         addLabel("Redneck Area", p, a, 14);
-        a.gridx=6;
+        a.gridy=7;
         addLabel("Drug Usage", p, a, 14);
-        a.gridx=7;
+        a.gridy=8;
         addLabel("Close to Town", p, a, 14);
         
-        a.gridy=4;
-        a.gridx=0;
-        addLabel("Answer", p, a, 14);
-        a.gridx=1;
-        addAnswerDropDown(p,a);
-        a.gridx=2;
-        addHighLowDropDown(p,a);
         a.gridx=3;
+        a.gridy=2;
+        addAnswerDropDown(p,a);
+        a.gridy=3;
         addHighLowDropDown(p,a);
-        a.gridx=4;
+        a.gridy=4;
         addHighLowDropDown(p,a);
-        a.gridx=5;
+        a.gridy=5;
         addHighLowDropDown(p,a);
-        a.gridx=6;
+        a.gridy=6;
         addHighLowDropDown(p,a);
-        a.gridx=7;
+        a.gridy=7;
+        addHighLowDropDown(p,a);
+        a.gridy=8;
         addHighLowDropDown(p,a);
  
+        JButton butt = new JButton("Submit");
+        butt.addActionListener(new ActionListener() {
+ 
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                //Execute when button is pressed
+                Main.engine.addRule(null);
+                pu.dispose();
+                
+            }
+        });
+        
         
         pu.add(p);
         
@@ -778,12 +792,16 @@ public class UI {
         
         JComboBox jc = new JComboBox(items);
         
+        
         p.add(jc, c);
     }
     
     private void addAnswerDropDown(JPanel p, GridBagConstraints c)
     {
-        String[] items = {"Very High", "High", "Average", "Low", "Very Low"};
+        String[] items = {"College Heights","Ridgeview", "Hart",
+        "Foothills", "North Opsika", "Fort George", "Westwood",
+        "Crescents", "Downtown", "PedenHill", "OutofTown"};
+
         
         JComboBox jc = new JComboBox(items);
         
