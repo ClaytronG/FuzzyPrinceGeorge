@@ -3,6 +3,7 @@ package com.fuzzypg;
 import java.util.ArrayList;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.json.JSONStringer;
 
 /**
  * Fuzzy rules consist of a premise or multiple premises and a result. Premises
@@ -86,12 +87,7 @@ public class FuzzyRule {
     public void evaluate() {
         LinguisticVariable variable = result.getVariable();
         FuzzySet term = variable.getTerm(result.getValue());
-        double value;
-        if (isAnswer()) {
-            value = premise.getResult(true);
-        } else {
-            value = premise.getResult(false);
-        }
+        double value = premise.getResult();
         term.setFuzzyLimit(value);
     }
     
@@ -117,6 +113,47 @@ public class FuzzyRule {
         rule.append(result);
         
         return rule.toString();
+    }
+    
+    /*
+    
+    {
+		"answer" : "true",
+		"if" : [
+			{ "name" : "Price", "value" : [ "High", "Very High" ] },
+			{ "name" : "Safety", "value" : [ "Very High" ] },
+			{ "name" : "People", "value" : [ "Very High" ] },
+			{ "name" : "Style", "value" : [ "Very Low" ] },
+			{ "name" : "Drugs", "value" : [ "Very Low" ] },
+			{ "name" : "Proximity", "value" : [ "Very Low", "Low" ] }			
+		],
+		"then" : { 
+			"name" : "Area", 
+			"value" : [ "College Heights" ] 
+		}
+	}    
+    */
+    public JSONObject toJsonObject() {
+        String answerKey = isAnswer() ? "true" : "false";
+        JSONArray ifValue = premise.toJsonArray();
+        JSONObject thenValue = result.toJsonObject();
+        
+        ArrayList<JSONObject> ifs = new ArrayList<>();
+        
+        String object = new JSONStringer()
+                .object()
+                    .key("answer")
+                    .value(answerKey)
+                    .key("if")
+                    .value(ifValue)
+                    .key("then")
+                    .value(thenValue)
+                .endObject()
+                .toString();
+        
+        System.out.println(object);
+        
+        return new JSONObject(object);
     }
     
 }

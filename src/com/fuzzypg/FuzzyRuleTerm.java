@@ -1,8 +1,8 @@
 package com.fuzzypg;
 
-import java.util.ArrayList;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.json.JSONStringer;
 
 /**
  * A FuzzyRuleTerm is the portion of the rule that looks like
@@ -31,15 +31,8 @@ public class FuzzyRuleTerm extends FuzzyRuleObject {
     }        
     
     @Override
-    public double getResult(boolean defuzzy) {
+    public double getResult() {
         double result;
-        if (defuzzy) {
-            result = variable.defuzzify();
-            variable.setInput(result);
-            result = variable.getMembershipValueOf(value);
-        } else {
-            result = variable.getMembershipValueOf(value);
-        }
         result = variable.getMembershipValueOf(value);
         if (complement) result = 1 - result;
         
@@ -63,6 +56,34 @@ public class FuzzyRuleTerm extends FuzzyRuleObject {
         term.append(value);
         
         return term.toString();
+    }
+    
+    /*
+        "then" : { 
+                "name" : "Area", 
+                "value" : [ "College Heights" ] 
+        }
+    */
+    @Override
+    public JSONObject toJsonObject() {
+        String object = new JSONStringer()
+                .object()
+                    .key("name")
+                    .value(variable.getName())
+                    .key("value")
+                    .array()
+                        .value(value)
+                    .endArray()
+                .endObject()
+                .toString();
+        
+        return new JSONObject(object);
+    }
+
+    @Override
+    public JSONArray toJsonArray() {
+        
+        return null;
     }
     
 }

@@ -10,6 +10,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  * The Inference Engine evaluates rules and deffuzifies the answer using the 
@@ -195,14 +196,41 @@ public class InferenceEngine {
                     }
                 }
             } else {
-                System.out.println("You shouldn't live in Prince George1");                
+                System.out.println("You shouldn't live in Prince George");                
             }
         } else {
-            System.out.println("You shouldn't live in Prince George2");
+            System.out.println("You shouldn't live in Prince George");
             
         }
         
         return answerVariable;
         
+    }
+    /*
+    {
+            "answer" : "true",
+            "if" : [
+                    { "name" : "Price", "value" : [ "High", "Very High" ] },
+                    { "name" : "Safety", "value" : [ "Very High" ] },
+                    { "name" : "People", "value" : [ "Very High" ] },
+                    { "name" : "Style", "value" : [ "Very Low" ] },
+                    { "name" : "Drugs", "value" : [ "Very Low" ] },
+                    { "name" : "Proximity", "value" : [ "Very Low", "Low" ] }			
+            ],
+            "then" : { 
+                    "name" : "Area", 
+                    "value" : [ "College Heights" ] 
+            }
+    }
+    */
+    public void saveRules() {
+        ArrayList<JSONObject> ruleObjects = new ArrayList<>();
+        for (FuzzyRule rule : firstRules.values()) {
+            rule.toJsonObject();
+        }
+        
+        for (FuzzyRule rule : secondRules.values()) {
+            rule.toJsonObject();
+        }
     }
 }

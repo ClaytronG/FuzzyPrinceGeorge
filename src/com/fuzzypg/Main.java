@@ -14,8 +14,9 @@ public class Main {
         
         engine = new InferenceEngine("Rules.json");
         engine.setVariables(HousingSets.getVariables());
+        engine.saveRules();
            
-        UI myUI = new UI();
-        myUI.startUI();
+        //UI myUI = new UI();
+        //myUI.startUI();
     }    
 }

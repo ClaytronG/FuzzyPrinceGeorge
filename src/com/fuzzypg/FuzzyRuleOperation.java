@@ -15,7 +15,4 @@ public abstract class FuzzyRuleOperation extends FuzzyRuleObject {
         this.right = right;
     }
     
-    @Override
-    public abstract double getResult(boolean defuzzy);
-    
 }

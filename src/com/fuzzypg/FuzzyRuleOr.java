@@ -1,5 +1,10 @@
 package com.fuzzypg;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.json.JSONString;
+import org.json.JSONStringer;
+
 /**
  * The union of two fuzzy sets.
  * 
@@ -17,8 +22,8 @@ public class FuzzyRuleOr extends FuzzyRuleOperation {
     }
     
     @Override
-    public double getResult(boolean defuzzy) {
-        return Math.max(left.getResult(defuzzy), right.getResult(defuzzy));
+    public double getResult() {
+        return Math.max(left.getResult(), right.getResult());
     }
 
     @Override
@@ -30,5 +35,36 @@ public class FuzzyRuleOr extends FuzzyRuleOperation {
         operation.append(right);
         
         return operation.toString();
+    }
+
+    /*
+        { "name" : "Price", "value" : [ "High", "Very High" ] }
+    */
+    @Override
+    public JSONObject toJsonObject() {
+        System.out.println("OR");
+        
+        FuzzyRuleTerm leftTerm = (FuzzyRuleTerm) left;
+        FuzzyRuleTerm rightTerm = (FuzzyRuleTerm) right;
+        
+        String object = new JSONStringer()
+                .object()
+                    .key("name")
+                    .value(leftTerm.getVariable().getName())
+                    .value("value")
+                    .array()
+                        .value(leftTerm.getValue())
+                        .value(rightTerm.getValue())
+                    .endArray()
+                .endObject()
+                .toString();
+        
+        return new JSONObject(object);
+    }
+
+    @Override
+    public JSONArray toJsonArray() {
+        
+        return null;
     }
 }

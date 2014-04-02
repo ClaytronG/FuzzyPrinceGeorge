@@ -1,5 +1,8 @@
 package com.fuzzypg;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 /**
  * The intersection of two fuzzy sets.
  * 
@@ -17,8 +20,8 @@ public class FuzzyRuleAnd extends FuzzyRuleOperation {
     }
     
     @Override
-    public double getResult(boolean defuzzy) {
-        return Math.min(left.getResult(defuzzy), right.getResult(defuzzy));
+    public double getResult() {
+        return Math.min(left.getResult(), right.getResult());
     }
 
     @Override
@@ -30,5 +33,22 @@ public class FuzzyRuleAnd extends FuzzyRuleOperation {
         operation.append(right);
         
         return operation.toString();
+    }
+    
+    /*
+        { "name" : "Safety", "value" : [ "Very High" ] },
+        { "name" : "Safety", "value" : [ "Very High" ] }
+    */
+    @Override
+    public JSONObject toJsonObject() {
+        System.out.println("AND");
+        
+        return null;
+    }
+
+    @Override
+    public JSONArray toJsonArray() {
+        
+        return null;
     }
 }
