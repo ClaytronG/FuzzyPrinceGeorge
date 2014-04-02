@@ -10,6 +10,15 @@ import java.util.HashMap;
  * @author Clayton
  */
 public class HousingSets {
+    
+    //input variables
+    public static LinguisticVariable canAfford;
+    public static LinguisticVariable safetyImportant;
+    public static LinguisticVariable enjoyPeople;
+    public static LinguisticVariable plaidWins;
+    public static LinguisticVariable likesDrugs;
+    public static LinguisticVariable likesClose;
+    
     // Linguistic Variables
     public static LinguisticVariable price;
     public static LinguisticVariable safety;
@@ -20,6 +29,12 @@ public class HousingSets {
     // ANSWER
     public static LinguisticVariable area;
     
+    
+    public static FuzzySet veryHigh;
+    public static FuzzySet high;
+    public static FuzzySet middle;
+    public static FuzzySet low;
+    public static FuzzySet veryLow;
     // Linguistic Terms
     public static FuzzySet strongDisagree;
     public static FuzzySet disagree;
@@ -56,12 +71,29 @@ public class HousingSets {
         style = new LinguisticVariable("Style", false);
         drugs = new LinguisticVariable("Drugs", false);
         proximity = new LinguisticVariable("Proximity", false);
+        
+        
+        canAfford = new LinguisticVariable("Can Afford", false);
+        safetyImportant = new LinguisticVariable("Safety Important", false);
+        enjoyPeople = new LinguisticVariable("Enjoy People", false);
+        plaidWins = new LinguisticVariable("Plaid Wins", false);
+        likesDrugs = new LinguisticVariable("Likes Drugs", false);
+        likesClose = new LinguisticVariable("Likes Close", false);
+        
         variables.put(price.getName(), price);
         variables.put(safety.getName(), safety);
         variables.put(people.getName(), people);
         variables.put(style.getName(), style);
         variables.put(drugs.getName(), drugs);
         variables.put(proximity.getName(), proximity);
+        
+        variables.put(canAfford.getName(), canAfford);
+        variables.put(safetyImportant.getName(), safetyImportant);
+        variables.put(enjoyPeople.getName(), enjoyPeople);
+        variables.put(plaidWins.getName(), plaidWins);
+        variables.put(likesDrugs.getName(), likesDrugs);
+        variables.put(likesClose.getName(), likesClose);
+        
         // ANSWER
         area = new LinguisticVariable("Area", true);
         variables.put(area.getName(), area);
@@ -82,6 +114,24 @@ public class HousingSets {
         terms.put(neutral.getName(), neutral);
         terms.put(agree.getName(), agree);
         terms.put(strongAgree.getName(), strongAgree);
+        
+        veryLow= new FuzzySet("Very Low");
+        veryLow.addValue(new Pair(0,1), new Pair(1,1), new Pair(2,0));
+        low = new FuzzySet("Low");
+        low.addValue(new Pair(0,0), new Pair(1,1), new Pair(2,1), new Pair(3,0));
+        middle = new FuzzySet("Middle");
+        middle.addValue(new Pair(1,0.5), new Pair(2,1), new Pair(3,1), new Pair(4,0.5));
+        high = new FuzzySet("High");
+        high.addValue(new Pair(2,0), new Pair(3,1), new Pair(4,1), new Pair(5,0));
+        veryHigh = new FuzzySet("Very High");
+        veryHigh.addValue(new Pair(3,0), new Pair(4,1), new Pair(5,1));
+        terms.put(veryLow.getName(), veryLow);
+        terms.put(low.getName(), low);
+        terms.put(middle.getName(), middle);
+        terms.put(high.getName(), high);
+        terms.put(veryHigh.getName(), veryHigh);
+       
+        
         // ANSWERS
         collegeHeights = new FuzzySet("College Heights");
         collegeHeights.addValue(new Pair(0,0), new Pair(5,1), new Pair(10,0));
@@ -117,12 +167,19 @@ public class HousingSets {
         terms.put(pedenHill.getName(), pedenHill);
         terms.put(outOfTown.getName(), outOfTown);
         
+        ArrayList<FuzzySet> inputTerms = new ArrayList<>();
+        inputTerms.add(strongDisagree);
+        inputTerms.add(disagree);
+        inputTerms.add(neutral);
+        inputTerms.add(agree);
+        inputTerms.add(strongAgree);
+        
         ArrayList<FuzzySet> fuzzyTerms = new ArrayList<>();
-        fuzzyTerms.add(strongDisagree);
-        fuzzyTerms.add(disagree);
-        fuzzyTerms.add(neutral);
-        fuzzyTerms.add(agree);
-        fuzzyTerms.add(strongAgree);
+        fuzzyTerms.add(veryLow);
+        fuzzyTerms.add(low);
+        fuzzyTerms.add(middle);
+        fuzzyTerms.add(high);
+        fuzzyTerms.add(veryHigh);
         
         ArrayList<FuzzySet> answerTerms = new ArrayList<>();
         answerTerms.add(collegeHeights);
@@ -136,6 +193,14 @@ public class HousingSets {
         answerTerms.add(downtown);
         answerTerms.add(pedenHill);
         answerTerms.add(outOfTown);
+        
+        //add terms
+        canAfford.addTerms(inputTerms);
+        safetyImportant.addTerms(inputTerms);
+        enjoyPeople.addTerms(inputTerms);
+        plaidWins.addTerms(inputTerms);
+        likesDrugs.addTerms(inputTerms);
+        likesClose.addTerms(inputTerms);
         
         // Add the terms to the variables
         price.addTerms(fuzzyTerms);

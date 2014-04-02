@@ -54,33 +54,37 @@ public class FuzzyRule {
             String name = ifThing.getString("name");
             JSONArray value = ifThing.getJSONArray("value");
             if (value.length() == 1) {
-                System.out.println(name + " - " + value.getString(0));
                 FuzzyRuleTerm term = new FuzzyRuleTerm(name, value.getString(0));
-                System.out.println(term);
                 andThings.add(term);
             } else if (value.length() == 2) {
                 FuzzyRuleTerm left = new FuzzyRuleTerm(name, value.getString(0));
                 FuzzyRuleTerm right = new FuzzyRuleTerm(name, value.getString(1));
                 FuzzyRuleOr orOp = new FuzzyRuleOr(left, right);
-                System.out.println(orOp);
                 andThings.add(orOp);            
             } else {                
                 System.err.println("Nah dog!");
+            }            
+        }
+        // And all of those premises together
+        if (andThings.size() == 1) {
+            premise = andThings.get(0);
+        } else {            
+            FuzzyRuleAnd and = new FuzzyRuleAnd(andThings.get(0), andThings.get(1));
+            for (int i = 2; i < andThings.size(); ++i) {
+                and = new FuzzyRuleAnd(and, andThings.get(i));
             }
-            
+            premise = and;
         }
         // Construct the THEN
         JSONObject then = rule.getJSONObject("then");
         String thenName = then.getString("name");
         JSONArray value = then.getJSONArray("value");
         if (value.length() == 1) {
-            premise = new FuzzyRuleTerm(thenName, value.getString(0));
+            result = new FuzzyRuleTerm(thenName, value.getString(0));
         } else {
             System.err.println("Nah dog!");
-            premise = null;
-        } 
-        
-        result = null;
+            result = null;
+        }
     }
     
     /**

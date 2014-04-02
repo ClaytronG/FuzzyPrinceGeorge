@@ -14,7 +14,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import org.json.JSONArray;
-import org.json.JSONObject;
 
 /**
  * The Inference Engine evaluates rules and deffuzifies the answer using the 
@@ -68,6 +67,7 @@ public class InferenceEngine {
     private void parseJson(JSONArray array) {
         for (int i = 0; i < array.length(); ++i) {
             FuzzyRule rule = new FuzzyRule(array.getJSONObject(i));
+            System.out.println(rule);
             rules.put(rule.getName(), rule);
         }
     }    
