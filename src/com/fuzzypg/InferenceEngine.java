@@ -353,9 +353,14 @@ public class InferenceEngine {
     public LinguisticVariable answer() {
         System.out.println("InferenceEngine.answer()");
         // Evaluate the rules
-        for (FuzzyRule rule : rules.values()) {
-            rule.evaluate();
-        }
+        boolean wmChanged;
+        do{
+            wmChanged =false;
+            for (FuzzyRule rule : rules.values()) {
+                if(rule.evaluate())
+                    wmChanged=true;
+            }
+        }while(wmChanged);
         
         // Deffuzify the answer
         double answerValue = -1;

@@ -135,4 +135,8 @@ public class FuzzySet {
         return pointValue;
     }
     
+    public double getFuzzyLimit(){
+        return fuzzyLimit;
+    }
+    
 }
