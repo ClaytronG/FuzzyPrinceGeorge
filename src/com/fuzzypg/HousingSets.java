@@ -70,12 +70,11 @@ public class HousingSets {
         people = new LinguisticVariable("People", false);
         style = new LinguisticVariable("Style", false);
         drugs = new LinguisticVariable("Drugs", false);
-        proximity = new LinguisticVariable("Proximity", false);
-        
+        proximity = new LinguisticVariable("Proximity", false);        
         
         canAfford = new LinguisticVariable("Can Afford", false);
         safetyImportant = new LinguisticVariable("Safety Important", false);
-        enjoyPeople = new LinguisticVariable("Enjoy People", false);
+        enjoyPeople = new LinguisticVariable("Enjoys People", false);
         plaidWins = new LinguisticVariable("Plaid Wins", false);
         likesDrugs = new LinguisticVariable("Likes Drugs", false);
         likesClose = new LinguisticVariable("Likes Close", false);

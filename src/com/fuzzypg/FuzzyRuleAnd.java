@@ -28,7 +28,6 @@ public class FuzzyRuleAnd extends FuzzyRuleOperation {
         operation.append(left);
         operation.append(" AND ");
         operation.append(right);
-        operation.append(" ");
         
         return operation.toString();
     }

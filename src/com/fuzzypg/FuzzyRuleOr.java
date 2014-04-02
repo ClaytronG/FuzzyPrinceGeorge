@@ -28,7 +28,6 @@ public class FuzzyRuleOr extends FuzzyRuleOperation {
         operation.append(left);
         operation.append(" OR ");
         operation.append(right);
-        operation.append(" ");
         
         return operation.toString();
     }

@@ -1,5 +1,6 @@
 [
 	{
+		"answer" : "false",
 		"if" : [
 			{ "name": "Can Afford", "value" : [ "Strongly Agree" ] }
 		],
@@ -9,6 +10,7 @@
 		}
 	},
 	{
+		"answer" : "false",
 		"if" : [
 			{ "name" : "Can Afford", "value" : [ "Agree" ] }
 		],
@@ -18,6 +20,7 @@
 		}
 	},
 	{
+		"answer" : "false",
 		"if" : [
 			{ "name" : "Can Afford", "value" : [ "Neutral" ] }
 		],
@@ -27,6 +30,7 @@
 		}
 	},
 	{
+		"answer" : "false",
 		"if" : [
 			{ "name" : "Can Afford", "value" : [ "Disagree" ] }
 		],
@@ -36,6 +40,7 @@
 		}
 	},
 	{
+		"answer" : "false",
 		"if" : [
 			{ "name" : "Can Afford", "value" : [ "Strongly Disagree" ] }
 		],
@@ -45,6 +50,257 @@
 		}
 	},
 	{
+		"answer" : "false",
+		"if" : [
+			{ "name": "Safety Important", "value" : [ "Strongly Agree" ] }
+		],
+		"then" : {
+			"name" : "Safety", 
+			"value" : [ "Very High" ]
+		}
+	},
+	{
+		"answer" : "false",
+		"if" : [
+			{ "name" : "Safety Important", "value" : [ "Agree" ] }
+		],
+		"then" : {
+			"name" : "Safety",
+			"value" : [ "High" ] 
+		}
+	},
+	{
+		"answer" : "false",
+		"if" : [
+			{ "name" : "Safety Important", "value" : [ "Neutral" ] }
+		],
+		"then" : {
+			"name" : "Safety", 
+			"value" : [ "Middle" ] 
+		}
+	},
+	{
+		"answer" : "false",
+		"if" : [
+			{ "name" : "Safety Important", "value" : [ "Disagree" ] }
+		],
+		"then" : {
+			"name" : "Safety", 
+			"value" : [ "Low" ] 
+		}
+	},
+	{
+		"answer" : "false",
+		"if" : [
+			{ "name" : "Safety Important", "value" : [ "Strongly Disagree" ] }
+		],
+		"then" : {
+			"name" : "Safety", 
+			"value" : [ "Very Low" ] 
+		}
+	},
+	{
+		"answer" : "false",
+		"if" : [
+			{ "name": "Enjoys People", "value" : [ "Strongly Agree" ] }
+		],
+		"then" : {
+			"name" : "People", 
+			"value" : [ "Very High" ]
+		}
+	},
+	{
+		"answer" : "false",
+		"if" : [
+			{ "name" : "Enjoys People", "value" : [ "Agree" ] }
+		],
+		"then" : {
+			"name" : "People",
+			"value" : [ "High" ] 
+		}
+	},
+	{
+		"answer" : "false",
+		"if" : [
+			{ "name" : "Enjoys People", "value" : [ "Neutral" ] }
+		],
+		"then" : {
+			"name" : "People", 
+			"value" : [ "Middle" ] 
+		}
+	},
+	{
+		"answer" : "false",
+		"if" : [
+			{ "name" : "Enjoys People", "value" : [ "Disagree" ] }
+		],
+		"then" : {
+			"name" : "People", 
+			"value" : [ "Low" ] 
+		}
+	},
+	{
+		"answer" : "false",
+		"if" : [
+			{ "name" : "Enjoys People", "value" : [ "Strongly Disagree" ] }
+		],
+		"then" : {
+			"name" : "People", 
+			"value" : [ "Very Low" ] 
+		}
+	},
+	{
+		"answer" : "false",
+		"if" : [
+			{ "name": "Plaid Wins", "value" : [ "Strongly Agree" ] }
+		],
+		"then" : {
+			"name" : "Style", 
+			"value" : [ "Very High" ]
+		}
+	},
+	{
+		"answer" : "false",
+		"if" : [
+			{ "name" : "Plaid Wins", "value" : [ "Agree" ] }
+		],
+		"then" : {
+			"name" : "Style",
+			"value" : [ "High" ] 
+		}
+	},
+	{
+		"answer" : "false",
+		"if" : [
+			{ "name" : "Plaid Wins", "value" : [ "Neutral" ] }
+		],
+		"then" : {
+			"name" : "Style", 
+			"value" : [ "Middle" ] 
+		}
+	},
+	{
+		"answer" : "false",
+		"if" : [
+			{ "name" : "Plaid Wins", "value" : [ "Disagree" ] }
+		],
+		"then" : {
+			"name" : "Style", 
+			"value" : [ "Low" ] 
+		}
+	},
+	{
+		"answer" : "false",
+		"if" : [
+			{ "name" : "Plaid Wins", "value" : [ "Strongly Disagree" ] }
+		],
+		"then" : {
+			"name" : "Style", 
+			"value" : [ "Very Low" ] 
+		}
+	},
+	{
+		"answer" : "false",
+		"if" : [
+			{ "name": "Likes Drugs", "value" : [ "Strongly Agree" ] }
+		],
+		"then" : {
+			"name" : "Drugs", 
+			"value" : [ "Very High" ]
+		}
+	},
+	{
+		"answer" : "false",
+		"if" : [
+			{ "name" : "Likes Drugs", "value" : [ "Agree" ] }
+		],
+		"then" : {
+			"name" : "Drugs",
+			"value" : [ "High" ] 
+		}
+	},
+	{
+		"answer" : "false",
+		"if" : [
+			{ "name" : "Likes Drugs", "value" : [ "Neutral" ] }
+		],
+		"then" : {
+			"name" : "Drugs", 
+			"value" : [ "Middle" ] 
+		}
+	},
+	{
+		"answer" : "false",
+		"if" : [
+			{ "name" : "Likes Drugs", "value" : [ "Disagree" ] }
+		],
+		"then" : {
+			"name" : "Drugs", 
+			"value" : [ "Low" ] 
+		}
+	},
+	{
+		"answer" : "false",
+		"if" : [
+			{ "name" : "Likes Drugs", "value" : [ "Strongly Disagree" ] }
+		],
+		"then" : {
+			"name" : "Drugs", 
+			"value" : [ "Very Low" ] 
+		}
+	},
+	{
+		"answer" : "false",
+		"if" : [
+			{ "name": "Likes Close", "value" : [ "Strongly Agree" ] }
+		],
+		"then" : {
+			"name" : "Proximity", 
+			"value" : [ "Very High" ]
+		}
+	},
+	{
+		"answer" : "false",
+		"if" : [
+			{ "name" : "Likes Close", "value" : [ "Agree" ] }
+		],
+		"then" : {
+			"name" : "Proximity",
+			"value" : [ "High" ] 
+		}
+	},
+	{
+		"answer" : "false",
+		"if" : [
+			{ "name" : "Likes Close", "value" : [ "Neutral" ] }
+		],
+		"then" : {
+			"name" : "Proximity", 
+			"value" : [ "Middle" ] 
+		}
+	},
+	{
+		"answer" : "false",
+		"if" : [
+			{ "name" : "Likes Close", "value" : [ "Disagree" ] }
+		],
+		"then" : {
+			"name" : "Proximity", 
+			"value" : [ "Low" ] 
+		}
+	},
+	{
+		"answer" : "false",
+		"if" : [
+			{ "name" : "Likes Close", "value" : [ "Strongly Disagree" ] }
+		],
+		"then" : {
+			"name" : "Proximity", 
+			"value" : [ "Very Low" ] 
+		}
+	},
+	{
+		"answer" : "true",
 		"if" : [
 			{ "name" : "Price", "value" : [ "Very Low" ] },
 			{ "name" : "Safety", "value" : [ "Very Low" ] },
@@ -59,6 +315,7 @@
 		}
 	},
 	{
+		"answer" : "true",
 		"if" : [
 			{ "name" : "Price", "value" : [ "High" ] },
 			{ "name" : "Safety", "value" : [ "High" ] },
@@ -73,6 +330,7 @@
 		}
 	},
 	{
+		"answer" : "true",
 		"if" : [
 			{ "name" : "Price", "value" : [ "Low", "Middle" ] },
 			{ "name" : "Safety", "value" : [ "Low", "Middle" ] },
@@ -87,6 +345,7 @@
 		}
 	},
 	{
+		"answer" : "true",
 		"if" : [
 			{ "name" : "Price", "value" : [ "High" ] },
 			{ "name" : "Safety", "value" : [ "Middle", "High" ] },
@@ -101,6 +360,7 @@
 		}
 	},
 	{
+		"answer" : "true",
 		"if" : [
 			{ "name" : "Price", "value" : [ "Very High" ] },
 			{ "name" : "Safety", "value" : [ "Very High" ] },
@@ -115,6 +375,7 @@
 		}
 	},
 	{
+		"answer" : "true",
 		"if" : [
 			{ "name" : "Price", "value" : [ "Middle" ] },
 			{ "name" : "Safety", "value" : [ "Low", "Middle" ] },
@@ -129,6 +390,7 @@
 		}
 	},
 	{
+		"answer" : "true",
 		"if" : [
 			{ "name" : "Price", "value" : [ "Middle" ] },
 			{ "name" : "Safety", "value" : [ "Middle" ] },
@@ -143,6 +405,7 @@
 		}
 	},
 	{
+		"answer" : "true",
 		"if" : [
 			{ "name" : "Price", "value" : [ "Middle", "High" ] },
 			{ "name" : "Safety", "value" : [ "Very High" ] },
@@ -157,6 +420,7 @@
 		}
 	},
 	{
+		"answer" : "true",
 		"if" : [
 			{ "name" : "Price", "value" : [ "High" ] },
 			{ "name" : "Safety", "value" : [ "High" ] },
@@ -172,6 +436,7 @@
 		
 	},
 	{
+		"answer" : "true",
 		"if" : [
 			{ "name" : "Price", "value" : [ "Middle", "High" ] },
 			{ "name" : "Safety", "value" : [ "Low", "Middle" ] },

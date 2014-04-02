@@ -203,7 +203,7 @@ public class UI {
             public void actionPerformed(ActionEvent e)
             {
                 //Execute when button is pressed
-                Main.engine.addRule(null);
+                //Main.engine.addRule(null);
                 pu.dispose();
                 
             }
@@ -557,12 +557,12 @@ public class UI {
 
                 showAnswerPage(a);
                 */
-                HousingSets.price.setInput(inputs[0]);
-                HousingSets.safety.setInput(inputs[1]);
-                HousingSets.people.setInput(inputs[2]);
-                HousingSets.style.setInput(inputs[3]);
-                HousingSets.drugs.setInput(inputs[4]);
-                HousingSets.proximity.setInput(inputs[5]);
+                HousingSets.canAfford.setInput(inputs[0]);
+                HousingSets.safetyImportant.setInput(inputs[1]);
+                HousingSets.enjoyPeople.setInput(inputs[2]);
+                HousingSets.plaidWins.setInput(inputs[3]);
+                HousingSets.likesDrugs.setInput(inputs[4]);
+                HousingSets.likesClose.setInput(inputs[5]);
                 LinguisticVariable a =Main.engine.answer();
                 showAnswerPage(a);
                 
@@ -731,7 +731,7 @@ public class UI {
            addLabel("Awesome! Thanks for the feedback.", j,a,18 );
            
            // Update the rules
-           Main.engine.updateRules(answer, feedback);
+           //Main.engine.updateRules(answer, feedback);
         }
         return j;
     }
