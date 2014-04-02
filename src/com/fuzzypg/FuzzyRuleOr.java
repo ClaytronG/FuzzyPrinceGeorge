@@ -17,8 +17,8 @@ public class FuzzyRuleOr extends FuzzyRuleOperation {
     }
     
     @Override
-    public double getResult() {
-        return Math.max(left.getResult(), right.getResult());
+    public double getResult(boolean defuzzy) {
+        return Math.max(left.getResult(defuzzy), right.getResult(defuzzy));
     }
 
     @Override

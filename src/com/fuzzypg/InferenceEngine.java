@@ -19,8 +19,9 @@ import org.json.JSONArray;
  */
 public class InferenceEngine {
     
-    private final HashMap<String, FuzzyRule> firstRules;
-    private final HashMap<String, FuzzyRule> secondRules;
+    private final HashMap<Integer, FuzzyRule> firstRules;
+    private final HashMap<Integer, FuzzyRule> secondRules;
+    private final HashMap<Integer, FuzzyRule> rules;
     private final HashMap<String, LinguisticVariable> variables;
     
     /**
@@ -29,6 +30,7 @@ public class InferenceEngine {
     public InferenceEngine() {
         firstRules = new HashMap<>();
         secondRules = new HashMap<>();
+        rules = new HashMap<>();
         variables = new HashMap<>();
     }
     
@@ -40,6 +42,7 @@ public class InferenceEngine {
     public InferenceEngine(String file) {
         firstRules = new HashMap<>();
         secondRules = new HashMap<>();
+        rules = new HashMap<>();
         variables = new HashMap<>();
         parseJson(file);
     }
@@ -73,14 +76,16 @@ public class InferenceEngine {
      * @param array 
      */
     private void parseJson(JSONArray array) {
-        System.out.println(array.length());
         for (int i = 0; i < array.length(); ++i) {
-            FuzzyRule rule = new FuzzyRule(array.getJSONObject(i));
+            FuzzyRule rule = new FuzzyRule(array.getJSONObject(i));            
             if (array.getJSONObject(i).getString("answer").equals("true")) {
-                secondRules.put(rule.toString(), rule);
+                secondRules.put(rule.toString().hashCode(), rule);
+                rule.setAnswer(true);
             } else {
-                firstRules.put(rule.toString(), rule);
+                firstRules.put(rule.toString().hashCode(), rule);
             }
+            
+            rules.put(rule.toString().hashCode(), rule);            
         }
     }
     
@@ -117,30 +122,20 @@ public class InferenceEngine {
      * @return deffuzified linguistic variable
      */
     public LinguisticVariable answer() {
-        System.out.println("InferenceEngine.answer()");
-        // Evaluate the rules
-        System.out.print("First rules ");
-        System.out.println(firstRules.size());
+        // Evaluate the initial rules
         for (FuzzyRule rule : firstRules.values()) {
-            System.out.println(rule);
             rule.evaluate();
         }
-        System.out.print("Second rules ");
-        System.out.println(secondRules.size());
+        // Defuzzify the intermediate variables
+        for (FuzzyRule rule : firstRules.values()) {
+            LinguisticVariable variable = HousingSets.getVariable(rule.getName());
+            double thing = variable.defuzzify();
+            variable.setInput(thing);
+        }
+        // Evaluate the final rules
         for (FuzzyRule rule : secondRules.values()) {
-            System.out.println(rule);
             rule.evaluate();
         }
-        /**
-        boolean wmChanged;
-        do{
-            wmChanged =false;
-            for (FuzzyRule rule : rules.values()) {
-                if(rule.evaluate())
-                    wmChanged=true;
-            }
-        }while(wmChanged);
-        */
         
         // Deffuzify the answer
         double answerValue = -1;
@@ -149,7 +144,6 @@ public class InferenceEngine {
             if (variable.isAnswer()) {
                 answerValue = variable.defuzzify();
                 answerVariable = variable;
-                System.out.println("v:"+answerValue);
             }
         }
         
@@ -201,10 +195,10 @@ public class InferenceEngine {
                     }
                 }
             } else {
-                System.out.println("You shouldn't live in Prince George");                
+                System.out.println("You shouldn't live in Prince George1");                
             }
         } else {
-            System.out.println("You shouldn't live in Prince George");
+            System.out.println("You shouldn't live in Prince George2");
             
         }
         

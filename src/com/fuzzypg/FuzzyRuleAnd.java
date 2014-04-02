@@ -17,8 +17,8 @@ public class FuzzyRuleAnd extends FuzzyRuleOperation {
     }
     
     @Override
-    public double getResult() {
-        return Math.min(left.getResult(), right.getResult());
+    public double getResult(boolean defuzzy) {
+        return Math.min(left.getResult(defuzzy), right.getResult(defuzzy));
     }
 
     @Override

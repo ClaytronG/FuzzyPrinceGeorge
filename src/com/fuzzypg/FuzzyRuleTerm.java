@@ -31,9 +31,18 @@ public class FuzzyRuleTerm extends FuzzyRuleObject {
     }        
     
     @Override
-    public double getResult() {
-        double result = variable.getMembershipValueOf(value);
+    public double getResult(boolean defuzzy) {
+        double result;
+        if (defuzzy) {
+            result = variable.defuzzify();
+            variable.setInput(result);
+            result = variable.getMembershipValueOf(value);
+        } else {
+            result = variable.getMembershipValueOf(value);
+        }
+        result = variable.getMembershipValueOf(value);
         if (complement) result = 1 - result;
+        
         return result;
     }
     

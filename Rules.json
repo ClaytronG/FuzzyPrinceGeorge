@@ -2,6 +2,56 @@
 	{
 		"answer" : "false",
 		"if" : [
+			{ "name": "Can Afford", "value" : [ "Strongly Agree" ] }
+		],
+		"then" : {
+			"name" : "Price", 
+			"value" : [ "Very High" ]
+		}
+	},
+	{
+		"answer" : "false",
+		"if" : [
+			{ "name" : "Can Afford", "value" : [ "Agree" ] }
+		],
+		"then" : {
+			"name" : "Price",
+			"value" : [ "High" ] 
+		}
+	},
+	{
+		"answer" : "false",
+		"if" : [
+			{ "name" : "Can Afford", "value" : [ "Neutral" ] }
+		],
+		"then" : {
+			"name" : "Price", 
+			"value" : [ "Middle" ] 
+		}
+	},
+	{
+		"answer" : "false",
+		"if" : [
+			{ "name" : "Can Afford", "value" : [ "Disagree" ] }
+		],
+		"then" : {
+			"name" : "Price", 
+			"value" : [ "Low" ] 
+		}
+	},
+	{
+		"answer" : "false",
+		"if" : [
+			{ "name" : "Can Afford", "value" : [ "Strongly Disagree" ] }
+		],
+		"then" : {
+			"name" : "Price", 
+			"value" : [ "Very Low" ] 
+		}
+	},
+	{
+		"answer" : "false",
+		"if" : [
 			{ "name": "Safety Important", "value" : [ "Strongly Agree" ] }
 		],
 		"then" : {
@@ -398,6 +448,21 @@
 		"then" : { 
 			"name" : "Area", 
 			"value" : [ "Crescents" ] 
+		}
+	},
+	{
+		"answer" : "true",
+		"if" : [
+			{ "name" : "Price", "value" : [ "High", "Very High" ] },
+			{ "name" : "Safety", "value" : [ "Very High" ] },
+			{ "name" : "People", "value" : [ "Very High" ] },
+			{ "name" : "Style", "value" : [ "Very Low" ] },
+			{ "name" : "Drugs", "value" : [ "Very Low" ] },
+			{ "name" : "Proximity", "value" : [ "Very Low", "Low" ] }			
+		],
+		"then" : { 
+			"name" : "Area", 
+			"value" : [ "College Heights" ] 
 		}
 	}
 ]

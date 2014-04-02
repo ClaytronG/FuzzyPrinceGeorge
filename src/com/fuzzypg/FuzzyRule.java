@@ -30,6 +30,8 @@ public class FuzzyRule {
      */
     private final FuzzyRuleTerm result;
     
+    private boolean answer = false;
+    
     public FuzzyRule(FuzzyRuleObject premise, FuzzyRuleTerm result) {
         this.premise = premise;
         this.result = result;
@@ -77,25 +79,32 @@ public class FuzzyRule {
         }
         this.name = thenName;
     }
-      
-    /**
-     * Evaluates the rule and updates the corresponding answer fuzzy set.
-     */
     
-    public boolean evaluate() {
-        boolean updated=false;
+    /**
+     * 
+     */
+    public void evaluate() {
         LinguisticVariable variable = result.getVariable();
         FuzzySet term = variable.getTerm(result.getValue());
-        double limit = premise.getResult();
-        if(term.getFuzzyLimit() != limit)
-            updated=true;
-        term.setFuzzyLimit(limit);
-        
-        return updated;
+        double value;
+        if (isAnswer()) {
+            value = premise.getResult(true);
+        } else {
+            value = premise.getResult(false);
+        }
+        term.setFuzzyLimit(value);
     }
     
     public String getName() {
         return name;
+    }
+    
+    public boolean isAnswer() {
+        return answer;
+    }
+    
+    public void setAnswer(boolean answer) {
+        this.answer = answer;
     }
     
     @Override

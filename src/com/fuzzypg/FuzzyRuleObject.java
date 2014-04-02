@@ -12,5 +12,5 @@ public abstract class FuzzyRuleObject {
      * 
      * @return membership value
      */
-    public abstract double getResult();
+    public abstract double getResult(boolean defuzzy);
 }

@@ -16,6 +16,6 @@ public abstract class FuzzyRuleOperation extends FuzzyRuleObject {
     }
     
     @Override
-    public abstract double getResult();
+    public abstract double getResult(boolean defuzzy);
     
 }

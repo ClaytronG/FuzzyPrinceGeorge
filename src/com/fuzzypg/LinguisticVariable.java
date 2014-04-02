@@ -103,7 +103,8 @@ public class LinguisticVariable {
     }
     
     public double getMembershipValueOf(String name) {
-        return sets.get(name).getValue(input);
+        double result = sets.get(name).getValue(input);
+        return result;
     }
     
     /**
@@ -131,7 +132,6 @@ public class LinguisticVariable {
      * @return the defuzzified value
      */
     public double defuzzify() {
-        System.out.println("Defuzzifing...");
         double[] results = new double[(int) ((maxValue - minValue) / STEP_SIZE)];
         for (FuzzySet term : sets.values()) {
             for (int i = 0; i < results.length; ++i) {
