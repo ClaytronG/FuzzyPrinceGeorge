@@ -1,0 +1,188 @@
+[
+	{
+		"if" : [
+			{ "name": "Can Afford", "value" : [ "Strongly Agree" ] }
+		],
+		"then" : {
+			"name" : "Price", 
+			"value" : [ "Very High" ]
+		}
+	},
+	{
+		"if" : [
+			{ "name" : "Can Afford", "value" : [ "Agree" ] }
+		],
+		"then" : {
+			"name" : "Price",
+			"value" : [ "High" ] 
+		}
+	},
+	{
+		"if" : [
+			{ "name" : "Can Afford", "value" : [ "Neutral" ] }
+		],
+		"then" : {
+			"name" : "Price", 
+			"value" : [ "Middle" ] 
+		}
+	},
+	{
+		"if" : [
+			{ "name" : "Can Afford", "value" : [ "Disagree" ] }
+		],
+		"then" : {
+			"name" : "Price", 
+			"value" : [ "Low" ] 
+		}
+	},
+	{
+		"if" : [
+			{ "name" : "Can Afford", "value" : [ "Strongly Disagree" ] }
+		],
+		"then" : {
+			"name" : "Price", 
+			"value" : [ "Very Low" ] 
+		}
+	},
+	{
+		"if" : [
+			{ "name" : "Price", "value" : [ "Very Low" ] },
+			{ "name" : "Safety", "value" : [ "Very Low" ] },
+			{ "name" : "People", "value" : [ "Middle", "High" ] },
+			{ "name" : "Style", "value" : [ "Middle" ] },
+			{ "name" : "Drugs", "value" : [ "Very High" ] },
+			{ "name" : "Proximity", "value" : [ "High" ] }
+		],
+		"then" : {
+			"name" : "Area", 
+			"value" : [ "Fort George" ] 
+		}
+	},
+	{
+		"if" : [
+			{ "name" : "Price", "value" : [ "High" ] },
+			{ "name" : "Safety", "value" : [ "High" ] },
+			{ "name" : "People", "value" : [ "Middle", "High" ] },
+			{ "name" : "Style", "value" : [ "Middle" ] },
+			{ "name" : "Drugs", "value" : [ "Low" ] },
+			{ "name" : "Proximity", "value" : [ "Low" ] }
+		],
+		"then" : {
+			"name" : "Area", 
+			"value" : [ "Peden Hill" ] 
+		}
+	},
+	{
+		"if" : [
+			{ "name" : "Price", "value" : [ "Low", "Middle" ] },
+			{ "name" : "Safety", "value" : [ "Low", "Middle" ] },
+			{ "name" : "People", "value" : [ "Middle", "High" ] },
+			{ "name" : "Style", "value" : [ "Middle" ] },
+			{ "name" : "Drugs", "value" : [ "Middle" ] },
+			{ "name" : "Proximity", "value" : [ "Very High" ] }
+		],
+		"then" : {
+			"name" : "Area", 
+			"value" : [ "Downtown" ] 
+		}
+	},
+	{
+		"if" : [
+			{ "name" : "Price", "value" : [ "High" ] },
+			{ "name" : "Safety", "value" : [ "Middle", "High" ] },
+			{ "name" : "People", "value" : [ "High"] },
+			{ "name" : "Style", "value" : [ "Low" ] },
+			{ "name" : "Drugs", "value" : [ "Low" ] },
+			{ "name" : "Proximity", "value" : [ "Middle" ] }			
+		],
+		"then" : {
+			"name" : "Area", 
+			"value" : [ "Foothills" ] 
+		}
+	},
+	{
+		"if" : [
+			{ "name" : "Price", "value" : [ "Very High" ] },
+			{ "name" : "Safety", "value" : [ "Very High" ] },
+			{ "name" : "People", "value" : [ "Very High"] },
+			{ "name" : "Style", "value" : [ "High" ] },
+			{ "name" : "Drugs", "value" : [ "Very Low" ] },
+			{ "name" : "Proximity", "value" : [ "Low" ] }			
+		],
+		"then" : {
+			"name" : "Area", 
+			"value" : [ "Ridgeview" ]
+		}
+	},
+	{
+		"if" : [
+			{ "name" : "Price", "value" : [ "Middle" ] },
+			{ "name" : "Safety", "value" : [ "Low", "Middle" ] },
+			{ "name" : "People", "value" : [ "Middle"] },
+			{ "name" : "Style", "value" : [ "Middle" ] },
+			{ "name" : "Drugs", "value" : [ "Middle" ] },
+			{ "name" : "Proximity", "value" : [ "Middle" ] }			
+		],
+		"then" : { 
+			"name" : "Area", 
+			"value" : [ "North Ospika" ] 
+		}
+	},
+	{
+		"if" : [
+			{ "name" : "Price", "value" : [ "Middle" ] },
+			{ "name" : "Safety", "value" : [ "Middle" ] },
+			{ "name" : "People", "value" : [ "High"] },
+			{ "name" : "Style", "value" : [ "High" ] },
+			{ "name" : "Drugs", "value" : [ "High" ] },
+			{ "name" : "Proximity", "value" : [ "Low" ] }			
+		],
+		"then" : { 
+			"name" : "Area", 
+			"value" : [ "Hart" ] 
+		}
+	},
+	{
+		"if" : [
+			{ "name" : "Price", "value" : [ "Middle", "High" ] },
+			{ "name" : "Safety", "value" : [ "Very High" ] },
+			{ "name" : "People", "value" : [ "Very Low", "Low" ] },
+			{ "name" : "Style", "value" : [ "High", "Very High" ] },
+			{ "name" : "Drugs", "value" : [ "Middle" ] },
+			{ "name" : "Proximity", "value" : [ "Very Low" ] }			
+		],
+		"then" : { 
+			"name" : "Area", 
+			"value" : [ "Out of Town" ]
+		}
+	},
+	{
+		"if" : [
+			{ "name" : "Price", "value" : [ "High" ] },
+			{ "name" : "Safety", "value" : [ "High" ] },
+			{ "name" : "People", "value" : [ "High" ] },
+			{ "name" : "Style", "value" : [ "Low" ] },
+			{ "name" : "Drugs", "value" : [ "Low" ] },
+			{ "name" : "Proximity", "value" : [ "High" ] }			
+		],
+		"then" : { 
+			"name" : "Area", 
+			"value" : [ "Westwood and Pinewood" ] 
+		}
+		
+	},
+	{
+		"if" : [
+			{ "name" : "Price", "value" : [ "Middle", "High" ] },
+			{ "name" : "Safety", "value" : [ "Low", "Middle" ] },
+			{ "name" : "People", "value" : [ "High" ] },
+			{ "name" : "Style", "value" : [ "Low" ] },
+			{ "name" : "Drugs", "value" : [ "Low", "Middle" ] },
+			{ "name" : "Proximity", "value" : [ "Very High" ] }			
+		],
+		"then" : { 
+			"name" : "Area", 
+			"value" : [ "Crescents" ] 
+		}
+	}
+]
