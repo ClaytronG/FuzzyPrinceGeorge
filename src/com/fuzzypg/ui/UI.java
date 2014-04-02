@@ -59,7 +59,7 @@ public class UI {
     private JFrame mf;
     
     //answers to questions;
-    double[] inputs = new double[6];
+    double[] inputs = {3.0,3.0,3.0,3.0,3.0,3.0};
     int[] feedback = new int[6];
     
     public void startUI()
