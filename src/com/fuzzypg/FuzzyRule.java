@@ -76,15 +76,21 @@ public class FuzzyRule {
             result = null;
         }
     }
-    
+      
     /**
      * Evaluates the rule and updates the corresponding answer fuzzy set.
      */
-    public void evaluate() {
+    
+    public boolean evaluate() {
+        boolean updated=false;
         LinguisticVariable variable = result.getVariable();
         FuzzySet term = variable.getTerm(result.getValue());
         double limit = premise.getResult();
+        if(term.getFuzzyLimit() != limit)
+            updated=true;
         term.setFuzzyLimit(limit);
+        
+        return updated;
     }
     
     public String getName() {

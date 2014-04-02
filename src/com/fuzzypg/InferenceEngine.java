@@ -131,6 +131,16 @@ public class InferenceEngine {
             System.out.println(rule);
             rule.evaluate();
         }
+        /**
+        boolean wmChanged;
+        do{
+            wmChanged =false;
+            for (FuzzyRule rule : rules.values()) {
+                if(rule.evaluate())
+                    wmChanged=true;
+            }
+        }while(wmChanged);
+        */
         
         // Deffuzify the answer
         double answerValue = -1;

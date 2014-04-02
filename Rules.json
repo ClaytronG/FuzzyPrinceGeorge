@@ -49,6 +49,231 @@
 			"value" : [ "Very Low" ] 
 		}
 	},
+{
+		"if" : [
+			{ "name": "Safety Important", "value" : [ "Strongly Agree" ] }
+		],
+		"then" : {
+			"name" : "Safety", 
+			"value" : [ "Very High" ]
+		}
+	},
+	{
+		"if" : [
+			{ "name" : "Safety Important", "value" : [ "Agree" ] }
+		],
+		"then" : {
+			"name" : "Safety",
+			"value" : [ "High" ] 
+		}
+	},
+	{
+		"if" : [
+			{ "name" : "Safety Important", "value" : [ "Neutral" ] }
+		],
+		"then" : {
+			"name" : "Safety", 
+			"value" : [ "Middle" ] 
+		}
+	},
+	{
+		"if" : [
+			{ "name" : "Safety Important", "value" : [ "Disagree" ] }
+		],
+		"then" : {
+			"name" : "Safety", 
+			"value" : [ "Low" ] 
+		}
+	},
+	{
+		"if" : [
+			{ "name" : "Safety Important", "value" : [ "Strongly Disagree" ] }
+		],
+		"then" : {
+			"name" : "Safety", 
+			"value" : [ "Very Low" ] 
+		}
+	},
+{
+		"if" : [
+			{ "name": "Enjoy People", "value" : [ "Strongly Agree" ] }
+		],
+		"then" : {
+			"name" : "People", 
+			"value" : [ "Very High" ]
+		}
+	},
+	{
+		"if" : [
+			{ "name" : "Enjoy People", "value" : [ "Agree" ] }
+		],
+		"then" : {
+			"name" : "People",
+			"value" : [ "High" ] 
+		}
+	},
+	{
+		"if" : [
+			{ "name" : "Enjoy People", "value" : [ "Neutral" ] }
+		],
+		"then" : {
+			"name" : "People", 
+			"value" : [ "Middle" ] 
+		}
+	},
+	{
+		"if" : [
+			{ "name" : "Enjoy People", "value" : [ "Disagree" ] }
+		],
+		"then" : {
+			"name" : "People", 
+			"value" : [ "Low" ] 
+		}
+	},
+	{
+		"if" : [
+			{ "name" : "Enjoy People", "value" : [ "Strongly Disagree" ] }
+		],
+		"then" : {
+			"name" : "People", 
+			"value" : [ "Very Low" ] 
+		}
+	},
+{
+		"if" : [
+			{ "name": "Plaid Wins", "value" : [ "Strongly Agree" ] }
+		],
+		"then" : {
+			"name" : "Style", 
+			"value" : [ "Very High" ]
+		}
+	},
+	{
+		"if" : [
+			{ "name" : "Plaid Wins", "value" : [ "Agree" ] }
+		],
+		"then" : {
+			"name" : "Style",
+			"value" : [ "High" ] 
+		}
+	},
+	{
+		"if" : [
+			{ "name" : "Plaid Wins", "value" : [ "Neutral" ] }
+		],
+		"then" : {
+			"name" : "Style", 
+			"value" : [ "Middle" ] 
+		}
+	},
+	{
+		"if" : [
+			{ "name" : "Plaid Wins", "value" : [ "Disagree" ] }
+		],
+		"then" : {
+			"name" : "Style", 
+			"value" : [ "Low" ] 
+		}
+	},
+	{
+		"if" : [
+			{ "name" : "Plaid Wins", "value" : [ "Strongly Disagree" ] }
+		],
+		"then" : {
+			"name" : "Style", 
+			"value" : [ "Very Low" ] 
+		}
+	},
+{
+		"if" : [
+			{ "name": "Likes Drugs", "value" : [ "Strongly Agree" ] }
+		],
+		"then" : {
+			"name" : "Drugs", 
+			"value" : [ "Very High" ]
+		}
+	},
+	{
+		"if" : [
+			{ "name" : "Likes Drugs", "value" : [ "Agree" ] }
+		],
+		"then" : {
+			"name" : "Drugs",
+			"value" : [ "High" ] 
+		}
+	},
+	{
+		"if" : [
+			{ "name" : "Likes Drugs", "value" : [ "Neutral" ] }
+		],
+		"then" : {
+			"name" : "Drugs", 
+			"value" : [ "Middle" ] 
+		}
+	},
+	{
+		"if" : [
+			{ "name" : "Likes Drugs", "value" : [ "Disagree" ] }
+		],
+		"then" : {
+			"name" : "Drugs", 
+			"value" : [ "Low" ] 
+		}
+	},
+	{
+		"if" : [
+			{ "name" : "Likes Drugs", "value" : [ "Strongly Disagree" ] }
+		],
+		"then" : {
+			"name" : "Drugs", 
+			"value" : [ "Very Low" ] 
+		}
+	},
+{
+		"if" : [
+			{ "name": "Likes Close", "value" : [ "Strongly Agree" ] }
+		],
+		"then" : {
+			"name" : "Proximity", 
+			"value" : [ "Very High" ]
+		}
+	},
+	{
+		"if" : [
+			{ "name" : "Likes Close", "value" : [ "Agree" ] }
+		],
+		"then" : {
+			"name" : "Proximity",
+			"value" : [ "High" ] 
+		}
+	},
+	{
+		"if" : [
+			{ "name" : "Likes Close", "value" : [ "Neutral" ] }
+		],
+		"then" : {
+			"name" : "Proximity", 
+			"value" : [ "Middle" ] 
+		}
+	},
+	{
+		"if" : [
+			{ "name" : "Likes Close", "value" : [ "Disagree" ] }
+		],
+		"then" : {
+			"name" : "Proximity", 
+			"value" : [ "Low" ] 
+		}
+	},
+	{
+		"if" : [
+			{ "name" : "Likes Close", "value" : [ "Strongly Disagree" ] }
+		],
+		"then" : {
+			"name" : "Proximity", 
+			"value" : [ "Very Low" ] 
+		}
+	},
 	{
 		"answer" : "false",
 		"if" : [
