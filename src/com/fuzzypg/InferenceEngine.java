@@ -130,7 +130,9 @@ public class InferenceEngine {
         // Defuzzify the intermediate variables
         for (FuzzyRule rule : firstRules.values()) {
             LinguisticVariable variable = HousingSets.getVariable(rule.getName());
+            // Defuzzify result
             double thing = variable.defuzzify();
+            // Set the CoG as the input for this linguistic variable
             variable.setInput(thing);
         }
         // Evaluate the final rules

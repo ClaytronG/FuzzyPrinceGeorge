@@ -88,6 +88,9 @@ public class FuzzyRule {
         LinguisticVariable variable = result.getVariable();
         FuzzySet term = variable.getTerm(result.getValue());
         double value = premise.getResult();
+        if (value > 0) {
+            System.out.println(this + " = " + value);
+        }
         term.setFuzzyLimit(value);
     }
     

@@ -5,7 +5,6 @@ package com.fuzzypg.ui;
  * and open the template in the editor.
  */
 
-import com.fuzzypg.FuzzyRule;
 import com.fuzzypg.HousingSets;
 import com.fuzzypg.FuzzySet;
 import com.fuzzypg.LinguisticVariable;
@@ -20,12 +19,9 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Insets;
-import java.awt.MenuBar;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -68,6 +64,10 @@ public class UI {
     
     public void startUI()
     {
+        // Initialize the input values to neutral
+        for (int i = 0; i < inputs.length; ++i) {
+            inputs[i] = 3.0;
+        }
         openWindow();
     }
     
@@ -225,6 +225,8 @@ public class UI {
      
     private void showQuestionPage()
     {
+        // Reset the inference engine
+        Main.initEngine();
         mf.getContentPane().removeAll();
         
         
