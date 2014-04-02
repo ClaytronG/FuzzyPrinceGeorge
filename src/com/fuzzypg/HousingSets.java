@@ -21,26 +21,26 @@ public class HousingSets {
     public static LinguisticVariable area;
     
     // Linguistic Terms
-    public static LinguisticTerm strongDisagree;
-    public static LinguisticTerm disagree;
-    public static LinguisticTerm neutral;
-    public static LinguisticTerm agree;
-    public static LinguisticTerm strongAgree;
+    public static FuzzySet strongDisagree;
+    public static FuzzySet disagree;
+    public static FuzzySet neutral;
+    public static FuzzySet agree;
+    public static FuzzySet strongAgree;
     // ANSWERS
-    public static LinguisticTerm collegeHeights;
-    public static LinguisticTerm ridgeview;
-    public static LinguisticTerm hart;
-    public static LinguisticTerm foothills;
-    public static LinguisticTerm ospika;
-    public static LinguisticTerm fortGeorge;
-    public static LinguisticTerm westwood;
-    public static LinguisticTerm crescents;
-    public static LinguisticTerm downtown;
-    public static LinguisticTerm pedenHill;
-    public static LinguisticTerm outOfTown;    
+    public static FuzzySet collegeHeights;
+    public static FuzzySet ridgeview;
+    public static FuzzySet hart;
+    public static FuzzySet foothills;
+    public static FuzzySet ospika;
+    public static FuzzySet fortGeorge;
+    public static FuzzySet westwood;
+    public static FuzzySet crescents;
+    public static FuzzySet downtown;
+    public static FuzzySet pedenHill;
+    public static FuzzySet outOfTown;    
     
     private static HashMap<String, LinguisticVariable> variables;
-    private static HashMap<String, LinguisticTerm> terms;
+    private static HashMap<String, FuzzySet> terms;
     
     /**
      * Call this when the program starts.
@@ -67,15 +67,15 @@ public class HousingSets {
         variables.put(area.getName(), area);
         
         // Terms
-        strongDisagree = new LinguisticTerm("Strongly Disagree");
+        strongDisagree = new FuzzySet("Strongly Disagree");
         strongDisagree.addValue(new Pair(0,1), new Pair(1,1), new Pair(2,0));
-        disagree = new LinguisticTerm("Disagree");
+        disagree = new FuzzySet("Disagree");
         disagree.addValue(new Pair(0,0), new Pair(1,1), new Pair(2,1), new Pair(3,0));
-        neutral = new LinguisticTerm("Neutral");
+        neutral = new FuzzySet("Neutral");
         neutral.addValue(new Pair(1,0.5), new Pair(2,1), new Pair(3,1), new Pair(4,0.5));
-        agree = new LinguisticTerm("Agree");
+        agree = new FuzzySet("Agree");
         agree.addValue(new Pair(2,0), new Pair(3,1), new Pair(4,1), new Pair(5,0));
-        strongAgree = new LinguisticTerm("Strongly Agree");
+        strongAgree = new FuzzySet("Strongly Agree");
         strongAgree.addValue(new Pair(3,0), new Pair(4,1), new Pair(5,1));
         terms.put(strongDisagree.getName(), strongDisagree);
         terms.put(disagree.getName(), disagree);
@@ -83,27 +83,27 @@ public class HousingSets {
         terms.put(agree.getName(), agree);
         terms.put(strongAgree.getName(), strongAgree);
         // ANSWERS
-        collegeHeights = new LinguisticTerm("College Heights");
+        collegeHeights = new FuzzySet("College Heights");
         collegeHeights.addValue(new Pair(0,0), new Pair(5,1), new Pair(10,0));
-        ridgeview = new LinguisticTerm("Ridgeview");
+        ridgeview = new FuzzySet("Ridgeview");
         ridgeview.addValue(new Pair(10,0), new Pair(15,1), new Pair(20,0));
-        hart = new LinguisticTerm("Hart");
+        hart = new FuzzySet("Hart");
         hart.addValue(new Pair(20,0), new Pair(25,1), new Pair(30,0));
-        foothills = new LinguisticTerm("Foothills");
+        foothills = new FuzzySet("Foothills");
         foothills.addValue(new Pair(30,0), new Pair(35,1), new Pair(40,0));
-        ospika = new LinguisticTerm("North Ospika");
+        ospika = new FuzzySet("North Ospika");
         ospika.addValue(new Pair(40,0), new Pair(45,1), new Pair(50,0));
-        fortGeorge = new LinguisticTerm("Fort George");
+        fortGeorge = new FuzzySet("Fort George");
         fortGeorge.addValue(new Pair(50,0), new Pair(55,1), new Pair(60,0));
-        westwood = new LinguisticTerm("Westwood and Pinewood");
+        westwood = new FuzzySet("Westwood and Pinewood");
         westwood.addValue(new Pair(60,0), new Pair(65,1), new Pair(70,0));
-        crescents = new LinguisticTerm("Crescents");
+        crescents = new FuzzySet("Crescents");
         crescents.addValue(new Pair(70,0), new Pair(75,1), new Pair(80,0));
-        downtown = new LinguisticTerm("Downtown");
+        downtown = new FuzzySet("Downtown");
         downtown.addValue(new Pair(80,0), new Pair(85,1), new Pair(90,0));
-        pedenHill = new LinguisticTerm("Peden Hill");
+        pedenHill = new FuzzySet("Peden Hill");
         pedenHill.addValue(new Pair(90,0), new Pair(95,1), new Pair(100,0));
-        outOfTown = new LinguisticTerm("Out of Town");
+        outOfTown = new FuzzySet("Out of Town");
         outOfTown.addValue(new Pair(100,0), new Pair(105,1), new Pair(110,0));
         terms.put(collegeHeights.getName(), collegeHeights);
         terms.put(ridgeview.getName(), ridgeview);
@@ -117,14 +117,14 @@ public class HousingSets {
         terms.put(pedenHill.getName(), pedenHill);
         terms.put(outOfTown.getName(), outOfTown);
         
-        ArrayList<LinguisticTerm> fuzzyTerms = new ArrayList<>();
+        ArrayList<FuzzySet> fuzzyTerms = new ArrayList<>();
         fuzzyTerms.add(strongDisagree);
         fuzzyTerms.add(disagree);
         fuzzyTerms.add(neutral);
         fuzzyTerms.add(agree);
         fuzzyTerms.add(strongAgree);
         
-        ArrayList<LinguisticTerm> answerTerms = new ArrayList<>();
+        ArrayList<FuzzySet> answerTerms = new ArrayList<>();
         answerTerms.add(collegeHeights);
         answerTerms.add(ridgeview);
         answerTerms.add(hart);
@@ -156,11 +156,11 @@ public class HousingSets {
         return variables.values();
     }
     
-    public static LinguisticTerm getTerm(String name) {
+    public static FuzzySet getTerm(String name) {
         return terms.get(name);
     }
     
-    public static Collection<LinguisticTerm> getTerms() {
+    public static Collection<FuzzySet> getTerms() {
         return terms.values();
     }
 

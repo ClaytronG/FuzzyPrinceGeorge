@@ -1,5 +1,9 @@
 package com.fuzzypg;
 
+import java.util.ArrayList;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 /**
  * A FuzzyRuleTerm is the portion of the rule that looks like
  *  variable IS value
@@ -19,6 +23,12 @@ public class FuzzyRuleTerm extends FuzzyRuleObject {
         this.value = value;
         this.complement = complement;
     }
+    
+    public FuzzyRuleTerm(String name, String value) {
+        variable = HousingSets.getVariable(name);
+        this.value = value;
+        complement = false;
+    }        
     
     @Override
     public double getResult() {

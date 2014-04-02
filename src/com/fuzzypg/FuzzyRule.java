@@ -1,5 +1,9 @@
 package com.fuzzypg;
 
+import java.util.ArrayList;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 /**
  * Fuzzy rules consist of a premise or multiple premises and a result. Premises
  * consist of Fuzzy Terms and, if necessary, operations like AND and OR.
@@ -41,12 +45,50 @@ public class FuzzyRule {
         this.values = values;
     }
     
+    public FuzzyRule(JSONObject rule) {
+        // Construct the IF
+        JSONArray ifThings = rule.getJSONArray("if");
+        ArrayList<FuzzyRuleObject> andThings = new ArrayList<>();
+        for (int i = 0; i < ifThings.length(); ++i) {
+            JSONObject ifThing = ifThings.getJSONObject(i);
+            String name = ifThing.getString("name");
+            JSONArray value = ifThing.getJSONArray("value");
+            if (value.length() == 1) {
+                System.out.println(name + " - " + value.getString(0));
+                FuzzyRuleTerm term = new FuzzyRuleTerm(name, value.getString(0));
+                System.out.println(term);
+                andThings.add(term);
+            } else if (value.length() == 2) {
+                FuzzyRuleTerm left = new FuzzyRuleTerm(name, value.getString(0));
+                FuzzyRuleTerm right = new FuzzyRuleTerm(name, value.getString(1));
+                FuzzyRuleOr orOp = new FuzzyRuleOr(left, right);
+                System.out.println(orOp);
+                andThings.add(orOp);            
+            } else {                
+                System.err.println("Nah dog!");
+            }
+            
+        }
+        // Construct the THEN
+        JSONObject then = rule.getJSONObject("then");
+        String thenName = then.getString("name");
+        JSONArray value = then.getJSONArray("value");
+        if (value.length() == 1) {
+            premise = new FuzzyRuleTerm(thenName, value.getString(0));
+        } else {
+            System.err.println("Nah dog!");
+            premise = null;
+        } 
+        
+        result = null;
+    }
+    
     /**
      * Evaluates the rule and updates the corresponding answer fuzzy set.
      */
     public void evaluate() {
         LinguisticVariable variable = result.getVariable();
-        LinguisticTerm term = variable.getTerm(result.getValue());
+        FuzzySet term = variable.getTerm(result.getValue());
         double limit = premise.getResult();
         term.setFuzzyLimit(limit);
     }

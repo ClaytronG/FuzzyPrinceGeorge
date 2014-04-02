@@ -13,6 +13,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  * The Inference Engine evaluates rules and deffuzifies the answer using the 
@@ -41,8 +43,34 @@ public class InferenceEngine {
     public InferenceEngine(String file) {
         rules = new HashMap<>();
         variables = new HashMap<>();
-        parseRules(file);
+        //parseRules(file);
+        parseJson(file);
     }
+    
+    private void parseJson(String file) {
+        try {
+            FileReader input = new FileReader(file);
+            BufferedReader reader = new BufferedReader(input);
+            String line;
+            StringBuilder builder = new StringBuilder();
+            while ((line = reader.readLine()) != null) {
+                builder.append(line);
+                builder.append("\n");
+            }
+            parseJson(new JSONArray(builder.toString()));
+        } catch (FileNotFoundException e) {
+            
+        } catch (IOException e) {
+            
+        }
+    }
+    
+    private void parseJson(JSONArray array) {
+        for (int i = 0; i < array.length(); ++i) {
+            FuzzyRule rule = new FuzzyRule(array.getJSONObject(i));
+            rules.put(rule.getName(), rule);
+        }
+    }    
     
     /**
      * Parses a .rules file into FuzzyRules and adds them to the inference
@@ -77,7 +105,6 @@ public class InferenceEngine {
         String[] things = line.split(",");
         double[] values = new double[6];
         String name;
-        //System.out.println("Reading: " + line);
         FuzzyRuleTerm result = 
                 new FuzzyRuleTerm(HousingSets.area, 
                                   HousingSets.getTerm(things[0]).getName(), 
@@ -125,9 +152,9 @@ public class InferenceEngine {
      * @return         rule term or operation
      */
     private FuzzyRuleObject createRule(LinguisticVariable variable, double value) {
-        int thing =(int) (value); // Because Swicth dn'like d'ble
+        int thing =(int) (value*10); // Because Swicth dn'like d'ble
         switch (thing) {
-            case 1:    // 1
+            case 10:    // 1
                 return new FuzzyRuleTerm(variable, 
                                          HousingSets.strongDisagree.getName(), 
                                          false);
@@ -141,7 +168,7 @@ public class InferenceEngine {
                                           HousingSets.disagree.getName(), 
                                           false);
                 return new FuzzyRuleOr(left, right);
-            case 2:    // 2
+            case 20:    // 2
                 return new FuzzyRuleTerm(variable, 
                                          HousingSets.disagree.getName(), 
                                          false);                
@@ -153,7 +180,7 @@ public class InferenceEngine {
                                           HousingSets.neutral.getName(), 
                                           false);
                 return new FuzzyRuleOr(left, right);
-            case 3:    // 3
+            case 30:    // 3
                 return new FuzzyRuleTerm(variable, 
                                          HousingSets.neutral.getName(), 
                                          false);
@@ -165,7 +192,7 @@ public class InferenceEngine {
                                           HousingSets.agree.getName(), 
                                           false);
                 return new FuzzyRuleOr(left, right);
-            case 4:    // 4
+            case 40:    // 4
                 return new FuzzyRuleTerm(variable, 
                                          HousingSets.agree.getName(), 
                                          false);
@@ -177,7 +204,7 @@ public class InferenceEngine {
                                           HousingSets.strongAgree.getName(), 
                                           false);
                 return new FuzzyRuleOr(left, right);
-            case 5:    // 5
+            case 50:    // 5
                 return new FuzzyRuleTerm(variable, 
                                          HousingSets.strongAgree.getName(), 
                                          false);
@@ -343,21 +370,21 @@ public class InferenceEngine {
         
         // Do something with the answer
         if (answerVariable != null) {
-            ArrayList<LinguisticTerm> terms = new ArrayList<>();
+            ArrayList<FuzzySet> terms = new ArrayList<>();
             terms.addAll(answerVariable.getTermFromInput(answerValue));
             
             if (!terms.isEmpty()) {
                 // Get the answer using CoG
                 System.out.println("You should live around: ");
-                for (LinguisticTerm term : terms) {
+                for (FuzzySet term : terms) {
                     System.out.println("\t" + term.getName());
                 }
                 // Get a list of alternatives
-                ArrayList<LinguisticTerm> alternates = new ArrayList<>();
+                ArrayList<FuzzySet> alternates = new ArrayList<>();
                 alternates.addAll(answerVariable.getTerms());
-                Collections.sort(alternates, new Comparator<LinguisticTerm>() {
+                Collections.sort(alternates, new Comparator<FuzzySet>() {
                     @Override
-                    public int compare(LinguisticTerm o1, LinguisticTerm o2) {
+                    public int compare(FuzzySet o1, FuzzySet o2) {
                         return Double.compare(o2.getValue(o2.getPointValue()), o1.getValue(o1.getPointValue()));
                     }
                 });
@@ -366,10 +393,10 @@ public class InferenceEngine {
                 if (alternates.get(0).getValue(alternates.get(0).getPointValue()) != 0) {
                     StringBuilder builder = new StringBuilder();
                     for (int i = 0; i < TOP_N; ++i) {                        
-                        LinguisticTerm term = alternates.get(i);
+                        FuzzySet term = alternates.get(i);
                         if (term.getValue(term.getPointValue()) > 0) {
                             boolean contains = false;
-                            for (LinguisticTerm answer : terms) {
+                            for (FuzzySet answer : terms) {
                                 if (answer.getName().equals(term.getName())) {
                                     contains = true;
                                 }

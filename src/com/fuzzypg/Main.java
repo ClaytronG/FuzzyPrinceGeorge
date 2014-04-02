@@ -12,7 +12,7 @@ public class Main {
     public static void main(String[] args) {        
         HousingSets.init();
         
-        engine = new InferenceEngine("Area.rules");
+        engine = new InferenceEngine("Rules.json");
         engine.setVariables(HousingSets.getVariables());
                
         UI myUI = new UI();

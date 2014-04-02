@@ -7,7 +7,9 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- *
+ * Linguistic variables consist of a name and fuzzy sets. If it is defined as 
+ * an answer, then this can be defuzzified.
+ * 
  * @author Clayton
  */
 public class LinguisticVariable {
@@ -32,7 +34,7 @@ public class LinguisticVariable {
     /**
      * Collection of sets that belong to this linguistic variable.
      */
-    private final HashMap<String, LinguisticTerm> values;
+    private final HashMap<String, FuzzySet> sets;
 
     /**
      * Minimum value that this fuzzy set covers.
@@ -52,7 +54,7 @@ public class LinguisticVariable {
      */
     public LinguisticVariable(String name, boolean answer) {
         this.name = name;
-        values = new HashMap<>();
+        sets = new HashMap<>();
         this.answer = answer;
     }
     
@@ -61,8 +63,8 @@ public class LinguisticVariable {
      * 
      * @param terms list of terms to add
      */
-    public void addTerms(List<LinguisticTerm> terms) {
-        for (LinguisticTerm term : terms) {
+    public void addTerms(List<FuzzySet> terms) {
+        for (FuzzySet term : terms) {
             addTerms(term);
         }
     }
@@ -73,12 +75,12 @@ public class LinguisticVariable {
      * 
      * @param terms list of terms to add to this fuzzy set
      */
-    public void addTerms(LinguisticTerm... terms) {
-        for (LinguisticTerm term : terms) {
+    public void addTerms(FuzzySet... terms) {
+        for (FuzzySet term : terms) {
             if (answer) {
                 term.setFuzzyLimit(0);
             }
-            values.put(term.getName(), term);
+            sets.put(term.getName(), term);
             if (term.getMinValue() < minValue) minValue = term.getMinValue();
             if (term.getMaxValue() > maxValue) maxValue = term.getMaxValue();
         }
@@ -90,9 +92,9 @@ public class LinguisticVariable {
      * @param x
      * @return 
      */
-    public Collection<LinguisticTerm> getTermFromInput(double x) {
-        Collection<LinguisticTerm> terms = new ArrayList<>();
-        for (LinguisticTerm term : values.values()) {
+    public Collection<FuzzySet> getTermFromInput(double x) {
+        Collection<FuzzySet> terms = new ArrayList<>();
+        for (FuzzySet term : sets.values()) {
             if (term.contains(x)) {
                 terms.add(term);
             }
@@ -101,7 +103,7 @@ public class LinguisticVariable {
     }
     
     public double getMembershipValueOf(String name) {
-        return values.get(name).getValue(input);
+        return sets.get(name).getValue(input);
     }
     
     /**
@@ -109,12 +111,18 @@ public class LinguisticVariable {
      * 
      * @return list of terms
      */
-    public Collection<LinguisticTerm> getTerms() {
-        return values.values();
+    public Collection<FuzzySet> getTerms() {
+        return sets.values();
     }
     
-    public LinguisticTerm getTerm(String name) {
-        return values.get(name);
+    /**
+     * 
+     * 
+     * @param name 
+     * @return     
+     */
+    public FuzzySet getTerm(String name) {
+        return sets.get(name);
     }
     
     /**
@@ -125,7 +133,7 @@ public class LinguisticVariable {
     public double defuzzify() {
         System.out.println("Defuzzifing...");
         double[] results = new double[(int) ((maxValue - minValue) / STEP_SIZE)];
-        for (LinguisticTerm term : values.values()) {
+        for (FuzzySet term : sets.values()) {
             for (int i = 0; i < results.length; ++i) {
                 double x = minValue + (i * STEP_SIZE);
                 // Generate the resulting graph using max-min

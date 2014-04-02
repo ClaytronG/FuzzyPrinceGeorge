@@ -6,7 +6,7 @@ package com.fuzzypg.ui;
  */
 
 import com.fuzzypg.HousingSets;
-import com.fuzzypg.LinguisticTerm;
+import com.fuzzypg.FuzzySet;
 import com.fuzzypg.LinguisticVariable;
 import com.fuzzypg.Main;
 import java.awt.BorderLayout;
@@ -144,7 +144,7 @@ public class UI {
         JPanel c = null;
         
         if (a!= null) {
-            ArrayList<LinguisticTerm> terms = new ArrayList<>();
+            ArrayList<FuzzySet> terms = new ArrayList<>();
             terms.addAll(a.getTermFromInput(a.defuzzify()));
             
             if (!terms.isEmpty()) {

@@ -10,7 +10,7 @@ import java.util.Comparator;
  * 
  * @author Clayton
  */
-public class LinguisticTerm {
+public class FuzzySet {
     
     private final String name;
     
@@ -45,7 +45,7 @@ public class LinguisticTerm {
      * 
      * @param name name of the term
      */
-    public LinguisticTerm(String name) {
+    public FuzzySet(String name) {
         this.name = name;
         values = new ArrayList<>();
     }
