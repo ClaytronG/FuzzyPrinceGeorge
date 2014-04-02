@@ -8,5 +8,131 @@
 			"Agree",
 			"Strongly Agree"
 		]
+	},
+	{
+		"name" : "Saftey Important",
+		"value" : [
+			"Strongly Disagree",
+			"Disagree",
+			"Neutral",
+			"Agree",
+			"Strongly Agree"
+		]
+	},
+	{
+		"name" : "Enjoys People",
+		"value" : [
+			"Strongly Disagree",
+			"Disagree",
+			"Neutral",
+			"Agree",
+			"Strongly Agree"
+		]
+	},
+	{
+		"name" : "Plaid Wins",
+		"value" : [
+			"Strongly Disagree",
+			"Disagree",
+			"Neutral",
+			"Agree",
+			"Strongly Agree"
+		]
+	},
+	{
+		"name" : "Likes Drugs",
+		"value" : [
+			"Strongly Disagree",
+			"Disagree",
+			"Neutral",
+			"Agree",
+			"Strongly Agree"
+		]
+	},
+	{
+		"name" : "Likes Close",
+		"value" : [
+			"Strongly Disagree",
+			"Disagree",
+			"Neutral",
+			"Agree",
+			"Strongly Agree"
+		]
+	},
+	{
+		"name" : "Price",
+		"value" : [
+			"Very Low",
+			"Low",
+			"Middle",
+			"High",
+			"Very High"
+		]
+	},
+	{
+		"name" : "Safety",
+		"value" : [
+			"Very Low",
+			"Low",
+			"Middle",
+			"High",
+			"Very High"
+		]
+	},
+	{
+		"name" : "People",
+		"value" : [
+			"Very Low",
+			"Low",
+			"Middle",
+			"High",
+			"Very High"
+		]
+	},
+	{
+		"name" : "Style",
+		"value" : [
+			"Very Low",
+			"Low",
+			"Middle",
+			"High",
+			"Very High"
+		]
+	},
+	{
+		"name" : "Drugs",
+		"value" : [
+			"Very Low",
+			"Low",
+			"Middle",
+			"High",
+			"Very High"
+		]
+	},
+	{
+		"name" : "Proximity",
+		"value" : [
+			"Very Low",
+			"Low",
+			"Middle",
+			"High",
+			"Very High"
+		]
+	},
+	{
+		"name" : "Area",
+		"value" : [
+			"College Heights",
+			"Ridgeview",
+			"Hart",
+			"Foothills",
+			"North Ospika",
+			"Fort George",
+			"Westwood and Pinewood",
+			"Crescents",
+			"Downtown",
+			"Peden Hill",
+			"Out of Town"
+		]
 	}
 ]
