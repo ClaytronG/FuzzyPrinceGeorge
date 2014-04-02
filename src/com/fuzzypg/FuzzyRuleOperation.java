@@ -15,4 +15,11 @@ public abstract class FuzzyRuleOperation extends FuzzyRuleObject {
         this.right = right;
     }
     
+    public FuzzyRuleObject getLeft() {
+        return left;
+    }
+ 
+    public FuzzyRuleObject getRight() {
+        return right;
+    }
 }

@@ -1,5 +1,12 @@
 [
 	{
-		
+		"name" : "Can Afford",
+		"value" : [
+			"Strongly Disagree",
+			"Disagree",
+			"Neutral",
+			"Agree",
+			"Strongly Agree"
+		]
 	}
 ]

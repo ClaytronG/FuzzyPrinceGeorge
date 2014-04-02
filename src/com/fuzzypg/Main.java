@@ -13,10 +13,10 @@ public class Main {
         HousingSets.init();
         
         initEngine();
-        //engine.saveRules();
+        engine.saveRules();
            
-        UI myUI = new UI();
-        myUI.startUI();
+        //UI myUI = new UI();
+        //myUI.startUI();
     }  
     
     public static void initEngine() {        

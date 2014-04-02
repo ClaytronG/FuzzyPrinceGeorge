@@ -227,8 +227,8 @@ public class UI {
     {
         // Reset the inference engine
         Main.initEngine();
-        mf.getContentPane().removeAll();
         
+        mf.getContentPane().removeAll();        
         
         JPanel Main = new JPanel(new BorderLayout());
         Main.setBackground(secondary);

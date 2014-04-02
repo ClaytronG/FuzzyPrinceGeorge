@@ -170,6 +170,9 @@ public class InferenceEngine {
                         return Double.compare(o2.getValue(o2.getPointValue()), o1.getValue(o1.getPointValue()));
                     }
                 });
+                for (FuzzySet set : alternates) {
+                    System.out.println(set.getName() + " = " + set.getValue(set.getPointValue()));
+                }
                 // Since the list is sorted, check the first one. If it is 0
                 // then there are no alternatives
                 if (alternates.get(0).getValue(alternates.get(0).getPointValue()) != 0) {

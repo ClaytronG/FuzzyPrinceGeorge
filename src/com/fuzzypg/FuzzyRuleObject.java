@@ -13,7 +13,6 @@ public abstract class FuzzyRuleObject {
     /**
      * Evaluate the membership value of this rule.
      * 
-     * @param defuzzy 
      * @return membership value
      */
     public abstract double getResult();

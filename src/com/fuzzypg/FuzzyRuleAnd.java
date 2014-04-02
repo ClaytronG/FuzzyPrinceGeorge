@@ -46,8 +46,24 @@ public class FuzzyRuleAnd extends FuzzyRuleOperation {
         return null;
     }
 
+    /*
+        
+    */
     @Override
     public JSONArray toJsonArray() {
+        
+        if (left instanceof FuzzyRuleOr) {
+            
+        } else if (left instanceof FuzzyRuleAnd) {
+            
+        }
+        
+        
+        if (right instanceof FuzzyRuleOr) {
+            
+        } else if (right instanceof FuzzyRuleOr) {
+            
+        }
         
         return null;
     }

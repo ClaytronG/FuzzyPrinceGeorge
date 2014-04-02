@@ -2,7 +2,6 @@ package com.fuzzypg;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.json.JSONString;
 import org.json.JSONStringer;
 
 /**
@@ -63,8 +62,17 @@ public class FuzzyRuleOr extends FuzzyRuleOperation {
     }
 
     @Override
-    public JSONArray toJsonArray() {
-        
+    public JSONArray toJsonArray() {        
         return null;
+    }
+    
+    public String getName() {
+        if (left instanceof FuzzyRuleTerm) {
+            return ((FuzzyRuleTerm) left).getVariable().getName();
+        } else if (right instanceof FuzzyRuleTerm) {
+            return ((FuzzyRuleTerm) right).getVariable().getName();            
+        } else {
+            return null;
+        }
     }
 }
