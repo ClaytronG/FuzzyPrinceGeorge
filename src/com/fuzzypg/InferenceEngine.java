@@ -77,9 +77,9 @@ public class InferenceEngine {
         for (int i = 0; i < array.length(); ++i) {
             FuzzyRule rule = new FuzzyRule(array.getJSONObject(i));
             if (array.getJSONObject(i).getString("answer").equals("true")) {
-                secondRules.put(rule.getName(), rule);
+                secondRules.put(rule.toString(), rule);
             } else {
-                firstRules.put(rule.getName(), rule);
+                firstRules.put(rule.toString(), rule);
             }
         }
     }

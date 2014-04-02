@@ -75,6 +75,7 @@ public class FuzzyRule {
             System.err.println("Nah dog!");
             result = null;
         }
+        this.name = thenName;
     }
       
     /**
