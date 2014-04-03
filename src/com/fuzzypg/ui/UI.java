@@ -1,12 +1,7 @@
 package com.fuzzypg.ui;
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-import com.fuzzypg.HousingSets;
 import com.fuzzypg.FuzzySet;
+import com.fuzzypg.InferenceEngine;
 import com.fuzzypg.LinguisticVariable;
 import com.fuzzypg.Main;
 import java.awt.BorderLayout;
@@ -559,13 +554,13 @@ public class UI {
 
                 showAnswerPage(a);
                 */
-                HousingSets.canAfford.setInput(inputs[0]);
-                HousingSets.safetyImportant.setInput(inputs[1]);
-                HousingSets.enjoyPeople.setInput(inputs[2]);
-                HousingSets.plaidWins.setInput(inputs[3]);
-                HousingSets.likesDrugs.setInput(inputs[4]);
-                HousingSets.likesClose.setInput(inputs[5]);
-                LinguisticVariable a =Main.engine.answer();
+                InferenceEngine.getVariable("Can Afford").setInput(inputs[0]);
+                InferenceEngine.getVariable("Safety Important").setInput(inputs[1]);
+                InferenceEngine.getVariable("Enjoys People").setInput(inputs[2]);
+                InferenceEngine.getVariable("Plaid Wins").setInput(inputs[3]);
+                InferenceEngine.getVariable("Likes Drugs").setInput(inputs[4]);
+                InferenceEngine.getVariable("Likes Close").setInput(inputs[5]);
+                LinguisticVariable a = Main.engine.answer();
                 showAnswerPage(a);
                 
             }

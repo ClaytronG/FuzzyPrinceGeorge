@@ -10,17 +10,14 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {        
-        HousingSets.init();
-        
         initEngine();
-        engine.saveRules();
+        //engine.saveRules();
            
-        //UI myUI = new UI();
-        //myUI.startUI();
+        UI myUI = new UI();
+        myUI.startUI();
     }  
     
     public static void initEngine() {        
-        engine = new InferenceEngine("Rules.json");
-        engine.setVariables(HousingSets.getVariables());
+        engine = new InferenceEngine("Sets.json", "Variables.json", "Rules.json");
     }
 }

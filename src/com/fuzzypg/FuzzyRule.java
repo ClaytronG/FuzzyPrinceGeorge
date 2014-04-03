@@ -1,6 +1,8 @@
 package com.fuzzypg;
 
 import java.util.ArrayList;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONStringer;
@@ -180,6 +182,35 @@ public class FuzzyRule {
         System.out.println(object);
         
         return new JSONObject(object);
+    }
+    
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 31)
+                .append(name)
+                .append(premise)
+                .append(result)
+                .toHashCode();
+    }
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
+        if (!(obj instanceof FuzzyRule)) {
+            return false;
+        }
+        
+        FuzzyRule rhs = (FuzzyRule) obj;
+        return new EqualsBuilder()
+                .append(name, rhs.name)
+                .append(premise, rhs.premise)
+                .append(result, rhs.result)
+                .isEquals();
     }
     
 }

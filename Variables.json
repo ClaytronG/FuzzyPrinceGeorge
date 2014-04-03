@@ -1,5 +1,6 @@
 [
 	{
+		"answer" : "false",
 		"name" : "Can Afford",
 		"value" : [
 			"Strongly Disagree",
@@ -10,7 +11,8 @@
 		]
 	},
 	{
-		"name" : "Saftey Important",
+		"answer" : "false",
+		"name" : "Safety Important",
 		"value" : [
 			"Strongly Disagree",
 			"Disagree",
@@ -20,6 +22,7 @@
 		]
 	},
 	{
+		"answer" : "false",
 		"name" : "Enjoys People",
 		"value" : [
 			"Strongly Disagree",
@@ -30,6 +33,7 @@
 		]
 	},
 	{
+		"answer" : "false",
 		"name" : "Plaid Wins",
 		"value" : [
 			"Strongly Disagree",
@@ -40,6 +44,7 @@
 		]
 	},
 	{
+		"answer" : "false",
 		"name" : "Likes Drugs",
 		"value" : [
 			"Strongly Disagree",
@@ -50,6 +55,7 @@
 		]
 	},
 	{
+		"answer" : "false",
 		"name" : "Likes Close",
 		"value" : [
 			"Strongly Disagree",
@@ -60,6 +66,7 @@
 		]
 	},
 	{
+		"answer" : "false",
 		"name" : "Price",
 		"value" : [
 			"Very Low",
@@ -70,6 +77,7 @@
 		]
 	},
 	{
+		"answer" : "false",
 		"name" : "Safety",
 		"value" : [
 			"Very Low",
@@ -80,6 +88,7 @@
 		]
 	},
 	{
+		"answer" : "false",
 		"name" : "People",
 		"value" : [
 			"Very Low",
@@ -90,6 +99,7 @@
 		]
 	},
 	{
+		"answer" : "false",
 		"name" : "Style",
 		"value" : [
 			"Very Low",
@@ -100,6 +110,7 @@
 		]
 	},
 	{
+		"answer" : "false",
 		"name" : "Drugs",
 		"value" : [
 			"Very Low",
@@ -110,6 +121,7 @@
 		]
 	},
 	{
+		"answer" : "false",
 		"name" : "Proximity",
 		"value" : [
 			"Very Low",
@@ -120,6 +132,7 @@
 		]
 	},
 	{
+		"answer" : "true",
 		"name" : "Area",
 		"value" : [
 			"College Heights",

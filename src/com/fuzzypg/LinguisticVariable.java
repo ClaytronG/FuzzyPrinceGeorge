@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  * Linguistic variables consist of a name and fuzzy sets. If it is defined as 
@@ -59,13 +63,29 @@ public class LinguisticVariable {
     }
     
     /**
+     * 
+     * 
+     * @param object 
+     */
+    public LinguisticVariable(JSONObject object) {
+        answer = object.getString("answer").equals("true");
+        name = object.getString("name");
+        sets = new HashMap<>();
+        JSONArray setsArray = object.getJSONArray("value");
+        for (int i = 0; i < setsArray.length(); ++i) {
+            FuzzySet set = InferenceEngine.getSet(setsArray.getString(i));
+            addFuzzySets(set);
+        }
+    }
+    
+    /**
      * Adds a list of terms to this fuzzy set.
      * 
      * @param terms list of terms to add
      */
-    public void addTerms(List<FuzzySet> terms) {
+    public void addFuzzySets(List<FuzzySet> terms) {
         for (FuzzySet term : terms) {
-            addTerms(term);
+            LinguisticVariable.this.addFuzzySets(term);
         }
     }
 
@@ -75,7 +95,7 @@ public class LinguisticVariable {
      * 
      * @param terms list of terms to add to this fuzzy set
      */
-    public void addTerms(FuzzySet... terms) {
+    private void addFuzzySets(FuzzySet... terms) {
         for (FuzzySet term : terms) {
             if (answer) {
                 term.setFuzzyLimit(0);
@@ -173,5 +193,32 @@ public class LinguisticVariable {
     
     public void setInput(double input) {
         this.input = input;
+    }
+    
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 31)
+                .append(name)
+                .append(sets)
+                .toHashCode();
+    }
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
+        if (!(obj instanceof LinguisticVariable)) {
+            return false;
+        }
+        
+        LinguisticVariable rhs = (LinguisticVariable) obj;
+        return new EqualsBuilder()
+                .append(name, rhs.name)
+                .append(sets, rhs.sets)
+                .isEquals();
     }
 }

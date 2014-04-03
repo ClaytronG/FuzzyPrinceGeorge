@@ -3,6 +3,10 @@ package com.fuzzypg;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  * A linguistic term or fuzzy set belongs to a linguistic variable, and has a 
@@ -49,6 +53,22 @@ public class FuzzySet {
         this.name = name;
         values = new ArrayList<>();
     }
+    
+    /**
+     * 
+     * 
+     * @param object 
+     */
+    public FuzzySet(JSONObject object) {
+        name = object.getString("name");
+        values = new ArrayList<>();
+        JSONArray valuesArray = object.getJSONArray("value");
+        for (int i = 0; i < valuesArray.length(); ++i) {
+            JSONArray point = valuesArray.getJSONArray(i);
+            Pair pair = new Pair(point.getDouble(0), point.getDouble(1));
+            addValue(pair);
+        }
+    }
 
     /**
      * Adds a list of Pairs (x and y points) to this term. Updates the min and 
@@ -56,7 +76,7 @@ public class FuzzySet {
      * 
      * @param pairs 
      */
-    public void addValue(Pair... pairs) {
+    private void addValue(Pair... pairs) {
         for (Pair pair : pairs) {
             values.add(pair);
             if (pair.getFirst() < minValue) minValue = pair.getFirst();
@@ -137,6 +157,33 @@ public class FuzzySet {
     
     public double getFuzzyLimit(){
         return fuzzyLimit;
+    }
+    
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 31)
+                .append(name)
+                .append(values)
+                .toHashCode();
+    }
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
+        if (!(obj instanceof FuzzySet)) {
+            return false;
+        }
+        
+        FuzzySet rhs = (FuzzySet) obj;
+        return new EqualsBuilder()
+                .append(name, rhs.name)
+                .append(values, rhs.values)
+                .isEquals();
     }
     
 }

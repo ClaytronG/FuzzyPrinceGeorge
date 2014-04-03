@@ -25,7 +25,7 @@ public class FuzzyRuleTerm extends FuzzyRuleObject {
     }
     
     public FuzzyRuleTerm(String name, String value) {
-        variable = HousingSets.getVariable(name);
+        variable = InferenceEngine.getVariable(name);
         this.value = value;
         complement = false;
     }        

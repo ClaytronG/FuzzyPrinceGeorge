@@ -22,38 +22,42 @@ public class InferenceEngine {
     
     private final HashMap<Integer, FuzzyRule> firstRules;
     private final HashMap<Integer, FuzzyRule> secondRules;
+    
     private final HashMap<Integer, FuzzyRule> rules;
-    private final HashMap<String, LinguisticVariable> variables;
+    private static final HashMap<String, LinguisticVariable> variables = new HashMap<>();
+    private static final HashMap<String, FuzzySet> sets = new HashMap<>();
     
-    /**
-     * Create an empty inference engine. 
-     */
-    public InferenceEngine() {
+    public InferenceEngine(String setsFile ,String variablesFile, String rulesFile) {
         firstRules = new HashMap<>();
         secondRules = new HashMap<>();
+
+        variables.clear();
+        sets.clear();
         rules = new HashMap<>();
-        variables = new HashMap<>();
+        
+        parseJsonSets(setsFile);
+        parseJsonVariables(variablesFile);
+        parseJsonRules(rulesFile); 
+        
+        System.out.println("sets = " + sets.size());
+        System.out.println("variables = " + variables.size());
+        System.out.println("rules = " + rules.size());
     }
     
-    /**
-     * Create an inference engine with rules defined by a .rules file.
-     * 
-     * @param file name of a .rules file 
-     */
-    public InferenceEngine(String file) {
-        firstRules = new HashMap<>();
-        secondRules = new HashMap<>();
-        rules = new HashMap<>();
-        variables = new HashMap<>();
-        parseJson(file);
+    private void parseJsonSets(String file) {
+        parseJsonSets(new JSONArray(jsonFileToString(file)));        
     }
     
-    /**
-     * 
-     * 
-     * @param file 
-     */
-    private void parseJson(String file) {
+    private void parseJsonVariables(String file) {
+        parseJsonVariables(new JSONArray(jsonFileToString(file)));        
+    }
+    
+    private void parseJsonRules(String file) {
+        parseJsonRules(new JSONArray(jsonFileToString(file)));
+    }
+    
+    private String jsonFileToString(String file) {
+        String result = null;
         try {
             FileReader input = new FileReader(file);
             BufferedReader reader = new BufferedReader(input);
@@ -63,53 +67,49 @@ public class InferenceEngine {
                 builder.append(line);
                 builder.append("\n");
             }
-            parseJson(new JSONArray(builder.toString()));
+            result = builder.toString();
         } catch (FileNotFoundException e) {
             
         } catch (IOException e) {
             
         }
+        return result;
     }
     
-    /**
-     * 
-     * 
-     * @param array 
-     */
-    private void parseJson(JSONArray array) {
+    private void parseJsonSets(JSONArray array) {
+        for (int i = 0; i < array.length(); ++i) {
+            FuzzySet set = new FuzzySet(array.getJSONObject(i));
+            sets.put(set.getName(), set);
+        }
+    }
+    
+    private void parseJsonVariables(JSONArray array) {
+        for (int i = 0; i < array.length(); ++i) {
+            LinguisticVariable variable = new LinguisticVariable(array.getJSONObject(i));
+            variables.put(variable.getName(), variable);
+        }
+    }
+    
+    private void parseJsonRules(JSONArray array) {
         for (int i = 0; i < array.length(); ++i) {
             FuzzyRule rule = new FuzzyRule(array.getJSONObject(i));            
             if (array.getJSONObject(i).getString("answer").equals("true")) {
-                secondRules.put(rule.toString().hashCode(), rule);
+                secondRules.put(rule.hashCode(), rule);
                 rule.setAnswer(true);
             } else {
-                firstRules.put(rule.toString().hashCode(), rule);
+                firstRules.put(rule.hashCode(), rule);
             }
             
-            rules.put(rule.toString().hashCode(), rule);            
+            rules.put(rule.hashCode(), rule);            
         }
     }
     
-    /**
-     * Clears the list of linguistic variables associated with this inference 
-     * engine and adds new ones.
-     * 
-     * @param variables list of variables to add
-     */
-    public void setVariables(Collection<LinguisticVariable> variables) {
-        this.variables.clear();
-        for (LinguisticVariable variable : variables) {
-            this.variables.put(variable.getName(), variable);
-        }
+    public static FuzzySet getSet(String name) {
+        return sets.get(name);
     }
     
-    /**
-     * Add a single variable to this inference engine without removing others.
-     * 
-     * @param variable variable to add
-     */
-    public void addVariable(LinguisticVariable variable) {
-        variables.put(variable.getName(), variable);
+    public static LinguisticVariable getVariable(String name) {
+        return variables.get(name);
     }
     
     /**
@@ -129,7 +129,7 @@ public class InferenceEngine {
         }
         // Defuzzify the intermediate variables
         for (FuzzyRule rule : firstRules.values()) {
-            LinguisticVariable variable = HousingSets.getVariable(rule.getName());
+            LinguisticVariable variable = getVariable(rule.getName());
             // Defuzzify result
             double thing = variable.defuzzify();
             // Set the CoG as the input for this linguistic variable
