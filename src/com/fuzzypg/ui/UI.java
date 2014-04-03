@@ -54,7 +54,7 @@ public class UI {
     private JFrame mf;
     
     //answers to questions;
-    double[] inputs = new double[6];
+    double[] inputs = {3.0,3.0,3.0,3.0,3.0,3.0};
     int[] feedback = new int[6];
     
     public void startUI()
@@ -456,6 +456,7 @@ public class UI {
             public void actionPerformed(ActionEvent e)
             {
                 //Execute when button is pressed
+                reset();
                 showQuestionPage();
                 
             }
@@ -617,6 +618,7 @@ public class UI {
             public void actionPerformed(ActionEvent e)
             {
                 //Execute when button is pressed
+                reset();
                 showQuestionPage();
                 
             }
@@ -870,5 +872,13 @@ public class UI {
         p.add(emptyS,BorderLayout.SOUTH);
         p.add(emptyE,BorderLayout.EAST);
         p.add(emptyW,BorderLayout.WEST);
+    }
+    
+    private void reset()
+    {
+        for(int i=0; i<inputs.length; i++)
+        {
+            inputs[i] = 3.0;
+        }
     }
 }
