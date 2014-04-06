@@ -221,7 +221,7 @@ public class UI {
     private void showQuestionPage()
     {
         // Reset the inference engine
-        Main.initEngine();
+        Main.getEngine(true);
         
         mf.getContentPane().removeAll();        
         
@@ -561,7 +561,7 @@ public class UI {
                 InferenceEngine.getVariable("Plaid Wins").setInput(inputs[3]);
                 InferenceEngine.getVariable("Likes Drugs").setInput(inputs[4]);
                 InferenceEngine.getVariable("Likes Close").setInput(inputs[5]);
-                LinguisticVariable a = Main.engine.answer();
+                LinguisticVariable a = Main.getEngine(true).answer();
                 showAnswerPage(a);
                 
             }

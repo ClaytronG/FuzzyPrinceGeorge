@@ -4,7 +4,7 @@ import com.fuzzypg.ui.UI;
 
 public class Main {
     
-    public static InferenceEngine engine;
+    private static InferenceEngine engine;
 
     /**
      * @param args the command line arguments
@@ -17,7 +17,15 @@ public class Main {
         myUI.startUI();
     }  
     
-    public static void initEngine() {        
+    public static InferenceEngine getEngine(boolean create) {
+        if (create || engine == null) {
+            initEngine();
+        }
+        return engine;
+    }
+    
+    private static void initEngine() {        
         engine = new InferenceEngine("Sets.json", "Variables.json", "Rules.json");
     }
+    
 }
