@@ -1,5 +1,6 @@
 package com.fuzzypg;
 
+import java.util.ArrayList;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -41,7 +42,6 @@ public class FuzzyRuleAnd extends FuzzyRuleOperation {
     */
     @Override
     public JSONObject toJsonObject() {
-        System.out.println("AND");
         
         return null;
     }
@@ -51,20 +51,26 @@ public class FuzzyRuleAnd extends FuzzyRuleOperation {
     */
     @Override
     public JSONArray toJsonArray() {
-        
-        if (left instanceof FuzzyRuleOr) {
-            
+        JSONArray arr = new JSONArray(getList());
+        return arr;
+    }
+    
+    public ArrayList<JSONObject> getList() {
+        ArrayList<JSONObject> list = new ArrayList<>();
+        list.add(right.toJsonObject());
+        // Base case
+        if (left instanceof FuzzyRuleTerm) {
+            list.add(left.toJsonObject());
+            return list;
+        } else if (left instanceof FuzzyRuleOr) {
+            list.add(left.toJsonObject());
+            return list;
         } else if (left instanceof FuzzyRuleAnd) {
-            
+            list.addAll(((FuzzyRuleAnd) left).getList());
+            return list;
+        } else {
+            System.out.println("OH SHIT");
+            return null;
         }
-        
-        
-        if (right instanceof FuzzyRuleOr) {
-            
-        } else if (right instanceof FuzzyRuleOr) {
-            
-        }
-        
-        return null;
     }
 }

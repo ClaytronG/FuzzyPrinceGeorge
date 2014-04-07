@@ -11,7 +11,6 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
@@ -54,14 +53,14 @@ public class UI {
     private JFrame mf;
     
     //answers to questions;
-    double[] inputs = {3.0,3.0,3.0,3.0,3.0,3.0};
+    double[] inputs = new double[6];
     int[] feedback = new int[6];
     
     public void startUI()
     {
         // Initialize the input values to neutral
         for (int i = 0; i < inputs.length; ++i) {
-            inputs[i] = 3.0;
+            inputs[i] = Input.NEUTRAL;
         }
         openWindow();
     }
@@ -309,79 +308,6 @@ public class UI {
         p.add(l,c);
     }
     
-    private void addRadioButtonGroup(JPanel p, GridBagConstraints c, final int i)
-    {
-        //create the 5 buttons
-        JRadioButton b1 = new JRadioButton();
-        b1.setActionCommand("StrongDis");
-        JRadioButton b2 = new JRadioButton();
-        b2.setActionCommand("Disagree");
-        JRadioButton b3 = new JRadioButton();
-        b3.setActionCommand("Neutral");
-        JRadioButton b4 = new JRadioButton();
-        b4.setActionCommand("Agree");
-        JRadioButton b5 = new JRadioButton();
-        b5.setActionCommand("StrongAgr");
-        
-        //make them all have no background
-        b1.setOpaque(false);
-        b2.setOpaque(false);
-        b3.setOpaque(false);
-        b4.setOpaque(false);
-        b5.setOpaque(false);
-        
-        //group together
-        ButtonGroup g = new ButtonGroup();
-        g.add(b1);
-        g.add(b2);
-        g.add(b3);
-        g.add(b4);
-        g.add(b5);
-        
-        //create action listener
-        ActionListener al = new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                switch(e.getActionCommand())
-                {
-                    case "StrongDis":
-                        inputs[i] = Input.STRONGLY_DISAGREE;
-                        break;
-                    case "Disagree":
-                        inputs[i] = Input.DISAGREE;
-                        break;
-                    case "Neutral":
-                        inputs[i] = Input.NEUTRAL;
-                        break;
-                    case "Agree":
-                        inputs[i] = Input.AGREE;
-                        break;
-                    case "StrongAgr":
-                        inputs[i] = Input.STRONGLY_AGREE;
-                        break;
-                        
-                }
-            }
-        };
-        //add action listener to all buttons
-        b1.addActionListener(al);
-        b2.addActionListener(al);
-        b3.addActionListener(al);
-        b4.addActionListener(al);
-        b5.addActionListener(al);
-        
-        JPanel rp = new JPanel(new GridLayout(0,5,40,0));
-        rp.setOpaque(false);
-        rp.add(b1);
-        rp.add(b2);
-        rp.add(b3);
-        rp.add(b4);
-        rp.add(b5);
-        
-        p.add(rp,c);
-    }
-    
     private static final int MIN_VALUE = 0;
     private static final int MAX_VALUE = 4;
     private static final int FACTOR = 5;
@@ -561,7 +487,7 @@ public class UI {
                 InferenceEngine.getVariable("Plaid Wins").setInput(inputs[3]);
                 InferenceEngine.getVariable("Likes Drugs").setInput(inputs[4]);
                 InferenceEngine.getVariable("Likes Close").setInput(inputs[5]);
-                LinguisticVariable a = Main.getEngine(true).answer();
+                LinguisticVariable a = Main.getEngine(false).answer();
                 showAnswerPage(a);
                 
             }

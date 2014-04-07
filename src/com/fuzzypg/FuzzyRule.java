@@ -46,14 +46,14 @@ public class FuzzyRule {
         ArrayList<FuzzyRuleObject> andThings = new ArrayList<>();
         for (int i = 0; i < ifThings.length(); ++i) {
             JSONObject ifThing = ifThings.getJSONObject(i);
-            String name = ifThing.getString("name");
+            String ifName = ifThing.getString("name");
             JSONArray value = ifThing.getJSONArray("value");
             if (value.length() == 1) {
-                FuzzyRuleTerm term = new FuzzyRuleTerm(name, value.getString(0));
+                FuzzyRuleTerm term = new FuzzyRuleTerm(ifName, value.getString(0));
                 andThings.add(term);
             } else if (value.length() == 2) {
-                FuzzyRuleTerm left = new FuzzyRuleTerm(name, value.getString(0));
-                FuzzyRuleTerm right = new FuzzyRuleTerm(name, value.getString(1));
+                FuzzyRuleTerm left = new FuzzyRuleTerm(ifName, value.getString(0));
+                FuzzyRuleTerm right = new FuzzyRuleTerm(ifName, value.getString(1));
                 FuzzyRuleOr orOp = new FuzzyRuleOr(left, right);
                 andThings.add(orOp);            
             } else {                
@@ -90,9 +90,6 @@ public class FuzzyRule {
         LinguisticVariable variable = result.getVariable();
         FuzzySet term = variable.getTerm(result.getValue());
         double value = premise.getResult();
-        if (value > 0) {
-            System.out.println(this + " = " + value);
-        }
         term.setFuzzyLimit(value);
     }
     
@@ -142,29 +139,29 @@ public class FuzzyRule {
         String answerKey = isAnswer() ? "true" : "false";
         
         // Construct the premise JSON object/array
-        JSONArray ifValue = new JSONArray();
+        String ifString = null;
+        JSONArray ifValue = null;
         if (premise instanceof FuzzyRuleOr) {
             JSONObject obj = premise.toJsonObject();
-            String ifString = new JSONStringer()
+            ifString = new JSONStringer()
                     .array()
                         .object()
-                            .key("name")
-                            .value(((FuzzyRuleOr) premise).getName())
-                            .key("value")
-                            .array()
-                                .value(obj)
-                            .endArray()
+                            .value(obj)
                         .endObject()
                     .endArray()
                     .toString();
             ifValue = new JSONArray(ifString);
         } else if (premise instanceof FuzzyRuleAnd) {
-            JSONArray arr = premise.toJsonArray();
-            String ifString = new JSONStringer()
-                    .value(arr)
+            ifValue = ((FuzzyRuleAnd) premise).toJsonArray();
+        } else if (premise instanceof FuzzyRuleTerm) {
+            JSONObject arr = premise.toJsonObject();
+            ifString = new JSONStringer()
+                    .array()
+                        .value(arr)
+                    .endArray()
                     .toString();
             ifValue = new JSONArray(ifString);
-        }   
+        }
         
         JSONObject thenValue = result.toJsonObject();
         
@@ -178,8 +175,6 @@ public class FuzzyRule {
                     .value(thenValue)
                 .endObject()
                 .toString();
-        
-        System.out.println(object);
         
         return new JSONObject(object);
     }

@@ -1,11 +1,12 @@
 package com.fuzzypg;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -13,7 +14,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
- * The Inference Engine evaluates rules and deffuzifies the answer using the 
+ * The Inference Engine evaluates rules and defuzzifies the answer using the 
  * Center of Gravity (CoG) method.
  * 
  * @author Clayton
@@ -23,7 +24,7 @@ public class InferenceEngine {
     private final HashMap<Integer, FuzzyRule> firstRules;
     private final HashMap<Integer, FuzzyRule> secondRules;
     
-    private final HashMap<Integer, FuzzyRule> rules;
+    private static final HashMap<Integer, FuzzyRule> rules = new HashMap<>();
     private static final HashMap<String, LinguisticVariable> variables = new HashMap<>();
     private static final HashMap<String, FuzzySet> sets = new HashMap<>();
     
@@ -31,17 +32,13 @@ public class InferenceEngine {
         firstRules = new HashMap<>();
         secondRules = new HashMap<>();
 
+        rules.clear();
         variables.clear();
         sets.clear();
-        rules = new HashMap<>();
         
         parseJsonSets(setsFile);
         parseJsonVariables(variablesFile);
-        parseJsonRules(rulesFile); 
-        
-        System.out.println("sets = " + sets.size());
-        System.out.println("variables = " + variables.size());
-        System.out.println("rules = " + rules.size());
+        parseJsonRules(rulesFile);
     }
     
     private void parseJsonSets(String file) {
@@ -112,6 +109,22 @@ public class InferenceEngine {
         return variables.get(name);
     }
     
+    public void saveRules() {
+        ArrayList<JSONObject> list = new ArrayList<>();
+        for (FuzzyRule rule : rules.values()) {
+            list.add(rule.toJsonObject());
+        }
+        JSONArray arr = new JSONArray(list);
+        try {
+            File file = new File("ruletest.json");
+            PrintWriter out = new PrintWriter(file);
+            out.print(arr);
+            out.close();
+        } catch (IOException e) {
+            
+        }
+    }
+    
     /**
      * How many alternative places to show.
      */
@@ -170,9 +183,6 @@ public class InferenceEngine {
                         return Double.compare(o2.getValue(o2.getPointValue()), o1.getValue(o1.getPointValue()));
                     }
                 });
-                for (FuzzySet set : alternates) {
-                    System.out.println(set.getName() + " = " + set.getValue(set.getPointValue()));
-                }
                 // Since the list is sorted, check the first one. If it is 0
                 // then there are no alternatives
                 if (alternates.get(0).getValue(alternates.get(0).getPointValue()) != 0) {
@@ -210,32 +220,5 @@ public class InferenceEngine {
         
         return answerVariable;
         
-    }
-    /*
-    {
-            "answer" : "true",
-            "if" : [
-                    { "name" : "Price", "value" : [ "High", "Very High" ] },
-                    { "name" : "Safety", "value" : [ "Very High" ] },
-                    { "name" : "People", "value" : [ "Very High" ] },
-                    { "name" : "Style", "value" : [ "Very Low" ] },
-                    { "name" : "Drugs", "value" : [ "Very Low" ] },
-                    { "name" : "Proximity", "value" : [ "Very Low", "Low" ] }			
-            ],
-            "then" : { 
-                    "name" : "Area", 
-                    "value" : [ "College Heights" ] 
-            }
-    }
-    */
-    public void saveRules() {
-        ArrayList<JSONObject> ruleObjects = new ArrayList<>();
-        for (FuzzyRule rule : firstRules.values()) {
-            rule.toJsonObject();
-        }
-        
-        for (FuzzyRule rule : secondRules.values()) {
-            rule.toJsonObject();
-        }
     }
 }

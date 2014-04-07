@@ -12,7 +12,6 @@ public class Main {
     public static void main(String[] args) {        
         initEngine();
         //engine.saveRules();
-           
         UI myUI = new UI();
         myUI.startUI();
     }  
@@ -25,7 +24,7 @@ public class Main {
     }
     
     private static void initEngine() {        
-        engine = new InferenceEngine("Sets.json", "Variables.json", "Rules.json");
+        engine = new InferenceEngine("Sets.json", "Variables.json", "ruletest.json");
     }
     
 }

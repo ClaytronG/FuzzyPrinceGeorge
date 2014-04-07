@@ -41,7 +41,6 @@ public class FuzzyRuleOr extends FuzzyRuleOperation {
     */
     @Override
     public JSONObject toJsonObject() {
-        System.out.println("OR");
         
         FuzzyRuleTerm leftTerm = (FuzzyRuleTerm) left;
         FuzzyRuleTerm rightTerm = (FuzzyRuleTerm) right;
@@ -50,7 +49,7 @@ public class FuzzyRuleOr extends FuzzyRuleOperation {
                 .object()
                     .key("name")
                     .value(leftTerm.getVariable().getName())
-                    .value("value")
+                    .key("value")
                     .array()
                         .value(leftTerm.getValue())
                         .value(rightTerm.getValue())

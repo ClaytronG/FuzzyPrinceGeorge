@@ -34,12 +34,7 @@ public class FuzzyRuleTerm extends FuzzyRuleObject {
     public double getResult() {
         double result;
         result = variable.getMembershipValueOf(value);
-        if (complement) result = 1 - result;
-        
-        if (result > 0) {
-            System.out.println(this + " = " + result);
-        }
-        
+        if (complement) result = 1 - result;        
         return result;
     }
     
