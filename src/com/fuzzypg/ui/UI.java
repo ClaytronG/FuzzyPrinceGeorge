@@ -1,5 +1,6 @@
 package com.fuzzypg.ui;
 
+import com.fuzzypg.FuzzyRule;
 import com.fuzzypg.FuzzySet;
 import com.fuzzypg.InferenceEngine;
 import com.fuzzypg.LinguisticVariable;
@@ -19,6 +20,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -42,25 +44,36 @@ public class UI {
         public static final int STRONGLY_AGREE = 4;
     }    
     
-    public class Feedback{
+    public class Feedback {
         public static final int NONE = 0;
         public static final int MORE = 1;
         public static final int LESS = 2;
     }
     
-    private String answer;
-    
     private JFrame mf;
+    
+    String answer;
     
     //answers to questions;
     double[] inputs = new double[6];
-    int[] feedback = new int[6];
+    HashMap<String, Integer> feedback = new HashMap<>();
+    String[] names = {
+        "Price",
+        "Safety",
+        "People",
+        "Style",
+        "Drugs",
+        "Proximity"
+    };
     
     public void startUI()
     {
         // Initialize the input values to neutral
         for (int i = 0; i < inputs.length; ++i) {
             inputs[i] = Input.NEUTRAL;
+        }
+        for (String name : names) {
+            feedback.put(name, Feedback.NONE);
         }
         openWindow();
     }
@@ -262,6 +275,8 @@ public class UI {
             }
         }
         
+        answer = answ;
+        
         if("".equals(answ))
         {
             c=noAnswerPage();
@@ -308,12 +323,21 @@ public class UI {
         p.add(l,c);
     }
     
+    /**
+     * Minimum value for the input sliders.
+     */
     private static final int MIN_VALUE = 0;
+    /**
+     * Maximum value for the input sliders.
+     */
     private static final int MAX_VALUE = 4;
+    /**
+     * Step size for slider values.
+     */
     private static final int FACTOR = 5;
     
     private void addSlider(JPanel p, GridBagConstraints c, final int i) {
-        JSlider slider = new JSlider(JSlider.HORIZONTAL, MIN_VALUE * FACTOR, MAX_VALUE * FACTOR, MAX_VALUE * FACTOR / 2);
+        JSlider slider = new JSlider(JSlider.HORIZONTAL, MIN_VALUE, MAX_VALUE * FACTOR, MAX_VALUE * FACTOR / 2);
         slider.setPreferredSize(new Dimension(400,20));
         slider.addChangeListener(new ChangeListener() {
             @Override
@@ -334,7 +358,6 @@ public class UI {
     
     private JPanel addResultContent(String answ)
     {
-        answer = answ;
         JPanel r = new JPanel(new GridBagLayout());
         r.setBackground(primary);
         r.setOpaque(true);
@@ -636,9 +659,14 @@ public class UI {
             @Override
             public void actionPerformed(ActionEvent e)
             {
+                // Create the new rule
+                FuzzyRule rule = InferenceEngine.getRule("Area", answer);
+                InferenceEngine.removeRule(rule);
+                rule = rule.alterRule(feedback);
+                InferenceEngine.addRule(rule);                
+                Main.getEngine(false).saveRules();
                 //Execute when button is pressed
-                showInputPage(false);
-                
+                showInputPage(false);                
             }
             
             
@@ -754,16 +782,14 @@ public class UI {
         b1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Button1");
-                feedback[i] = Feedback.MORE;
+                feedback.put(names[i], Feedback.MORE);
             }
         });
         
         b2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Button2");
-                feedback[i] = Feedback.LESS;
+                feedback.put(names[i], Feedback.LESS);
             }
         });
     }

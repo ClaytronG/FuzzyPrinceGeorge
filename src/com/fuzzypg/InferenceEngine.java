@@ -97,7 +97,7 @@ public class InferenceEngine {
                 firstRules.put(rule.hashCode(), rule);
             }
             
-            rules.put(rule.hashCode(), rule);            
+            rules.put(rule.hashCode(), rule);
         }
     }
     
@@ -109,6 +109,18 @@ public class InferenceEngine {
         return variables.get(name);
     }
     
+    public static FuzzyRule getRule(String name, String value) {
+        return rules.get(FuzzyRule.getHashCode(name, value));
+    }
+    
+    public static void removeRule(FuzzyRule rule) {
+        rules.remove(rule.hashCode());
+    }
+    
+    public static void addRule(FuzzyRule rule) {
+        rules.put(rule.hashCode(), rule);
+    }
+    
     public void saveRules() {
         ArrayList<JSONObject> list = new ArrayList<>();
         for (FuzzyRule rule : rules.values()) {
@@ -116,11 +128,11 @@ public class InferenceEngine {
         }
         JSONArray arr = new JSONArray(list);
         try {
-            File file = new File("ruletest.json");
+            File file = new File("Rules.json");
             PrintWriter out = new PrintWriter(file);
             out.print(arr);
             out.close();
-        } catch (IOException e) {
+        } catch (FileNotFoundException e) {
             
         }
     }

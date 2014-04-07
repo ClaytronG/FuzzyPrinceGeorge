@@ -24,7 +24,7 @@ public class Main {
     }
     
     private static void initEngine() {        
-        engine = new InferenceEngine("Sets.json", "Variables.json", "ruletest.json");
+        engine = new InferenceEngine("Sets.json", "Variables.json", "Rules.json");
     }
     
 }

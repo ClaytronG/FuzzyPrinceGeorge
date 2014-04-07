@@ -1,6 +1,9 @@
 package com.fuzzypg;
 
+import com.fuzzypg.ui.UI;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map.Entry;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.json.JSONArray;
@@ -83,6 +86,224 @@ public class FuzzyRule {
         this.name = thenName;
     }
     
+    public FuzzyRule alterRule(HashMap<String, Integer> change) {
+        ArrayList<JSONObject> newThings = new ArrayList<>();
+        for (Entry<String, Integer> entry : change.entrySet()) {
+            newThings.add(newThing(entry.getKey(), entry.getValue()));
+        }
+        JSONArray ifArray = new JSONArray(newThings);
+        
+        String ruleString = new JSONStringer()
+                .object()
+                    .key("answer")
+                    .value("true")
+                    .key("if")
+                    .value(ifArray)
+                    .key("then")
+                    .object()
+                        .key("name")
+                        .value("Area")
+                        .key("value")
+                        .array()
+                            .value(result.getValue())
+                        .endArray()
+                    .endObject()                        
+                .endObject()
+                .toString();
+        
+        return new FuzzyRule(new JSONObject(ruleString));
+    }
+    
+    private JSONObject newThing(String thing, int change) {
+        if (change == UI.Feedback.MORE) {
+            return increaseRule(thing);
+        } else if (change == UI.Feedback.LESS) {
+            return reduceRule(thing);
+        } else {
+            return ((FuzzyRuleAnd) premise).getHashMap().get(thing);
+        }
+    }
+    
+    private JSONObject increaseRule(String thing) {
+        JSONObject obj = ((FuzzyRuleAnd) premise).getHashMap().get(thing);
+        JSONArray valueArray = obj.getJSONArray("value");
+        if (valueArray.length() > 1) {
+            // This is an inbetween (OR) rule, change it to a single term
+            String termString = new JSONStringer()
+                    .object()
+                        .key("name")
+                        .value(thing)
+                        .key("value")
+                        .array()
+                            .value(valueArray.getString(1))
+                        .endArray()
+                    .endObject()
+                    .toString();
+            return new JSONObject(termString);
+        } else if (valueArray.length() == 1) {
+            // This is a single term, change it to an OR rule
+            String termString = null;
+            switch (valueArray.getString(0)) {
+                case "Very Low" : // Very Low OR Low
+                    termString = new JSONStringer()
+                            .object()
+                                .key("name")
+                                .value(thing)
+                                .key("value")
+                                .array()
+                                    .value("Very Low")
+                                    .value("Low")
+                                .endArray()
+                            .endObject()
+                            .toString();
+                    break;
+                case "Low" : // Low OR Middle
+                    termString = new JSONStringer()
+                            .object()
+                                .key("name")
+                                .value(thing)
+                                .key("value")
+                                .array()
+                                    .value("Low")
+                                    .value("Middle")
+                                .endArray()
+                            .endObject()
+                            .toString();                    
+                    break;
+                case "Middle" : // Middle OR High
+                    termString = new JSONStringer()
+                            .object()
+                                .key("name")
+                                .value(thing)
+                                .key("value")
+                                .array()
+                                    .value("Middle")
+                                    .value("High")
+                                .endArray()
+                            .endObject()
+                            .toString();
+                    break;
+                case "High" : // High OR Very High
+                    termString = new JSONStringer()
+                            .object()
+                                .key("name")
+                                .value(thing)
+                                .key("value")
+                                .array()
+                                    .value("High")
+                                    .value("Very High")
+                                .endArray()
+                            .endObject()
+                            .toString();                    
+                    break;
+                case "Very High" : // Very High
+                    termString = new JSONStringer()
+                            .object()
+                                .key("name")
+                                .value(thing)
+                                .key("value")
+                                .array()
+                                    .value("Very High")
+                                .endArray()
+                            .endObject()
+                            .toString();
+                    break;
+            }
+            return new JSONObject(termString);
+        }
+        return null;
+    }
+    
+    private JSONObject reduceRule(String thing) {
+        JSONObject obj = ((FuzzyRuleAnd) premise).getHashMap().get(thing);
+        JSONArray valueArray = obj.getJSONArray("value");
+        if (valueArray.length() > 1) {
+            // This is an inbetween (OR) rule, change it to a single term
+            String termString = new JSONStringer()
+                    .object()
+                        .key("name")
+                        .value(thing)
+                        .key("value")
+                        .array()
+                            .value(valueArray.getString(0))
+                        .endArray()
+                    .endObject()
+                    .toString();
+            return new JSONObject(termString);
+        } else if (valueArray.length() == 1) {
+            // This is a single term, change it to an OR rule
+            String termString = null;
+            switch (valueArray.getString(0)) {
+                case "Very Low" : // Very Low
+                    termString = new JSONStringer()
+                            .object()
+                                .key("name")
+                                .value(thing)
+                                .key("value")
+                                .array()
+                                    .value("Very Low")
+                                .endArray()
+                            .endObject()
+                            .toString();
+                    break;
+                case "Low" : // Very Low or Low
+                    termString = new JSONStringer()
+                            .object()
+                                .key("name")
+                                .value(thing)
+                                .key("value")
+                                .array()
+                                    .value("Very Low")
+                                    .value("Low")
+                                .endArray()
+                            .endObject()
+                            .toString();                    
+                    break;
+                case "Middle" : // Low OR Middle
+                    termString = new JSONStringer()
+                            .object()
+                                .key("name")
+                                .value(thing)
+                                .key("value")
+                                .array()
+                                    .value("Low")
+                                    .value("Middle")
+                                .endArray()
+                            .endObject()
+                            .toString();
+                    break;
+                case "High" : // Middle OR High
+                    termString = new JSONStringer()
+                            .object()
+                                .key("name")
+                                .value(thing)
+                                .key("value")
+                                .array()
+                                    .value("Middle")
+                                    .value("High")
+                                .endArray()
+                            .endObject()
+                            .toString();                    
+                    break;
+                case "Very High" : // High OR Very High
+                    termString = new JSONStringer()
+                            .object()
+                                .key("name")
+                                .value(thing)
+                                .key("value")
+                                .array()
+                                    .value("High")
+                                    .value("Very High")
+                                .endArray()
+                            .endObject()
+                            .toString();
+                    break;
+            }
+            return new JSONObject(termString); 
+        }
+        return null;
+    }
+    
     /**
      * 
      */
@@ -139,7 +360,7 @@ public class FuzzyRule {
         String answerKey = isAnswer() ? "true" : "false";
         
         // Construct the premise JSON object/array
-        String ifString = null;
+        String ifString;
         JSONArray ifValue = null;
         if (premise instanceof FuzzyRuleOr) {
             JSONObject obj = premise.toJsonObject();
@@ -183,8 +404,14 @@ public class FuzzyRule {
     public int hashCode() {
         return new HashCodeBuilder(17, 31)
                 .append(name)
-                .append(premise)
-                .append(result)
+                .append(result.getValue())
+                .toHashCode();
+    }
+    
+    public static int getHashCode(String name, String value) {
+        return new HashCodeBuilder(17, 31)
+                .append(name)
+                .append(value)
                 .toHashCode();
     }
     
