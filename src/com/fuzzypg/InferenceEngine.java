@@ -50,6 +50,7 @@ public class InferenceEngine {
         firstRules = new HashMap<>();
         secondRules = new HashMap<>();
 
+        // Clear the maps and start fresh for the new engine.
         rules.clear();
         variables.clear();
         sets.clear();
@@ -97,6 +98,11 @@ public class InferenceEngine {
         return result;
     }
     
+    /**
+     * Parse the FuzzySets from a JSONArray and place them in a map.
+     * 
+     * @param array JSONArray of sets
+     */
     private void parseJsonSets(JSONArray array) {
         for (int i = 0; i < array.length(); ++i) {
             FuzzySet set = new FuzzySet(array.getJSONObject(i));
@@ -104,6 +110,11 @@ public class InferenceEngine {
         }
     }
     
+    /**
+     * Parse the Linguistic Variables from a JSONArray and place them in a map.
+     * 
+     * @param array JSONArray of variables
+     */
     private void parseJsonVariables(JSONArray array) {
         for (int i = 0; i < array.length(); ++i) {
             LinguisticVariable variable = new LinguisticVariable(array.getJSONObject(i));
@@ -111,6 +122,11 @@ public class InferenceEngine {
         }
     }
     
+    /**
+     * Parse the Rules from a JSONArray and place them in a map.
+     * 
+     * @param array JSONArray of rules
+     */
     private void parseJsonRules(JSONArray array) {
         for (int i = 0; i < array.length(); ++i) {
             FuzzyRule rule = new FuzzyRule(array.getJSONObject(i));     
@@ -128,22 +144,51 @@ public class InferenceEngine {
         }
     }
     
+    /**
+     * Gets a fuzzy set from the inference engine.
+     * 
+     * @param name name of the fuzzy set
+     * @return     fuzzy set
+     */
     public static FuzzySet getSet(String name) {
         return sets.get(name);
     }
     
+    /**
+     * Gets a linguistic variable from the inference engine.
+     * 
+     * @param name name of the linguistic variable
+     * @return     linguistic variable
+     */
     public static LinguisticVariable getVariable(String name) {
         return variables.get(name);
     }
     
+    /**
+     * Gets a rule from the inference engine.
+     * 
+     * @param name  name of the rule
+     * @param value result of the rule
+     * @return      rule
+     */
     public static FuzzyRule getRule(String name, String value) {
         return rules.get(FuzzyRule.getHashCode(name, value));
     }
     
+    /**
+     * Removes a rule from the inference engine's mapping.
+     * 
+     * @param rule rule to remove
+     */
     public static void removeRule(FuzzyRule rule) {
         rules.remove(rule.hashCode());
     }
     
+    /**
+     * Adds a rule to the inference engine's mapping.
+     * 
+     * @param rule rule to add
+     */
     public static void addRule(FuzzyRule rule) {
         rules.put(rule.hashCode(), rule);
     }
@@ -191,7 +236,6 @@ public class InferenceEngine {
         }
         // Evaluate the final rules
         for (FuzzyRule rule : secondRules.values()) {
-            System.out.println(rule);
             rule.evaluate();
         }
         
@@ -218,7 +262,7 @@ public class InferenceEngine {
                 }
                 // Get a list of alternatives
                 ArrayList<FuzzySet> alternates = new ArrayList<>();
-                alternates.addAll(answerVariable.getTerms());
+                alternates.addAll(answerVariable.getSets());
                 Collections.sort(alternates, new Comparator<FuzzySet>() {
                     @Override
                     public int compare(FuzzySet o1, FuzzySet o2) {

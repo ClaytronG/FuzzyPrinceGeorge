@@ -4,7 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
- * 
+ * Base class for FuzzyRules. This is needed to combine rules using AND and OR.
  * 
  * @author Clayton
  */

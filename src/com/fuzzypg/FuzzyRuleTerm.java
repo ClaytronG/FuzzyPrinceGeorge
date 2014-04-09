@@ -6,9 +6,12 @@ import org.json.JSONStringer;
 
 /**
  * A FuzzyRuleTerm is the portion of the rule that looks like
+ * <pre>
  *  variable IS value
- * 
+ * </pre>
+ * <pre>
  * ex: Cost IS high
+ * </pre>
  * 
  * @author Clayton
  */
@@ -30,6 +33,11 @@ public class FuzzyRuleTerm extends FuzzyRuleObject {
         complement = false;
     }        
     
+    /**
+     * Gets the membership value of this term. 
+     * 
+     * @return membership value
+     */
     @Override
     public double getResult() {
         double result;
@@ -38,10 +46,20 @@ public class FuzzyRuleTerm extends FuzzyRuleObject {
         return result;
     }
     
+    /**
+     * Returns the variable in this term.
+     * 
+     * @return the variable
+     */
     public LinguisticVariable getVariable() {
         return variable;
     }
     
+    /**
+     * Returns the name of the fuzzy set that is being checked in this term.
+     * 
+     * @return name of fuzzy set
+     */
     public String getValue() {
         return value;
     }
@@ -81,7 +99,6 @@ public class FuzzyRuleTerm extends FuzzyRuleObject {
 
     @Override
     public JSONArray toJsonArray() {
-        
         return null;
     }
     

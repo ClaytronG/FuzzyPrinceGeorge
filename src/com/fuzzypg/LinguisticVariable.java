@@ -1,6 +1,5 @@
 package com.fuzzypg;
 
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -63,9 +62,9 @@ public class LinguisticVariable {
     }
     
     /**
+     * Creates a Linguistic Variable by parsing a JSONObject describing one.
      * 
-     * 
-     * @param object 
+     * @param object JSONObject describing linguistic variable
      */
     public LinguisticVariable(JSONObject object) {
         answer = object.getString("answer").equals("true");
@@ -109,8 +108,8 @@ public class LinguisticVariable {
     /**
      * Returns the list of terms that cover the value x.
      * 
-     * @param x
-     * @return 
+     * @param x x coordinate to check
+     * @return  list of fuzzy sets covering x
      */
     public Collection<FuzzySet> getTermFromInput(double x) {
         Collection<FuzzySet> terms = new ArrayList<>();
@@ -122,27 +121,33 @@ public class LinguisticVariable {
         return terms;
     }
     
+    /**
+     * Gets the membership of the fuzzy set 'name' in this variable.
+     * 
+     * @param name name of fuzzy set
+     * @return     membership value
+     */
     public double getMembershipValueOf(String name) {
         double result = sets.get(name).getValue(input);
         return result;
     }
     
     /**
-     * Returns a list of all terms associated with this Fuzzy set.
+     * Returns a list of all fuzzy sets associated with this.
      * 
-     * @return list of terms
+     * @return list of sets
      */
-    public Collection<FuzzySet> getTerms() {
+    public Collection<FuzzySet> getSets() {
         return sets.values();
     }
     
     /**
+     * Gets a set named 'name.'
      * 
-     * 
-     * @param name 
-     * @return     
+     * @param name name of fuzzy set
+     * @return     fuzzy set in this variable
      */
-    public FuzzySet getTerm(String name) {
+    public FuzzySet getSet(String name) {
         return sets.get(name);
     }
     
@@ -152,11 +157,13 @@ public class LinguisticVariable {
      * @return the defuzzified value
      */
     public double defuzzify() {
+        // Results contains the y-values for (maxValue-minValue)/STEP_SIZE steps 
+        // in this variable.
         double[] results = new double[(int) ((maxValue - minValue) / STEP_SIZE)];
+        // Generate the resulting graph using max-min
         for (FuzzySet term : sets.values()) {
             for (int i = 0; i < results.length; ++i) {
                 double x = minValue + (i * STEP_SIZE);
-                // Generate the resulting graph using max-min
                 double value = term.getValue(x);
                 double thing = results[i];
                 if (value > thing) {
@@ -165,6 +172,8 @@ public class LinguisticVariable {
             }
         }
         
+        // Using the centroid technique, find the ceter of gravity.
+        // Sum (Universe(x))x / Sum (Universe(x))
         double numerator = 0;
         double denominator = 0;
         for (int i = 0; i < results.length; ++i) {
@@ -174,23 +183,43 @@ public class LinguisticVariable {
         }
         return numerator / denominator;
     }
-    
+
     public String getName() {
         return name;
     }
     
+    /**
+     * Get the lowest x-value that this variable covers.
+     * 
+     * @return lowest x-value in the universe
+     */
     public double getMinValue() {
         return minValue;
     }
     
+    /**
+     * Get the highest x-value that this variable covers.
+     * 
+     * @return highest x-value in the universe
+     */
     public double getMaxValue() {
         return maxValue;
     }
     
+    /**
+     * Returns true if this Linguistic Variable is the answer to a question.
+     * 
+     * @return true if this is an answer
+     */
     public boolean isAnswer() {
         return answer;
     }
     
+    /**
+     * What x-value is input to this variable.
+     * 
+     * @param input x-value
+     */
     public void setInput(double input) {
         this.input = input;
     }

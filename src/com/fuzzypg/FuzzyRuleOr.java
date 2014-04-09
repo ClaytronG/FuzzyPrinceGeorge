@@ -6,20 +6,31 @@ import org.json.JSONStringer;
 
 /**
  * The union of two fuzzy sets.
- * 
- *  X is x OR Y is y
+ * <pre>
+ * X is x OR Y is y
  * 
  * where X is a linguistic variable and x is a fuzzy set in X 
  *   and Y is a linguistic variable and y is a fuzzy set in Y.
- * 
+ * </pre>
  * @author Clayton
  */
 public class FuzzyRuleOr extends FuzzyRuleOperation {
     
+    /**
+     * Connect two FuzzyRule objects by an OR.
+     * 
+     * @param left  left side of and
+     * @param right right side of and
+     */
     public FuzzyRuleOr(FuzzyRuleTerm left, FuzzyRuleTerm right) {
         super(left, right);
     }
     
+    /**
+     * And the left and right sides by taking the maximum value of both.
+     * 
+     * @return left side or'd with right side
+     */
     @Override
     public double getResult() {
         return Math.max(left.getResult(), right.getResult());

@@ -1,6 +1,7 @@
 package com.fuzzypg.ui;
 
 import com.fuzzypg.FuzzyRule;
+import com.fuzzypg.FuzzyRuleTerm;
 import com.fuzzypg.FuzzySet;
 import com.fuzzypg.InferenceEngine;
 import com.fuzzypg.LinguisticVariable;
@@ -25,6 +26,8 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import org.json.JSONObject;
+import org.json.JSONStringer;
 
 /**
  *
@@ -55,15 +58,26 @@ public class UI {
     String answer;
     
     //answers to questions;
-    double[] inputs = new double[6];
-    HashMap<String, Integer> feedback = new HashMap<>();
-    String[] names = {
+    private final double[] inputs = new double[6];
+    // answers to feedback.
+    private final HashMap<String, Integer> feedback = new HashMap<>();
+    private final String[] names = {
         "Price",
         "Safety",
         "People",
         "Style",
         "Drugs",
         "Proximity"
+    };
+    // answers to adding a rule
+    private final String[] ruleAnswers = {
+        "Very High",
+        "Very High",
+        "Very High",
+        "Very High",
+        "Very High",
+        "Very High",
+        "College Heights"
     };
     
     public void startUI()
@@ -191,17 +205,17 @@ public class UI {
         a.gridy=2;
         addAnswerDropDown(p,a);
         a.gridy=3;
-        addHighLowDropDown(p,a);
+        addHighLowDropDown(p,a, 0);
         a.gridy=4;
-        addHighLowDropDown(p,a);
+        addHighLowDropDown(p,a,1);
         a.gridy=5;
-        addHighLowDropDown(p,a);
+        addHighLowDropDown(p,a,2);
         a.gridy=6;
-        addHighLowDropDown(p,a);
+        addHighLowDropDown(p,a,3);
         a.gridy=7;
-        addHighLowDropDown(p,a);
+        addHighLowDropDown(p,a,4);
         a.gridy=8;
-        addHighLowDropDown(p,a);
+        addHighLowDropDown(p,a,5);
  
         JButton butt = new JButton("Submit");
         butt.addActionListener(new ActionListener() {
@@ -211,12 +225,84 @@ public class UI {
             {
                 //Execute when button is pressed
                 //Main.engine.addRule(null);
+                // Create the new rule using a JSONObject
+                String rule = new JSONStringer()
+                        .object()
+                            .key("answer")
+                            .value("true")
+                            .key("then")
+                            .object()
+                                .key("name")
+                                .value("Area")
+                                .key("value")
+                                .array()
+                                    .value(ruleAnswers[6])
+                                .endArray()
+                            .endObject()
+                            .key("if")
+                            .array()
+                                .object()
+                                .key("name")
+                                .value("Price")
+                                .key("value")
+                                .array()
+                                .value(ruleAnswers[0])
+                                .endArray()
+                                .endObject()
+                                .object()
+                                .key("name")
+                                .value("Safety")
+                                .key("value")
+                                .array()
+                                .value(ruleAnswers[1])
+                                .endArray()
+                                .endObject()
+                                .object()
+                                .key("name")
+                                .value("People")
+                                .key("value")
+                                .array()
+                                .value(ruleAnswers[2])
+                                .endArray()
+                                .endObject()
+                                .object()
+                                .key("name")
+                                .value("Style")
+                                .key("value")
+                                .array()
+                                .value(ruleAnswers[3])
+                                .endArray()
+                                .endObject()
+                                .object()
+                                .key("name")
+                                .value("Drugs")
+                                .key("value")
+                                .array()
+                                .value(ruleAnswers[4])
+                                .endArray()
+                                .endObject()
+                                .object()
+                                .key("name")
+                                .value("Proximity")
+                                .key("value")
+                                .array()
+                                .value(ruleAnswers[5])
+                                .endArray()
+                                .endObject()
+                            .endArray()
+                        .endObject()
+                        .toString();
+                FuzzyRule newRule = new FuzzyRule(new JSONObject(rule));
+                // Remove the conflicting rule.
+                InferenceEngine.removeRule(InferenceEngine.getRule("Area", ruleAnswers[6]));
+                // Add the new rule.
+                InferenceEngine.addRule(newRule);
+                // Close the window
                 pu.dispose();
-                
             }
         });
         
-        
+        p.add(butt);
         pu.add(p);
         
         pu.pack();
@@ -738,13 +824,19 @@ public class UI {
         return useful;
         
     }
-    private void addHighLowDropDown(JPanel p, GridBagConstraints c)
+    private void addHighLowDropDown(JPanel p, GridBagConstraints c, int i)
     {
         
         String[] items = {"Very High", "High", "Average", "Low", "Very Low"};
         
         JComboBox jc = new JComboBox(items);
         
+        jc.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ruleAnswers[i] = (String) jc.getSelectedItem();
+            }
+        });
         
         p.add(jc, c);
     }
@@ -757,6 +849,14 @@ public class UI {
 
         
         JComboBox jc = new JComboBox(items);
+        
+        jc.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ruleAnswers[6] = (String) jc.getSelectedItem();
+            }
+        });
         
         p.add(jc, c);
     }

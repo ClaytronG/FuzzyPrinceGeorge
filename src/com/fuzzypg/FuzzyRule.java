@@ -116,10 +116,10 @@ public class FuzzyRule {
     }
     
     /**
+     * Increase of decrease this rule.
      * 
-     * 
-     * @param change
-     * @return 
+     * @param change whether to increase or lower the rule
+     * @return       altered rule
      */
     public FuzzyRule alterRule(HashMap<String, Integer> change) {
         ArrayList<JSONObject> newThings = new ArrayList<>();
@@ -150,6 +150,13 @@ public class FuzzyRule {
         return new FuzzyRule(new JSONObject(ruleString));
     }
     
+    /**
+     * 
+     * 
+     * @param thing  what linguistic variable portion of the rule to change
+     * @param change increase or decrease
+     * @return       JSONObject of the new rule
+     */
     private JSONObject newThing(String thing, int change) {
         if (change == UI.Feedback.MORE) {
             return increaseRule(thing);
@@ -160,6 +167,12 @@ public class FuzzyRule {
         }
     }
     
+    /**
+     * Increase this rule (expect higher values). High goes to very high.
+     * 
+     * @param thing what linguistic variable portion of the rule to change
+     * @return      JSONObject of the new rule
+     */
     private JSONObject increaseRule(String thing) {
         JSONObject obj = ((FuzzyRuleAnd) premise).getHashMap().get(thing);
         JSONArray valueArray = obj.getJSONArray("value");
@@ -250,6 +263,12 @@ public class FuzzyRule {
         return null;
     }
     
+    /**
+     * Increase this rule (expect higher values). High goes to very high.
+     * 
+     * @param thing what linguistic variable portion of the rule to change
+     * @return      JSONObject of the new rule
+     */
     private JSONObject reduceRule(String thing) {
         JSONObject obj = ((FuzzyRuleAnd) premise).getHashMap().get(thing);
         JSONArray valueArray = obj.getJSONArray("value");
@@ -341,19 +360,29 @@ public class FuzzyRule {
     }
     
     /**
-     * 
+     * Evaluates this rule, and sets the max value for the answer fuzzy set.
      */
     public void evaluate() {
         LinguisticVariable variable = result.getVariable();
-        FuzzySet term = variable.getTerm(result.getValue());
+        FuzzySet term = variable.getSet(result.getValue());
         double value = premise.getResult();
         term.setFuzzyLimit(value);
     }
     
+    /**
+     * Returns the name of the linguistic variable this rule is answer.
+     * 
+     * @return name of rule
+     */
     public String getName() {
         return name;
     }
     
+    /**
+     * Returns true if this rule leads to an answer.
+     * 
+     * @return true if this leads to an answer
+     */
     public boolean isAnswer() {
         return answer;
     }
