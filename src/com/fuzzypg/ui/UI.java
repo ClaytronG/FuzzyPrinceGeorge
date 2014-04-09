@@ -474,7 +474,7 @@ public class UI {
         
         a.gridy=4;
         b.gridy=4;
-        addLabel("I like to plaid more than red carpet attire.",Questions,a,15);
+        addLabel("I like to wear plaid more than red carpet attire.",Questions,a,15);
         //addRadioButtonGroup(Questions,b,3);
         addSlider(Questions, b, 3);
         
