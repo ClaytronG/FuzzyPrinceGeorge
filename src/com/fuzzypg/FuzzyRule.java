@@ -3,7 +3,6 @@ package com.fuzzypg;
 import com.fuzzypg.ui.UI;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map.Entry;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.json.JSONArray;
@@ -12,40 +11,67 @@ import org.json.JSONStringer;
 
 /**
  * Fuzzy rules consist of a premise or multiple premises and a result. Premises
- * consist of Fuzzy Terms and, if necessary, operations like AND and OR.
- * 
+ * consist of Fuzzy Terms and, if necessary, operations like AND and OR.<p>
+ * <pre>
  * Example:
  * 
  *      IF temp IS hot AND time IS late THEN fan IS high
  *         ----------------------------      -----------
  *                  Premise                     Result
- * 
- * @author Clayton
+ * </pre>
  */
 public class FuzzyRule {
     
-    private String name;
+    /**
+     * The name of the fuzzy rule corresponds to the name of the result
+     * Linguistic Variable.
+     */
+    private final String name;
     
     /**
-     * The IFs
+     * The IFs.
      */
     private final FuzzyRuleObject premise;
     
     /**
-     * The THEN
+     * The THEN.
      */
     private final FuzzyRuleTerm result;
     
+    /**
+     * If this Rule leads to an answer, and not used as a value in another rule.
+     */
     private boolean answer = false;
     
-    public FuzzyRule(FuzzyRuleObject premise, FuzzyRuleTerm result) {
-        this.premise = premise;
-        this.result = result;
-    }
-    
-    public FuzzyRule(JSONObject rule) {
+    /**
+     * Creates a Fuzzy Rule by parsing a JSON object.
+     * <pre>
+     * {@code
+     *  {
+     *      "answer" : String, // "true" or "false"
+     *      "then" : {
+     *          "name" : String,
+     *          "value" : [ String, ... ]
+     *      },
+     *      "if" : [
+     *          { "name" : String, "value" : [ String, ... ] },
+     *          ...
+     *      ]
+     *  }
+     * }
+     * </pre>
+     * Where answer is a boolean value telling if this rule leads to an answer,
+     * or if it is an intermediate rule. The then portion is the result of the 
+     * rule with a name of a {@link LinguisticVariable} and an associated 
+     * {@link FuzzySet} with that variable. The if portion contains an array of
+     * {@link FuzzyRuleOr}s and {@link FuzzyRuleTerm}s that are to be and'd
+     * together.
+     * 
+     * @param object JSON object to be parsed into a Fuzzy Rule
+     */
+    public FuzzyRule(JSONObject object) {
         // Construct the IF
-        JSONArray ifThings = rule.getJSONArray("if");
+        JSONArray ifThings = object.getJSONArray("if");
         ArrayList<FuzzyRuleObject> andThings = new ArrayList<>();
         for (int i = 0; i < ifThings.length(); ++i) {
             JSONObject ifThing = ifThings.getJSONObject(i);
@@ -64,8 +90,11 @@ public class FuzzyRule {
             }            
         }
         // And all of those premises together
+        // If its length is 1 then it is just a single term and does not need
+        // to be and'd together.
         if (andThings.size() == 1) {
             premise = andThings.get(0);
+        // Otherwise each entry in the array needs to be and'd.
         } else {            
             FuzzyRuleAnd and = new FuzzyRuleAnd(andThings.get(0), andThings.get(1));
             for (int i = 2; i < andThings.size(); ++i) {
@@ -74,7 +103,7 @@ public class FuzzyRule {
             premise = and;
         }
         // Construct the THEN
-        JSONObject then = rule.getJSONObject("then");
+        JSONObject then = object.getJSONObject("then");
         String thenName = then.getString("name");
         JSONArray value = then.getJSONArray("value");
         if (value.length() == 1) {
@@ -86,11 +115,18 @@ public class FuzzyRule {
         this.name = thenName;
     }
     
+    /**
+     * 
+     * 
+     * @param change
+     * @return 
+     */
     public FuzzyRule alterRule(HashMap<String, Integer> change) {
         ArrayList<JSONObject> newThings = new ArrayList<>();
-        for (Entry<String, Integer> entry : change.entrySet()) {
+        // JAVA 8!
+        change.entrySet().stream().forEach((entry) -> {
             newThings.add(newThing(entry.getKey(), entry.getValue()));
-        }
+        });
         JSONArray ifArray = new JSONArray(newThings);
         
         String ruleString = new JSONStringer()

@@ -21,11 +21,29 @@ import org.json.JSONObject;
  */
 public class InferenceEngine {
     
+    /**
+     * Initial user input rules.
+     */
     private final HashMap<Integer, FuzzyRule> firstRules;
+    
+    /**
+     * Middle rules that lead to a final answer.
+     */
     private final HashMap<Integer, FuzzyRule> secondRules;
     
+    /**
+     * Rules parsed from JSON file.
+     */
     private static final HashMap<Integer, FuzzyRule> rules = new HashMap<>();
+    
+    /**
+     * Linguistic Variables parsed from JSON file.
+     */
     private static final HashMap<String, LinguisticVariable> variables = new HashMap<>();
+    
+    /**
+     * Fuzzy sets parsed from JSON file.
+     */
     private static final HashMap<String, FuzzySet> sets = new HashMap<>();
     
     public InferenceEngine(String setsFile ,String variablesFile, String rulesFile) {
@@ -53,6 +71,12 @@ public class InferenceEngine {
         parseJsonRules(new JSONArray(jsonFileToString(file)));
     }
     
+    /**
+     * Load the file and store its contents in a string.
+     * 
+     * @param file file to load
+     * @return     String of file contents
+     */
     private String jsonFileToString(String file) {
         String result = null;
         try {
@@ -89,10 +113,13 @@ public class InferenceEngine {
     
     private void parseJsonRules(JSONArray array) {
         for (int i = 0; i < array.length(); ++i) {
-            FuzzyRule rule = new FuzzyRule(array.getJSONObject(i));            
+            FuzzyRule rule = new FuzzyRule(array.getJSONObject(i));     
+            // If this rule leads to an answer, place it in the set of rules 
+            // that are evaluated second.
             if (array.getJSONObject(i).getString("answer").equals("true")) {
                 secondRules.put(rule.hashCode(), rule);
                 rule.setAnswer(true);
+            // Otherwise it's a rule based on user's input.
             } else {
                 firstRules.put(rule.hashCode(), rule);
             }
@@ -121,19 +148,21 @@ public class InferenceEngine {
         rules.put(rule.hashCode(), rule);
     }
     
+    /**
+     * Save rules to JSON file, "Rules.json".
+     */
     public void saveRules() {
         ArrayList<JSONObject> list = new ArrayList<>();
         for (FuzzyRule rule : rules.values()) {
             list.add(rule.toJsonObject());
         }
         JSONArray arr = new JSONArray(list);
-        try {
-            File file = new File("Rules.json");
-            PrintWriter out = new PrintWriter(file);
+        File file = new File("Rules.json");
+        try (PrintWriter out = new PrintWriter(file)) {
             out.print(arr);
             out.close();
         } catch (FileNotFoundException e) {
-            
+            System.err.println(e.getMessage());
         }
     }
     
@@ -162,6 +191,7 @@ public class InferenceEngine {
         }
         // Evaluate the final rules
         for (FuzzyRule rule : secondRules.values()) {
+            System.out.println(rule);
             rule.evaluate();
         }
         
@@ -230,7 +260,6 @@ public class InferenceEngine {
             
         }
         
-        return answerVariable;
-        
+        return answerVariable;        
     }
 }
